@@ -39,7 +39,7 @@
             <div class="col-md-8">
                 <ul class="nav justify-content-center mb-0">
                     <li class="nav-item">
-                        <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리1</a>
+                        <a href="" class="nav-link p-5 bg-body-tertiary">카테고리1</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리2</a>
