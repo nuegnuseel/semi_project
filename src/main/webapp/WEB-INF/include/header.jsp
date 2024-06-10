@@ -18,7 +18,7 @@
     <c:when test="${sessionMember eq null}">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom">
             <div class="col-md-2">
-                <img src="../../images/logo.png">
+                <a href="/index/index"><img src="../../images/logo.png"></a>
             </div>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <h2>첫화면은 슬로건 좌측 사이드메뉴 클릭시 카테고리 </h2>
