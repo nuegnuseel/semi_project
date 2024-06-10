@@ -6,8 +6,11 @@
 <!--  순서 properties > typeAliases > typeHandlers  -->
     <properties resource="db.properties"></properties>
  <typeAliases>
+
+     <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
      <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
      <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
+
  </typeAliases>
 <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
 <!--    <typeHandlers>-->
@@ -27,6 +30,12 @@
     </environments>
 <!--  mapper resources의 xml resource  -->
     <mappers>
+<<<<<<< HEAD
+        <mapper resource="salary.xml"/>
         <mapper resource="hrm.xml"/>
+<!--        <mapper resource="member.xml"/>-->
+=======
+        <mapper resource="hrm.xml"/>
+>>>>>>> a6c69d49148be4554af0c319d158de0422904647
     </mappers>
 </configuration>
