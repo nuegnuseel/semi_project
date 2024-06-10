@@ -44,10 +44,10 @@
     </select>
 
     <select id="getHrmList" resultType="HrmDto" parameterType="HrmPageDto">
-        select * from
-        (select rownum as num, b01.* from
-        (select * from hrm) b01
-        ) where num between #{start} and #{end}
+        SELECT * FROM (
+        SELECT *, ROW_NUMBER() OVER () AS num FROM HRM
+        ) AS numbered_rows
+        LIMIT #{start}, #{end}
     </select>
 
     <insert id="insertHrm" parameterType="HrmDto">
