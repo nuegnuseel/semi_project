@@ -5,26 +5,16 @@
 <mapper namespace="com.hrproject.hrproject.dao.HrmDao">
 
     <sql id="search">
-        <choose>
-            <when test="search eq 'empno'">
-                subject like '%'||#{searchWord}||'%'
-            </when>
-            <when test="search eq 'ename'">
-                content like '%'||#{searchWord}||'%'
-            </when>
-            <when test="search eq 'deptno'">
-                username like '%'||#{searchWord}||'%'
-            </when>
-            <when test="search eq 'email'">
-                username like '%'||#{searchWord}||'%'
-            </when>
-            <otherwise>
-                empno like '%'||#{searchWord}||'%' or
-                ename like '%'||#{searchWord}||'%' or
-                deptno like '%'||#{searchWord}||'%' or
-                email like '%'||#{searchWord}||'%'
-            </otherwise>
-        </choose>
+        CASE
+        WHEN #{search} = 'empno' THEN subject LIKE CONCAT('%', #{searchWord}, '%')
+        WHEN #{search} = 'ename' THEN content LIKE CONCAT('%', #{searchWord}, '%')
+        WHEN #{search} = 'deptname' THEN username LIKE CONCAT('%', #{searchWord}, '%')
+        WHEN #{search} = 'email' THEN username LIKE CONCAT('%', #{searchWord}, '%')
+        ELSE empno LIKE CONCAT('%', #{searchWord}, '%') OR
+        ename LIKE CONCAT('%', #{searchWord}, '%') OR
+        deptname LIKE CONCAT('%', #{searchWord}, '%') OR
+        email LIKE CONCAT('%', #{searchWord}, '%')
+        END
     </sql>
 
     <select id="getHrmTotal" resultType="int">
@@ -48,6 +38,19 @@
         SELECT *, ROW_NUMBER() OVER () AS num FROM HRM
         ) AS numbered_rows
         LIMIT #{start}, #{end}
+    </select>
+
+    <select id="getSearchHrmList" resultType="BoardDto" parameterType="PageDto">
+        SELECT * FROM (
+        SELECT *, ROW_NUMBER() OVER (ORDER BY regroup DESC, relevel ASC) AS num
+        FROM board
+        WHERE available = 1
+        <if test="search != null and searchWord != null">
+            AND
+            <include refid="search"></include>
+        </if>
+        ) AS b01
+        WHERE num BETWEEN #{start} AND #{end}
     </select>
 
     <insert id="insertHrm" parameterType="HrmDto">

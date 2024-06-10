@@ -37,7 +37,7 @@ public class HrmBoard extends HttpServlet {
         System.out.println("hrmList === " + hrmList.get(1).getEName());
 
 
-        req.getRequestDispatcher("/WEB-INF/hrm/hrm-boardt.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/hrm/hrm-board.jsp").forward(req, resp);
     }
     private int getTotalHrmCount(String search, String searchWord) {
         HrmDao hrmTotalDao = new HrmDao();
@@ -92,11 +92,11 @@ public class HrmBoard extends HttpServlet {
     private List<HrmDto> getHrmList(HrmPageDto pageListDto) {
         HrmDao hrmDao = new HrmDao();
         if (pageListDto.getSearch() != null && pageListDto.getSearchWord() != null){
-            return hrmDao.getSearchHrmList(pageListDto);
+            return hrmDao.getSearchHrmBoardList(pageListDto);
         } else {
             System.out.println(pageListDto.getStart() + pageListDto.getEnd() + pageListDto.getSearch());
             System.out.println("getHrmList");
-            return hrmDao.getHrmList(pageListDto);
+            return hrmDao.getHrmBoardList(pageListDto);
         }
     }
 

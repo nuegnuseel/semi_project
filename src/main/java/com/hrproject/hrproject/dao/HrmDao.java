@@ -63,7 +63,7 @@ public class HrmDao {
 
         return total;
     }
-    public List<HrmDto> getHrmList(HrmPageDto hrmPageDto) {
+    public List<HrmDto> getHrmBoardList(HrmPageDto hrmPageDto) {
         List<HrmDto> hrmList =  null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         hrmList = sqlSession.selectList("getHrmList", hrmPageDto);
@@ -73,7 +73,7 @@ public class HrmDao {
 
     }
 
-    public List<HrmDto> getSearchHrmList(HrmPageDto pageListDto) {
+    public List<HrmDto> getSearchHrmBoardList(HrmPageDto pageListDto) {
         List<HrmDto> hrmList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         hrmList = sqlSession.selectList("getSearchHrmList", pageListDto);
