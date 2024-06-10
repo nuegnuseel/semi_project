@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JSP - Hello World</title>
-  <meta http-equiv="refresh" content="0; url=/index/index" >
+    <title>JSP - Hello World</title>
+    <meta http-equiv="refresh" content="0; url=/index/index" >
 </head>
 <body>
 </body>

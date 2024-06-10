@@ -1,8 +1,6 @@
 package com.hrproject.hrproject.controller.salary;
 
-import com.hrproject.hrproject.dao.HrmDao;
 import com.hrproject.hrproject.dao.SalaryDao;
-import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.SalaryDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
