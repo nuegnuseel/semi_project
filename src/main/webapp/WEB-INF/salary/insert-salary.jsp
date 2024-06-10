@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <script src="../js/bootstrap.bundle.min.js"></script>
 <html>
@@ -13,33 +16,17 @@
     <title>Title</title>
 
 
-
 </head>
 <body>
-<!-- Button trigger modal -->
-<%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">--%>
-<%--    Launch static backdrop modal--%>
-<%--</button>--%>
 
-<!-- Modal -->
-<!-- Scrollable modal -->
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop">신규
-</button>
-
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">급여정보입력</h1>
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">급여 정보 등록</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-
             <div class="modal-body">
                 <form action="../salary/insert" id="modalForm" method="post">
                     <div class="row">
@@ -47,6 +34,7 @@
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo">
+
 
 
                         </div>
@@ -116,12 +104,8 @@
             </div>
 
 
-
-
-
-
-
             <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
                 <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
@@ -130,30 +114,63 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal2" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+     data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">두번째 모달 창</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">사원 찾기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>모달 내용</p>
+
+
+
+                <table class="table table-striped">
+                    <colgroup>
+
+                        <col style="width:30px">
+                        <col style="width:150px">
+                        <col style="width:150px">
+                        <col style="width:150px">
+
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>사원 번호</th>
+                        <th>부서 명</th>
+                        <th>사원 명</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
+                        <tr>
+                            <td><input type="checkbox" id="check-all"></td>
+                            <td>${hrmDto.empNo}</td>
+                            <td>${hrmDto.deptName}</td>
+<%--                            <td>${hrmDto.eName}</td>--%>
+
+
+
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+
+
+
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to
+                    first
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
+<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
 
 
 </body>

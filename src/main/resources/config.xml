@@ -7,6 +7,8 @@
     <properties resource="db.properties"></properties>
  <typeAliases>
      <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
+     <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
+
  </typeAliases>
 <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
 <!--    <typeHandlers>-->
@@ -27,6 +29,7 @@
 <!--  mapper resources의 xml resource  -->
     <mappers>
         <mapper resource="salary.xml"/>
+        <mapper resource="hrm.xml"/>
 <!--        <mapper resource="member.xml"/>-->
     </mappers>
 </configuration>

@@ -28,11 +28,11 @@
             </colgroup>
             <thead>
             <tr>
-                <th>사원번호</th>
-                <th>급여</th>
-                <th>지급일</th>
-                <th>급여구분</th>
-                <th>비고</th>
+                <th>테스트</th>
+                <th>테스트</th>
+                <th>테스트</th>
+                <th>테스트</th>
+                <th>테스트</th>
             </tr>
             </thead>
             <tbody>
