@@ -3,7 +3,7 @@
 <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary col-2" style="width: 220px;">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link link-body-emphasis p-5" aria-current="page">
+            <a href="/hrm/board" class="nav-link link-body-emphasis p-5" aria-current="page">
                 조회하기
             </a>
         </li>
