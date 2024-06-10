@@ -6,7 +6,8 @@
 <!--  순서 properties > typeAliases > typeHandlers  -->
     <properties resource="db.properties"></properties>
  <typeAliases>
-<!--     <typeAlias alias="BoardDto" type="com.heo96.mybatis.dto.BoardDto"/>-->
+     <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
+     <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
  </typeAliases>
 <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
 <!--    <typeHandlers>-->
@@ -26,7 +27,6 @@
     </environments>
 <!--  mapper resources의 xml resource  -->
     <mappers>
-<!--        <mapper resource="board.xml"/>-->
-<!--        <mapper resource="member.xml"/>-->
+        <mapper resource="hrm.xml"/>
     </mappers>
 </configuration>

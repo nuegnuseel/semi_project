@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class HrmDto {
+    private int num;
     private int empNo;
     private String eName;
     private String foreignName;
