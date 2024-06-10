@@ -98,6 +98,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.4.0</version> <!-- 버전은 필요에 따라 조정 -->
+        </dependency>
+
     </dependencies>
 
   <build>
