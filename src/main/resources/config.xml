@@ -7,9 +7,11 @@
     <properties resource="db.properties"></properties>
  <typeAliases>
      <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
+     <typeAlias alias="SalaryPlusEmpNameDto" type="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto"/>
      <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
      <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
      <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
+
  </typeAliases>
 <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
 <!--    <typeHandlers>-->
