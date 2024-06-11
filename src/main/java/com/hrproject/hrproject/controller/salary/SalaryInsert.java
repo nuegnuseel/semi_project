@@ -21,10 +21,6 @@ public class SalaryInsert extends HttpServlet {
         HrmDao hrmDao = new HrmDao();
         List<HrmDto> hrmList=null;
 
-
-
-
-
         req.getRequestDispatcher("/WEB-INF/salary/insert-salary.jsp").forward(req, resp);
 
     }
@@ -49,12 +45,10 @@ public class SalaryInsert extends HttpServlet {
         int result = salaryDao.insertSalaryDao(salaryDto);
 if (result>0){
     System.out.println("salary data input successfully");
-    resp.sendRedirect("/WEB-INF/salary/salary-board.jsp");
+    resp.sendRedirect("/salary/board");
 }else {
     System.out.println("salary data input failed");
 }
-
-//        req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp").forward(req, resp);
 
     }
 }

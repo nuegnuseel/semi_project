@@ -18,6 +18,7 @@
             <thead>
             <tr>
                 <th>번호</th>
+<<<<<<< HEAD
                 <th>사원 번호</th>
                 <th>사원 명</th>
                 <th>급여구분</th>
@@ -27,6 +28,12 @@
                 <th>근속연월</th>
                 <th>지급액</th>
                 <th>기타</th>
+=======
+                <th>사원번호</th>
+                <th>테스트</th>
+                <th>테스트</th>
+                <th>테스트</th>
+>>>>>>> b3132e61be3128b30884c08a32a6b4c1593af722
             </tr>
             </thead>
             <tbody>
@@ -58,6 +65,8 @@
                     <td>${salaryDto.empNo}</td>
                     <td>${salaryDto.eName}</td>
                     <td>${salaryDto.salaryName}</td>
+                    <td>${salaryDto.salary}</td>
+                    <td>${salaryDto.salaryDay}</td>
                     <td>${salaryDto.salaryCategory}</td>
                     <td>${salaryDto.salaryInfo}</td>
                     <td>${salaryDto.salaryDay}</td>
@@ -90,8 +99,6 @@
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo">
-
-
                         </div>
                     </div>
                     <div class="row">
@@ -177,24 +184,29 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">사원 찾기</h1>
+                    <div class="col-6">
+                <form action="/hrm/searchEmpNo">
+                    <div class="input-group mt-3 mx-5">
+                        <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" name="searchEmpNo">
+                        <button class="btn btn-primary" type="submit">찾기</button>
+                    </div>
+                </form>
+                    </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
                 <table class="table table-striped">
                     <colgroup>
-
-                        <col style="width:30px">
                         <col style="width:150px">
                         <col style="width:150px">
                         <col style="width:150px">
-
+                        <col style="width:150px">
                     </colgroup>
                     <thead>
                     <tr>
                         <th>사원 번호</th>
                         <th>부서 명</th>
+                        <th>직책</th>
                         <th>사원 명</th>
                     </tr>
                     </thead>
@@ -205,14 +217,10 @@
                             <td>${hrmDto.empNo}</td>
                             <td>${hrmDto.deptName}</td>
                                 <%--                            <td>${hrmDto.eName}</td>--%>
-
-
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-
-
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to
