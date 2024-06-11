@@ -1,0 +1,11 @@
+0610
+salaryDB insert select 확인
+salary-jsp에서 hrmDto 가져와서 출력 (근데 왜??  hrmDto 어떤건 되고 어떤 건 안되는겨 eName 안되는거임????? 진짜 왜??)
+
+
+0611 do-list
+1. 급여 정보 등록 확실하게 만들기
+2. 사원찾기에 페이지 버튼 + 서치러
+
+
+

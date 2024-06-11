@@ -6,6 +6,7 @@
 <!--  순서 properties > typeAliases > typeHandlers  -->
     <properties resource="db.properties"></properties>
  <typeAliases>
+     <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
      <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
      <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
      <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
@@ -29,6 +30,5 @@
 <!--  mapper resources의 xml resource  -->
     <mappers>
         <mapper resource="hrm.xml"/>
-        <mapper resource="attend.xml"/>
     </mappers>
 </configuration>
