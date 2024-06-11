@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/header.jsp" %>
 <%@include file="../include/left_side_menu.jsp" %>
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8" style="width: calc(100% - 520px);">
+<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8"
+     style="width: calc(100% - 520px);">
     <h2 class="mt-5 mb-5  ">LIST</h2>
     <form action="../board/delete-all" method="post">
         <table class="table table-striped">
@@ -35,9 +36,12 @@
             </tbody>
         </table>
     </form>
+    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+
 </div>
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     data-bs-backdrop="static"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -52,7 +56,6 @@
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo">
-
 
 
                         </div>
@@ -123,7 +126,8 @@
 
 
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기
+                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
                 <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
@@ -142,7 +146,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
 
 
                 <table class="table table-striped">
@@ -170,13 +173,10 @@
                                 <%--                            <td>${hrmDto.eName}</td>--%>
 
 
-
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-
-
 
 
             </div>
@@ -188,7 +188,6 @@
         </div>
     </div>
 </div>
-<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
 
 
 <%@include file="../include/right_side_info.jsp" %>
