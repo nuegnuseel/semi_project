@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/salary/list")
-public class SalaryList extends HttpServlet {
+@WebServlet("/salary/board")
+public class SalaryBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //
@@ -21,7 +21,7 @@ public class SalaryList extends HttpServlet {
         List<SalaryDto> salaryList = salaryDao.getSalaryList();
         req.setAttribute("salaryList",salaryList);
         RequestDispatcher dispatcher =
-                req.getRequestDispatcher("/WEB-INF/salary/list-salary.jsp");
+                req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp");
         dispatcher.forward(req,resp);
     }
 }

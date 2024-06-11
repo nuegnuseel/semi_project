@@ -30,8 +30,8 @@
         </thead>
         <tbody>
         <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
-        <tr>
-<%--            <td>${total - hrmDto.num + 1}</td>  --%>
+            <tr>
+                    <%--            <td>${total - hrmDto.num + 1}</td>  --%>
                 <td scope="row"><input type="checkbox">${loop.count}</td>
                 <td>${hrmDto.hireDate}</td>
                 <td><a href="">${hrmDto.empNo}</a></td>
@@ -42,17 +42,17 @@
                 <td>${hrmDto.account}</td>
                 <td><textarea></textarea></td>
                 <td><a href="">인쇄</a></td>
-            <%--            <td><input type="checkbox"></td>--%>
-            <%--            <td>입사일자</td>--%>
-            <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">사원번호</a></td>--%>
-            <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">성명</a></td>--%>
-            <%--            <td>부서명</td>--%>
-            <%--            <td>직위/직급명</td>--%>
-            <%--            <td>Email</td>--%>
-            <%--            <td>계좌번호</td>--%>
-            <%--            <td>새로운 항목 추가???</td>--%>
-            <%--            <td>인쇄</td>--%>
-        </tr>
+                    <%--            <td><input type="checkbox"></td>--%>
+                    <%--            <td>입사일자</td>--%>
+                    <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">사원번호</a></td>--%>
+                    <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">성명</a></td>--%>
+                    <%--            <td>부서명</td>--%>
+                    <%--            <td>직위/직급명</td>--%>
+                    <%--            <td>Email</td>--%>
+                    <%--            <td>계좌번호</td>--%>
+                    <%--            <td>새로운 항목 추가???</td>--%>
+                    <%--            <td>인쇄</td>--%>
+            </tr>
         </c:forEach>
         </tbody>
     </table>
@@ -152,4 +152,4 @@
     </div>
 </div>
 </body>
-</html>
+</html>c
