@@ -163,6 +163,7 @@
                     <tr>
                         <th>사원 번호</th>
                         <th>부서 명</th>
+                        <th>직책</th>
                         <th>사원 명</th>
                     </tr>
                     </thead>
