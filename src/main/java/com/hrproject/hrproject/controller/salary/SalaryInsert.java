@@ -39,7 +39,7 @@ public class SalaryInsert extends HttpServlet {
                 .salaryDay(req.getParameter("salaryDay"))
                 .salary(Integer.parseInt(req.getParameter("salary")))
                 .salaryInfo(req.getParameter("salaryInfo"))
-                .bonus(Integer.parseInt(req.getParameter("bonus")))
+
                 .build();
 
         SalaryDao salaryDao = new SalaryDao();
@@ -49,12 +49,12 @@ public class SalaryInsert extends HttpServlet {
         int result = salaryDao.insertSalaryDao(salaryDto);
 if (result>0){
     System.out.println("salary data input successfully");
-
+    resp.sendRedirect("/WEB-INF/salary/salary-board.jsp");
 }else {
     System.out.println("salary data input failed");
 }
 
-        req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp").forward(req, resp);
 
     }
 }
