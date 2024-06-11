@@ -2,7 +2,7 @@
 <%@include file="../include/header.jsp" %>
 <%@include file="../include/left_side_menu.jsp" %>
 <div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8">
-    <table class="table">
+    <table class="table table-sm">
         <thead>
         <tr>
             <%-- 10개 --%>
@@ -38,69 +38,73 @@
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation example" class="mt-5 mb-5">
-        <ul class="pagination d-flex justify-content-center">
-            <c:if test="${startPage ne 1}">
-                <li class="page-item">
-                    <a class="page-link" href="${firstPage}" aria-label="Previous">
-                        <i class="bi bi-chevron-double-left"></i>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${prePage}" aria-label="Previous">
-                        <i class="bi bi-chevron-left"></i>
-                    </a>
-                </li>
-            </c:if>
-            <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
-                <c:choose>
-                    <c:when test="${page eq i}">
-                        <li class="page-item active"><span class="page-link">${i}</span></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="${selectPage}${i}">${i}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <c:if test="${endPage ne totalPage}">
-                <li class="page-item">
-                    <a class="page-link" href="${nextPage}" aria-label="Next">
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${lastPage}" aria-label="Next">
-                        <i class="bi bi-chevron-double-right"></i>
-                    </a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
-    <form action="../board/list">
-        <div class="row g-3 align-items-center">
-            <div class="col-3">
-                <select class="form-select" aria-label="Default select example" name="search">
-                    <option value="subject" ${search eq "empno" ? "selected": ""}>사원번호</option>
-                    <option value="username" ${search eq "ename" ? "selected": ""}>사원명</option>
-                    <option value="content" ${search eq "deptname" ? "selected": ""}>부서명</option>
-                    <option value="all" ${search eq "email" ? "selected": ""}>이메일</option>
-                    <option value="all" ${search eq "all" ? "selected": ""}>all</option>
-                </select>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <nav aria-label="Page navigation example" class="mt-5 mb-5">
+            <ul class="pagination d-flex justify-content-center">
+                <c:if test="${startPage ne 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="${firstPage}" aria-label="Previous">
+                            <i class="bi bi-chevron-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="${prePage}" aria-label="Previous">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+                    <c:choose>
+                        <c:when test="${page eq i}">
+                            <li class="page-item active"><span class="page-link">${i}</span></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="${selectPage}${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${endPage ne totalPage}">
+                    <li class="page-item">
+                        <a class="page-link" href="${nextPage}" aria-label="Next">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="${lastPage}" aria-label="Next">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+        <form action="../board/list" class="row g-3 d-flex align-items-center">
+            <div class="col-sm-7">
+                <div class="row g-3">
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" name="search">
+                            <option value="사원번호" ${search eq "empno" ? "selected": ""}>사원번호</option>
+                            <option value="사원이름" ${search eq "ename" ? "selected": ""}>사원명</option>
+                            <option value="부서명" ${search eq "deptname" ? "selected": ""}>부서명</option>
+                            <option value="email" ${search eq "email" ? "selected": ""}>이메일</option>
+                            <option value="all" ${search eq "all" ? "selected": ""}>all</option>
+                        </select>
+                    </div>
+                    <div class="col w-autoqw">
+                        <input type="text" name="searchWord" class="form-control" value="${searchWord}">
+                    </div>
+                </div>
             </div>
-            <div class="col-7">
-                <input type="text" name="searchWord" class="form-control" value="${searchWord}">
+            <div class="col-sm-3">
+                <button class="btn btn-primary w-100">SEARCH</button>
             </div>
-            <div class="col-3">
-                <button class="btn btn-primary">SEARCH</button>
-            </div>
-        </div>
-    </form>
+        </form>
 
-    <!-- Scrollable modal -->
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop">신규
-    </button>
+        <!-- Scrollable modal -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">신규
+        </button>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

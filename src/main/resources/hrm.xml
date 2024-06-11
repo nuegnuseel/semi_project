@@ -5,17 +5,28 @@
 <mapper namespace="com.hrproject.hrproject.dao.HrmDao">
 
     <sql id="search">
-        CASE
-        WHEN #{search} = 'empno' THEN subject LIKE CONCAT('%', #{searchWord}, '%')
-        WHEN #{search} = 'ename' THEN content LIKE CONCAT('%', #{searchWord}, '%')
-        WHEN #{search} = 'deptname' THEN username LIKE CONCAT('%', #{searchWord}, '%')
-        WHEN #{search} = 'email' THEN username LIKE CONCAT('%', #{searchWord}, '%')
-        ELSE empno LIKE CONCAT('%', #{searchWord}, '%') OR
-        ename LIKE CONCAT('%', #{searchWord}, '%') OR
-        deptname LIKE CONCAT('%', #{searchWord}, '%') OR
-        email LIKE CONCAT('%', #{searchWord}, '%')
-        END
+        <choose>
+            <when test="search == 'empno'">
+                empno LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="search == 'ename'">
+                ename LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="search == 'deptname'">
+                deptname LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="search == 'email'">
+                email LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <otherwise>
+                empno LIKE CONCAT('%', #{searchWord}, '%') OR
+                ename LIKE CONCAT('%', #{searchWord}, '%') OR
+                deptname LIKE CONCAT('%', #{searchWord}, '%') OR
+                email LIKE CONCAT('%', #{searchWord}, '%')
+            </otherwise>
+        </choose>
     </sql>
+
 
     <select id="getHrmTotal" resultType="int">
         SELECT COUNT(*) AS TOTAL FROM HRM
@@ -24,8 +35,7 @@
     <select id="getSearchHrmTotal" resultType="int" parameterType="HashMap">
         select count(*) as total from HRM
         <if test="search != null and searchWord != null">
-            where
-            <include refid="search"></include>
+            where <include refid="search"></include>
         </if>
     </select>
 
@@ -40,17 +50,15 @@
         LIMIT #{start}, #{end}
     </select>
 
-    <select id="getSearchHrmList" resultType="BoardDto" parameterType="PageDto">
+    <select id="getSearchHrmList" resultType="HrmDto" parameterType="HrmPageDto">
         SELECT * FROM (
-        SELECT *, ROW_NUMBER() OVER (ORDER BY regroup DESC, relevel ASC) AS num
-        FROM board
-        WHERE available = 1
+        SELECT *, ROW_NUMBER() OVER () AS num FROM HRM
+        ) AS numbered_rows
         <if test="search != null and searchWord != null">
-            AND
-            <include refid="search"></include>
+            where <include refid="search"></include>
         </if>
         ) AS b01
-        WHERE num BETWEEN #{start} AND #{end}
+        LIMIT #{start}, #{end}
     </select>
 
     <insert id="insertHrm" parameterType="HrmDto">
