@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrproject.hrproject.mybatis">
+    <insert id="insertAttend" parameterType="AttendDto">
+        INSERT INTO SALARY (EMPNO, ATTEND_COUNT, ENAME, ATTEND_NO, NUM, ATTEND_DATE, OFFDAY, DETAIL_OFFDAY, PRINT)
+        VALUES (
+        #{empNo},
+        #{eName},
+        #{attendCount},
+        #{attendNo},
+        #{num},
+        #{attendDate},
+        #{offDay},
+        #{detailOffday},
+        #{print}
+        )
+
+    </insert>
+
+    <select id="getAttendList" resultType="AttendDto">
+        select * from attend
+    </select>
+
+</mapper>

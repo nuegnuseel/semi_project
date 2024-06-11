@@ -33,7 +33,7 @@ public class HrmDto {
     private String etcFile;
     private String remarks;
     private int positionNo; // 테이블 정의에 없음, 필요시 추가
-
     // 생성자, getter, setter 등의 필요한 메서드 추가
 }
+
 

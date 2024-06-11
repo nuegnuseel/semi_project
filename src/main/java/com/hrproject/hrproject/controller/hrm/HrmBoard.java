@@ -33,6 +33,7 @@ public class HrmBoard extends HttpServlet {
 
         setRequestAttributes(req, totalPage, startPage, endPage, listPerPage, paginationPerPage, search, searchWord, hrmList);
 
+
         req.getRequestDispatcher("/WEB-INF/hrm/hrm-board.jsp").forward(req, resp);
     }
     private int getTotalHrmCount(String search, String searchWord) {

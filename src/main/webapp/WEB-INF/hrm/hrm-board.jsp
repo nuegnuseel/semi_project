@@ -259,7 +259,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $("#check-all").on("change", function () {
 
@@ -326,5 +325,5 @@
         }).open()({});
     }
 </script>
-
 <%@include file="../include/right_side_info.jsp" %>
+
