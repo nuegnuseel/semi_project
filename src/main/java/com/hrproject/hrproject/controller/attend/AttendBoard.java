@@ -21,7 +21,7 @@ public class AttendList extends HttpServlet {
         List<AttendDto> attendList = attendDao.getAttendList();
         req.setAttribute("attendList",attendList);
         RequestDispatcher dispatcher =
-                req.getRequestDispatcher("/WEB-INF/salary/list-attend.jsp");
+                req.getRequestDispatcher("/WEB-INF/attend/list-attend.jsp");
         dispatcher.forward(req,resp);
     }
 }
