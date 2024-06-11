@@ -11,6 +11,9 @@ public class SalaryDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.insert("insertSalary",salaryDto);
+        if (result>0){
+            System.out.println("salary insert Qry is successfully");
+        }
         sqlSession.close();
         return result;
 
@@ -21,8 +24,8 @@ public class SalaryDao {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         salaryList = sqlSession.selectList("getSalaryList");
         if (salaryList !=null){
-            System.out.println("select query is successfully");
-            System.out.println(salaryList);
+            System.out.println("salary select query is successfully");
+            System.out.println("salaryList >>> "+salaryList);
         }
         sqlSession.close();
         return salaryList;

@@ -75,6 +75,7 @@ public class HrmBoard extends HttpServlet {
     private HrmPageDto createPageDto(int page, int listPerPage, String search, String searchWord) {
         int start = (page - 1) * listPerPage;
         int end =  listPerPage;
+
         HrmPageDto hrmPageDto = HrmPageDto.builder()
                 .start(start)
                 .end(end)
