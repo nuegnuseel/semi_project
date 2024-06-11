@@ -9,14 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Salary List</title>
+    <title>Attend List</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <script src="../js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <h2 class="mt-5 mb-5">LIST</h2>
+    <h2 class="mt-5 mb-5">Attend list</h2>
     <form action="../board/delete-all" method="post">
         <table class="table table-striped">
             <thead>
@@ -37,13 +37,13 @@
             <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
                 <tr>
                     <td>${attendDto.empNo}</td>
-                    <td>${attendDto.attendCount}</td>
+                    <td>${attendDto.atdNo}</td>
                     <td>${attendDto.ename}</td>
-                    <td>${attendDto.attendNo}</td>
-                    <td>${attendDto.num}</td>
-                    <td>${attendDto.attendDate}</td>
+                    <td>${attendDto.atdCode}</td>
+                    <td>${attendDto.atdNum}</td>
+                    <td>${attendDto.atdDate}</td>
                     <td>${attendDto.offDay}</td>
-                    <td>${attendDto.detailOffday}</td>
+                    <td>${attendDto.offDayRs}</td>
                     <td>${attendDto.print}</td>
                 </tr>
             </c:forEach>

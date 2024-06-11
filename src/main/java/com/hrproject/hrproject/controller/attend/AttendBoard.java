@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/attend/list")
-public class AttendList extends HttpServlet {
+@WebServlet("/attend/board")
+public class AttendBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //
@@ -21,7 +21,7 @@ public class AttendList extends HttpServlet {
         List<AttendDto> attendList = attendDao.getAttendList();
         req.setAttribute("attendList",attendList);
         RequestDispatcher dispatcher =
-                req.getRequestDispatcher("/WEB-INF/attend/list-attend.jsp");
+                req.getRequestDispatcher("/WEB-INF/attend/board-attend.jsp");
         dispatcher.forward(req,resp);
     }
 }
