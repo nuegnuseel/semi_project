@@ -21,9 +21,13 @@
         </thead>
         <tbody>
         <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
+            <c:choose>
+                <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
+                <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
+            </c:choose>
             <tr>
                 <td><input type="checkbox" class="chk"></td>
-                <td>${loop.count + ((page -1) * listPerPage)}</td>
+                <td>${((page -1) * listPerPage) + loop.count}</td>
                 <td>${hrmDto.hireDate}</td>
                 <td><a href="">${hrmDto.empNo}</a></td>
                 <td><a href="">${hrmDto.EName}</a></td>
@@ -39,6 +43,25 @@
     </table>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
+        <c:choose>
+            <c:when test="${empty search}">
+                <c:set var="firstPage" value="../hrm/board?page=1"></c:set>
+                <c:set var="prePage" value="../hrm/board?page=${previousPage}"></c:set>
+                <c:set var="selectPage" value="../hrm/board?page="></c:set>
+                <c:set var="nextPage" value="../hrm/board?page=${nextPage}"></c:set>
+                <c:set var="lastPage" value="../hrm/board?page=${totalPage}"></c:set>
+            </c:when>
+            <c:otherwise>
+                <c:set var="firstPage" value="../hrm/board?search=${search}&searchWord=${searchWord}&page=1"></c:set>
+                <c:set var="prePage"
+                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${previousPage}"></c:set>
+                <c:set var="selectPage" value="../hrm/board?search=${search}&searchWord=${searchWord}&page="></c:set>
+                <c:set var="nextPage"
+                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${nextPage}"></c:set>
+                <c:set var="lastPage"
+                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${totalPage}"></c:set>
+            </c:otherwise>
+        </c:choose>
         <nav aria-label="Page navigation example" class="mt-5 mb-5">
             <ul class="pagination d-flex justify-content-center">
                 <c:if test="${startPage ne 1}">
@@ -77,14 +100,14 @@
                 </c:if>
             </ul>
         </nav>
-        <form action="../board/list" class="row g-3 d-flex align-items-center">
+        <form action="../hrm/board" class="row g-3 d-flex align-items-center">
             <div class="col-sm-7">
                 <div class="row g-3">
                     <div class="col">
                         <select class="form-select" aria-label="Default select example" name="search">
-                            <option value="사원번호" ${search eq "empno" ? "selected": ""}>사원번호</option>
-                            <option value="사원이름" ${search eq "ename" ? "selected": ""}>사원명</option>
-                            <option value="부서명" ${search eq "deptname" ? "selected": ""}>부서명</option>
+                            <option value="empno" ${search eq "empno" ? "selected": ""}>사원번호</option>
+                            <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
+                            <option value="deptname" ${search eq "deptname" ? "selected": ""}>부서명</option>
                             <option value="email" ${search eq "email" ? "selected": ""}>이메일</option>
                             <option value="all" ${search eq "all" ? "selected": ""}>all</option>
                         </select>
@@ -236,7 +259,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $("#check-all").on("change", function () {
 
@@ -303,5 +325,4 @@
         }).open()({});
     }
 </script>
-
 <%@include file="../include/right_side_info.jsp" %>

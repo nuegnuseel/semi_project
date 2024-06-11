@@ -24,7 +24,6 @@ public class HrmBoard extends HttpServlet {
         int listPerPage = 20; // 페이지당 보여지는 게시물 수
         int paginationPerPage = 5; // 보여지는 페이지 수 ex : 1 ~ 5, 6 ~ 10
 
-        /* 변수명 Page -> pagination 바꾸기 */
         int totalPage = calculateTotalPage(total, listPerPage);
         int startPage = calculateStartPage(currentPage, paginationPerPage);
         int endPage = calculateEndPage(totalPage, startPage, paginationPerPage);
@@ -33,6 +32,7 @@ public class HrmBoard extends HttpServlet {
         List<HrmDto> hrmList = getHrmList(hrmPageDto);
 
         setRequestAttributes(req, totalPage, startPage, endPage, listPerPage, paginationPerPage, search, searchWord, hrmList);
+
 
         req.getRequestDispatcher("/WEB-INF/hrm/hrm-board.jsp").forward(req, resp);
     }
@@ -75,7 +75,7 @@ public class HrmBoard extends HttpServlet {
     private HrmPageDto createPageDto(int page, int listPerPage, String search, String searchWord) {
         int start = (page - 1) * listPerPage;
         int end =  listPerPage;
-//        int end = page * listPerPage;
+
         HrmPageDto hrmPageDto = HrmPageDto.builder()
                 .start(start)
                 .end(end)
