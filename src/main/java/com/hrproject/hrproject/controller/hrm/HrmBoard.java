@@ -1,5 +1,7 @@
 package com.hrproject.hrproject.controller.hrm;
 
+import com.hrproject.hrproject.dao.HrmDao;
+import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.HrmPageDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
