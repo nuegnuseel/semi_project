@@ -30,12 +30,10 @@
     </environments>
 <!--  mapper resources의 xml resource  -->
     <mappers>
-<<<<<<< HEAD
+
         <mapper resource="salary.xml"/>
         <mapper resource="hrm.xml"/>
-<!--        <mapper resource="member.xml"/>-->
-=======
-        <mapper resource="hrm.xml"/>
->>>>>>> a6c69d49148be4554af0c319d158de0422904647
+
+
     </mappers>
 </configuration>

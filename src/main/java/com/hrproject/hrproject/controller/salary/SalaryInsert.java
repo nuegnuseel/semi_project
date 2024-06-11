@@ -40,10 +40,15 @@ public class SalaryInsert extends HttpServlet {
 
         SalaryDao salaryDao = new SalaryDao();
 
+        System.out.println("SalaryInsert.java __ salaryDto >>> "+ salaryDto);
 
         int result = salaryDao.insertSalaryDao(salaryDto);
+if (result>0){
+    System.out.println("salary data input successfully");
+}else {
+    System.out.println("salary data input failed");
+}
 
-
-        req.getRequestDispatcher("/WEB-INF/salary/insert-salary.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp").forward(req, resp);
     }
 }
