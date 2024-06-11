@@ -4,20 +4,21 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
     <insert id="insertAttend" parameterType="AttendDto">
-        INSERT INTO SALARY (EMPNO, ATTEND_COUNT, ENAME, ATTEND_NO, NUM, ATTEND_DATE, OFFDAY, DETAIL_OFFDAY, PRINT)
+        INSERT INTO SALARY (EMPNO, ATDNO, ENAME, ATDCODE, ATDNUM, ATDDATE, OFFDAY, OFFDAYRS, PRINT)
         VALUES (
         #{empNo},
-        #{eName},
-        #{attendCount},
-        #{attendNo},
-        #{num},
-        #{attendDate},
+        #{atdNo},
+        #{ename},
+        #{atdCode},
+        #{atdNum},
+        #{atdDate},
         #{offDay},
-        #{detailOffday},
+        #{offDayRs},
         #{print}
         )
 
     </insert>
+
 
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
