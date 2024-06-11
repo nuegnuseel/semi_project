@@ -23,6 +23,7 @@ public class HrmBoard extends HttpServlet {
         int currentPage = getCurrentPage(req);
         int listPerPage = 20; // 페이지당 보여지는 게시물 수
         int paginationPerPage = 5; // 보여지는 페이지 수 ex : 1 ~ 5, 6 ~ 10
+        System.out.println(total);
 
         int totalPage = calculateTotalPage(total, listPerPage);
         int startPage = calculateStartPage(currentPage, paginationPerPage);

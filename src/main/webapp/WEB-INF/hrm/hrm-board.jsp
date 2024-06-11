@@ -112,7 +112,7 @@
                             <option value="all" ${search eq "all" ? "selected": ""}>all</option>
                         </select>
                     </div>
-                    <div class="col w-autoqw">
+                    <div class="col w-auto">
                         <input type="text" name="searchWord" class="form-control" value="${searchWord}">
                     </div>
                 </div>
