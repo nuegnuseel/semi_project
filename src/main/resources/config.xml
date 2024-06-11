@@ -29,6 +29,11 @@
     </environments>
 <!--  mapper resources의 xml resource  -->
     <mappers>
+
+        <mapper resource="salary.xml"/>
         <mapper resource="hrm.xml"/>
+
+
+
     </mappers>
 </configuration>
