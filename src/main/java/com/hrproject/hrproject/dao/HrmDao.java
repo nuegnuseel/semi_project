@@ -73,10 +73,6 @@ public class HrmDao {
         List<HrmDto> hrmList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         hrmList = sqlSession.selectList("getSearchHrmList", hrmPageDto);
-
-        System.out.println("getSearchHrmList 실행");
-        System.out.println("getSearchHrmBoardList 실행");
-
         sqlSession.close();
         return hrmList;
     }

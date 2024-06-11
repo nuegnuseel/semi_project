@@ -63,12 +63,12 @@
     <insert id="insertHrm" parameterType="HrmDto">
         INSERT INTO HRM (
         EMPNO, ENAME, FOREIGN_NAME, DEPTNO, DEPTNAME, POSITION, MOBILE, PASSPORT, EMAIL, HIREDATE, HIRETYPE, RESIGNDATE,
-        OUTREASONS, BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, ORIGINAL_NAME, RENAME_NAME,
-        ETC_FILE, REMARKS, POSITION_NO
+        OUTREASONS, BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, ORIGINAL_PROFILE, RENAME_PROFILE,
+        ETC_FILE, REMARKS, POSITION_NO, ROLE
         ) VALUES (
         #{empNo}, #{eName}, #{foreignName}, #{deptNo}, #{deptName}, #{position}, #{mobile}, #{passport}, #{email},
         #{hireDate}, #{hireType}, #{resignDate}, #{outReasons}, #{bankName}, #{account}, #{accountHolder}, #{postCode},
-        #{address}, #{addressDetail}, #{originalName}, #{renameName}, #{etcFile}, #{remarks}, #{positionNo}
+        #{address}, #{addressDetail}, #{originalProfile}, #{renameProfile}, #{etcFile}, #{remarks}, #{positionNo}, #{role}
         )
     </insert>
 
@@ -93,8 +93,8 @@
         POSTCODE = #{postCode},
         ADDRESS = #{address},
         ADDRESS_DETAIL = #{addressDetail},
-        ORIGINAL_NAME = #{originalName},
-        RENAME_NAME = #{renameName},
+        ORIGINAL_Profile = #{originalProfile},
+        RENAME_Profile = #{renameProfile},
         ETC_FILE = #{etcFile},
         REMARKS = #{remarks},
         POSITION_NO = #{positionNo}
