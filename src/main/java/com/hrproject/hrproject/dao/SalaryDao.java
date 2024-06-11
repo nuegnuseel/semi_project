@@ -11,6 +11,7 @@ public class SalaryDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.insert("insertSalary",salaryDto);
+        //sqlSession.commit();
         if (result>0){
             System.out.println("salary insert Qry is successfully");
         }
