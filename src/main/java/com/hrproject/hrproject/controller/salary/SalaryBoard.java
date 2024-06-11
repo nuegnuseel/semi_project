@@ -17,7 +17,9 @@ import java.util.List;
 public class SalaryBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
+
+
+
         SalaryDao salaryDao = new SalaryDao();
         List<SalaryPlusEmpNameDto> salaryList = salaryDao.getSalaryList();
 

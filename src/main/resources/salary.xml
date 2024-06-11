@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
     <insert id="insertSalary" parameterType="SalaryDto">
-        INSERT INTO SALARY (EMPNO, ACCOUNTINGPERIOD, SALARYCATEGORY, SALARYNAME, SALARYDAY, SALARY, SALARYINFO, BONUS)
+        INSERT INTO SALARY (EMPNO, ACCOUNTINGPERIOD, SALARYCATEGORY, SALARYNAME, SALARYDAY, SALARY, SALARYINFO)
         VALUES (
         #{empNo},
         #{accountingPeriod},
@@ -16,11 +16,64 @@
         )
     </insert>
 
+
+
+    <select id="getSearchSalaryList" resultType="SalaryPlusEmpNameDto" parameterType="SalaryPlusEmpNameDto">
+        SELECT
+        S.SALARY_NO,
+        S.EMPNO,
+        H.ENAME AS ename,
+        S.ACCOUNTINGPERIOD,
+        S.SALARYCATEGORY,
+        S.SALARYNAME,
+        S.SALARYDAY,
+        S.SALARY,
+        S.SALARYINFO
+        FROM
+        SALARY S
+        JOIN
+        HRM H ON S.EMPNO = H.EMPNO
+        WHERE
+        1=1
+        <if test="salary_No != null and salary_No != 0">
+            AND S.SALARY_NO = #{salary_No}
+        </if>
+        <if test="empNo != null and empNo != 0">
+            AND S.EMPNO = #{empNo}
+        </if>
+        <if test="ename != null and ename != ''">
+            AND H.ENAME LIKE CONCAT('%', #{ename}, '%')
+        </if>
+        <if test="accountingPeriod != null and accountingPeriod != ''">
+            AND S.ACCOUNTINGPERIOD = #{accountingPeriod}
+        </if>
+        <if test="salaryCategory != null and salaryCategory != ''">
+            AND S.SALARYCATEGORY = #{salaryCategory}
+        </if>
+        <if test="salaryName != null and salaryName != '' ">
+            AND S.SALARYNAME = #{salaryName}
+        </if>
+        <if test="salaryDay != null and salaryDay != ''">
+            AND DATE_FORMAT(S.SALARYDAY, '%Y-%m') = #{salaryDay}
+        </if>
+        <if test="salary != null and salary != 0">
+            AND S.SALARY = #{salary}
+        </if>
+        <if test="salaryInfo != null and salaryInfo != ''">
+            AND S.SALARYINFO LIKE CONCAT('%', #{salaryInfo}, '%')
+        </if>
+
+    </select>
+
+
+
+
+
     <select id="getSalaryList" resultType="SalaryPlusEmpNameDto">
         SELECT
         S.SALARY_NO,
         S.EMPNO,
-        H.ENAME as eName,
+        H.ENAME as ename,
         S.ACCOUNTINGPERIOD,
         S.SALARYCATEGORY,
         S.SALARYNAME,
