@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: jhta
   Date: 2024-06-11
@@ -8,36 +9,82 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/header.jsp" %>
 <%@include file="../include/left_side_menu.jsp" %>
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8" style="width: calc(100% - 520px);">
+<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8"
+     style="width: calc(100% - 520px);">
     <h2 class="mt-5 mb-5  ">LIST</h2>
     <form action="../board/delete-all" method="post">
         <table class="table table-striped">
 
             <thead>
             <tr>
+                <th>번호</th>
+<<<<<<< HEAD
+                <th>사원 번호</th>
+                <th>사원 명</th>
+                <th>급여구분</th>
+                <th>지급구분</th>
+                <th>대장명칭</th>
+                <th>지급일</th>
+                <th>근속연월</th>
+                <th>지급액</th>
+                <th>기타</th>
+=======
+                <th>사원번호</th>
                 <th>테스트</th>
                 <th>테스트</th>
                 <th>테스트</th>
-                <th>테스트</th>
-                <th>테스트</th>
+>>>>>>> b3132e61be3128b30884c08a32a6b4c1593af722
             </tr>
             </thead>
             <tbody>
+
+
+
+
+
+            <%
+                // salaryList 값을 가져옴
+                List<SalaryPlusEmpNameDto> salaryList = (List<SalaryPlusEmpNameDto>) request.getAttribute("salaryList");
+
+                System.out.println();
+                System.out.println("JSP salaryList >>> "+salaryList);
+
+            %>
+
+
+
+
+
+
+
+
+
             <c:forEach items="${salaryList}" var="salaryDto" varStatus="loop">
                 <tr>
-                    <td>${salaryDto.salaryNo}</td>
+                    <td>${salaryDto.salary_No}</td>
+                    <td>${salaryDto.empNo}</td>
+                    <td>${salaryDto.eName}</td>
+                    <td>${salaryDto.salaryName}</td>
                     <td>${salaryDto.salary}</td>
                     <td>${salaryDto.salaryDay}</td>
                     <td>${salaryDto.salaryCategory}</td>
                     <td>${salaryDto.salaryInfo}</td>
+                    <td>${salaryDto.salaryDay}</td>
+                    <td>${salaryDto.accountingPeriod}</td>
+                    <td>${salaryDto.salary}</td>
+
+
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </form>
+    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+
 </div>
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     data-bs-backdrop="static"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -52,9 +99,6 @@
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo">
-
-
-
                         </div>
                     </div>
                     <div class="row">
@@ -123,7 +167,8 @@
 
 
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기
+                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
                 <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
@@ -139,25 +184,29 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">사원 찾기</h1>
+                    <div class="col-6">
+                <form action="/hrm/searchEmpNo">
+                    <div class="input-group mt-3 mx-5">
+                        <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" name="searchEmpNo">
+                        <button class="btn btn-primary" type="submit">찾기</button>
+                    </div>
+                </form>
+                    </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
-
                 <table class="table table-striped">
                     <colgroup>
-
-                        <col style="width:30px">
                         <col style="width:150px">
                         <col style="width:150px">
                         <col style="width:150px">
-
+                        <col style="width:150px">
                     </colgroup>
                     <thead>
                     <tr>
                         <th>사원 번호</th>
                         <th>부서 명</th>
+                        <th>직책</th>
                         <th>사원 명</th>
                     </tr>
                     </thead>
@@ -168,17 +217,10 @@
                             <td>${hrmDto.empNo}</td>
                             <td>${hrmDto.deptName}</td>
                                 <%--                            <td>${hrmDto.eName}</td>--%>
-
-
-
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-
-
-
-
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to
@@ -188,7 +230,6 @@
         </div>
     </div>
 </div>
-<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
 
 
 <%@include file="../include/right_side_info.jsp" %>

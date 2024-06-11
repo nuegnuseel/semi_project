@@ -12,13 +12,25 @@
         #{salaryName},
         #{salaryDay},
         #{salary},
-        #{salaryInfo},
-        #{bonus}
+        #{salaryInfo}
         )
     </insert>
 
-    <select id="getSalaryList" resultType="SalaryDto">
-        select * from salary
+    <select id="getSalaryList" resultType="SalaryPlusEmpNameDto">
+        SELECT
+        S.SALARY_NO,
+        S.EMPNO,
+        H.ENAME as eName,
+        S.ACCOUNTINGPERIOD,
+        S.SALARYCATEGORY,
+        S.SALARYNAME,
+        S.SALARYDAY,
+        S.SALARY,
+        S.SALARYINFO
+        FROM
+        SALARY S
+        JOIN
+        HRM H ON S.EMPNO = H.EMPNO
     </select>
 
 </mapper>
