@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link link-body-emphasis p-5">
+            <a href="/salary/board" class="nav-link link-body-emphasis p-5">
                 업무보기
             </a>
         </li>
