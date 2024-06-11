@@ -8,8 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/header.jsp" %>
 <%@include file="../include/left_side_menu.jsp" %>
-
-<div class="container">
+<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8" style="width: calc(100% - 520px);">
     <h2 class="mt-5 mb-5  ">LIST</h2>
     <form action="../board/delete-all" method="post">
         <table class="table table-striped">
