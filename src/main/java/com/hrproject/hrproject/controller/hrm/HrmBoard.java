@@ -1,5 +1,7 @@
 package com.hrproject.hrproject.controller.hrm;
 
+import com.hrproject.hrproject.dao.HrmDao;
+import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.HrmPageDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +37,7 @@ public class HrmBoard extends HttpServlet {
         System.out.println("hrmList === " + hrmList.get(1).getEName());
 
 
-        req.getRequestDispatcher("/WEB-INF/hrm/hrm-boardt.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/hrm/hrm-board.jsp").forward(req, resp);
     }
     private int getTotalHrmCount(String search, String searchWord) {
         HrmDao hrmTotalDao = new HrmDao();
