@@ -37,7 +37,7 @@ public class HrmBoard extends HttpServlet {
         System.out.println("hrmList === " + hrmList.get(1).getEName());
 
 
-        req.getRequestDispatcher("/WEB-INF/hrm/hrm-boardt.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/hrm/hrm-board.jsp").forward(req, resp);
     }
     private int getTotalHrmCount(String search, String searchWord) {
         HrmDao hrmTotalDao = new HrmDao();

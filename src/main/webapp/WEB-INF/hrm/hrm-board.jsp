@@ -1,16 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>JSP - Hello World</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/jquery-3.7.1.min.js"></script>
-</head>
-<body>
-<div class="container">
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@include file="../include/header.jsp"%>
+<%@include file="../include/left_side_menu.jsp"%>
+<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8">
     <table class="table">
         <thead>
         <tr>
@@ -30,30 +22,30 @@
         </thead>
         <tbody>
         <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
-        <tr>
-<%--            <td>${total - hrmDto.num + 1}</td>  --%>
+            <tr>
+                    <%--            <td>${total - hrmDto.num + 1}</td>  --%>
                 <td scope="row"><input type="checkbox">${loop.count}</td>
                 <td>${hrmDto.hireDate}</td>
                 <td><a href="">${hrmDto.empNo}</a></td>
                 <td>${hrmDto.EName}</td>
                 <td>${hrmDto.deptNo}(부서명 넣으면됨)</td>
                 <td>직위/직급</td>
-<%--                <td>${hrmList.positionName}</td>--%>
+                    <%--                <td>${hrmList.positionName}</td>--%>
                 <td>${hrmDto.email}</td>
                 <td>${hrmDto.account}</td>
                 <td><textarea></textarea></td>
                 <td><a href="">인쇄</a></td>
-            <%--            <td><input type="checkbox"></td>--%>
-            <%--            <td>입사일자</td>--%>
-            <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">사원번호</a></td>--%>
-            <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">성명</a></td>--%>
-            <%--            <td>부서명</td>--%>
-            <%--            <td>직위/직급명</td>--%>
-            <%--            <td>Email</td>--%>
-            <%--            <td>계좌번호</td>--%>
-            <%--            <td>새로운 항목 추가???</td>--%>
-            <%--            <td>인쇄</td>--%>
-        </tr>
+                    <%--            <td><input type="checkbox"></td>--%>
+                    <%--            <td>입사일자</td>--%>
+                    <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">사원번호</a></td>--%>
+                    <%--            <td><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">성명</a></td>--%>
+                    <%--            <td>부서명</td>--%>
+                    <%--            <td>직위/직급명</td>--%>
+                    <%--            <td>Email</td>--%>
+                    <%--            <td>계좌번호</td>--%>
+                    <%--            <td>새로운 항목 추가???</td>--%>
+                    <%--            <td>인쇄</td>--%>
+            </tr>
         </c:forEach>
         </tbody>
     </table>
@@ -152,5 +144,5 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+
+<%@include file="../include/right_side_info.jsp"%>
