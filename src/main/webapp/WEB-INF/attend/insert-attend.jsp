@@ -115,7 +115,7 @@
 
 
 
-<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+
 
 
 </body>
