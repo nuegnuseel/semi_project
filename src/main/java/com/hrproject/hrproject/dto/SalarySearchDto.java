@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-public class SalaryPlusEmpNameDto {
+public class SalarySearchDto {
     private int salary_No; //급여 번호 메인 키
     private int empNo;      // 사원번호 // 외래키
     private String ename;  // 사원 이름 + HRM table에서 받아와야함!
@@ -19,5 +19,6 @@ public class SalaryPlusEmpNameDto {
     private String salaryDay;           //지급날짜
     private int salary;                 //돈!
     private String salaryInfo;          //급여내역
-
+    private int salaryMax;              //검색 기능에 필요한 최대금액
+    private int salaryMin;              //검색 기능에 필요한 최소금액
 }
