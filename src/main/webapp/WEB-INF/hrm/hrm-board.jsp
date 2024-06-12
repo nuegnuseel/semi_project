@@ -6,8 +6,12 @@
         <thead>
         <tr>
             <%-- 9개 --%>
-            <th scope="col"><input type="checkbox" class="btn-check" id="check-all" checked autocomplete="off">
-                <label class="btn btn-outline-secondary" for="check-all">-</label><br></th>
+            <th scope="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-all">
+                    <label class="form-check-label" for="check-all"></label>
+                </div>
+            </th>
             <th scope="col">입사일자</th>
             <th scope="col">사원번호</th>
             <th scope="col">성명</th>
@@ -27,17 +31,25 @@
                 <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
             </c:choose>
             <tr>
-                <td><input type="checkbox" class="chk btn-check" id="btn-check-${loop.count}" autocomplete="off">
-                    <label class="btn btn-outline-secondary"
-                           for="btn-check-${loop.count}">${((page -1) * listPerPage) + loop.count}</label></td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="chk form-check-input" type="checkbox" id="${loop.count}" value="option1">
+                        <label class="chk form-check-label"
+                               for="${loop.count}">${((page -1) * listPerPage) + loop.count}</label>
+                    </div>
+                </td>
+
+                    <%--                <td><input type="checkbox" class="chk btn-check" id="btn-check-${loop.count}" autocomplete="off">--%>
+                    <%--                    <label class="btn btn-outline-secondary"--%>
+                    <%--                           for="btn-check-${loop.count}">${((page -1) * listPerPage) + loop.count}</label></td>--%>
                 <td>${hrmDto.hireDate}</td>
-                <td><button type="button" class="btn btn-link">${hrmDto.empNo}</button></td>
+                <td><a href="">${hrmDto.empNo}</a></td>
                 <td><a href="">${hrmDto.EName}</a></td>
                 <td>${hrmDto.deptName}</td>
                 <td>${hrmDto.position}</td>
                 <td>${hrmDto.email}</td>
                 <td>${hrmDto.account}</td>
-                <td><textarea></textarea></td>
+                <td><input type="text" value="일단빈칸"></td>
                 <td><a href="">인쇄</a></td>
             </tr>
         </c:forEach>
@@ -131,15 +143,10 @@
         </button>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <jsp:include page="include/insert-modal.jsp" flush="true"/>
-            <%--                <form action="../hrm/board-update" method="post" enctype="multipart/form-data">--%>
-            <%--                    <input type="hidden" value="${hrmDto.empNo}" name="empNo">--%>
-            <%--                </form>--%>
-        </div>
-    </div>
+    <jsp:include page="include/insert-modal123.jsp" flush="true"/>
+    <%--                <form action="../hrm/board-update" method="post" enctype="multipart/form-data">--%>
+    <%--                    <input type="hidden" value="${hrmDto.empNo}" name="empNo">--%>
+    <%--                </form>--%>
 </div>
 </div>
 <script>
