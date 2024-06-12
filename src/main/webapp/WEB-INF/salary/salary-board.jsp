@@ -14,8 +14,10 @@
 <div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8"
      style="width: calc(100% - 520px);">
     <h2 class="mt-5 mb-5  ">LIST</h2>
-    <button class="btn btn-primary" data-bs-target="#searchModal" data-bs-toggle="modal">검색</button>
-    <a class="btn btn-primary" href="../salary/board">전체보기</a>
+    <div>
+        <button class="btn btn-primary insertSalary " data-bs-target="#searchModal" data-bs-toggle="modal">검색</button>
+        <a class="btn btn-primary insertSalary" href="../salary/board">전체보기</a>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -56,8 +58,9 @@
         </c:forEach>
         </tbody>
     </table>
-    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
-    <button class="btn btn-primary" data-bs-target="#modifyModalToggle" data-bs-toggle="modal" hidden="hidden">수정버튼 히든</button>
+    <button class="insertSalary btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+    <button class="btn btn-primary" data-bs-target="#modifyModalToggle" data-bs-toggle="modal" hidden="hidden">수정버튼 히든
+    </button>
 </div>
 <%--급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색--%>
 <div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="searchModal"
@@ -229,13 +232,13 @@
                     <input type="text" hidden="hidden" id="salaryInfo_orig" name="salaryInfo_orig">
 
                     <input type="text" class="form-control" placeholder="00008" aria-label="empNo"
-                          hidden="hidden" readonly id="salary_No_modify" name="salary_No_modify" value="">
+                           hidden="hidden" readonly id="salary_No_modify" name="salary_No_modify" value="">
                     <div class="row">
                         <%-- form body --%>
                         <div class="col">사원번호</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="empNo"
-                                 readonly id="empNo_modify" name="empNo_modify" value="">
+                                   readonly id="empNo_modify" name="empNo_modify" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -243,14 +246,15 @@
                         <div class="col">사원 이름</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="ename"
-                               readonly  id="ename_modify" name="ename_modify" value="">
+                                   readonly id="ename_modify" name="ename_modify" value="">
                         </div>
                     </div>
                     <div class="row">
                         <%-- form body --%>
                         <div class="col">근무 연월</div>
                         <div class="col col-md-4">
-                            <input type="month" class="form-control" id="accountingPeriod_modify" name="accountingPeriod_modify">
+                            <input type="month" class="form-control" id="accountingPeriod_modify"
+                                   name="accountingPeriod_modify">
                         </div>
                     </div>
                     <div class="row">
@@ -279,7 +283,8 @@
                         <%-- form body --%>
                         <div class="col">지급날짜</div>
                         <div class="col col-md-4">
-                            <input type="date" class="form-control" id="salaryDay_modify" placeholder="select paymentDay"
+                            <input type="date" class="form-control" id="salaryDay_modify"
+                                   placeholder="select paymentDay"
                                    name="salaryDay_modify">
                         </div>
                     </div>
@@ -288,7 +293,7 @@
                         <div class="col">급여</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salary"
-                                id="salary_modify"   name="salary_modify">
+                                   id="salary_modify" name="salary_modify">
                         </div>
                     </div>
                     <div class="row">
@@ -296,7 +301,7 @@
                         <div class="col">급여 대장명칭</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salaryInfo"
-                                  id="salaryInfo_modify" name="salaryInfo_modify">
+                                   id="salaryInfo_modify" name="salaryInfo_modify">
                         </div>
                     </div>
                 </form>
@@ -325,7 +330,8 @@
                         <%-- form body --%>
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo" id="empNo">
+                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo"
+                                   id="empNo">
                         </div>
                     </div>
                     <div class="row">
@@ -401,12 +407,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">사원 찾기</h1>
-                    <div class="col-6">
-                        <div class="input-group mt-3 mx-5">
-                            <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" id="searchName">
-                            <button class="btn btn-primary" type="submit" id="searchEmpNoByName">찾기</button>
-                        </div>
+                <div class="col-6">
+                    <div class="input-group mt-3 mx-5">
+                        <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" id="searchName">
+                        <button class="btn btn-primary" type="submit" id="searchEmpNoByName">찾기</button>
                     </div>
+                </div>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -440,18 +446,49 @@
     </div>
 </div>
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         //salary insert modal 에서 searchEmpno시
-        $("#searchEmpNoByName").on("click",function (){
+        $("#searchEmpNoByName").on("click", function () {
             console.log("searchEmpNoByName clicked")
             const name = $("#searchName").val();
 
             $.ajax({
-                url:"/hrm/searchEmpNoByName",
-                type:"POST",
-                data:{searchName:name},
-                success:function (response){
+                url: "/hrm/searchEmpNoByName",
+                type: "POST",
+                data: {searchName: name},
+                success: function (response) {
                     console.log(response)
+
+
+                    $("#resultTableBody").empty();
+
+                    response.forEach(function (searchByNameResult) {
+                        const row = "<tr>" +
+                            "<td>" + searchByNameResult.empNo + "</td>" +
+                            "<td>" + searchByNameResult.deptName + "</td>" +
+                            "<td>" + searchByNameResult.role + "</td>" +
+                            "<td>" + searchByNameResult.ename + "</td>" +
+                            "</tr>"
+                        $("#resultTableBody").append(row);
+                    });
+                },
+                error: function () {
+
+                }
+            })
+        })
+        //searchEmpno에서 ename클릭시
+        $(document).on("click", "#resultTableBody td:nth-child(4)", function () {
+            // 클릭된 행의 empNo 값을 가져옴
+            var empNoValue = $(this).closest("tr").find("td:eq(0)").text();
+
+            // input 요소의 값을 변경
+            $("#empNo").val(empNoValue);
+            $("#exampleModalToggle").modal("show");
+            $("#exampleModalToggle2").modal("hide");
+        });
+    })
+
 
     let salary_No;
     let selectedSalary = {};
@@ -488,7 +525,7 @@
 
 
     // 수정 버튼 클릭 이벤트 핸들러
-    $('.modify-button').click(function() {
+    $('.modify-button').click(function () {
         // 클릭된 버튼이 속한 행을 찾기 위해 가장 가까운 tr 요소를 선택
         let $row = $(this).closest('tr');
 
@@ -525,34 +562,5 @@
         $('input#salary_orig').val(selectedSalary.salary);
         $('input#salaryInfo_orig').val(selectedSalary.salaryInfo);
     });
-
-                    $("#resultTableBody").empty();
-
-                    response.forEach(function (searchByNameResult){
-                        const row="<tr>" +
-                            "<td>" + searchByNameResult.empNo +"</td>" +
-                            "<td>" + searchByNameResult.deptName + "</td>" +
-                            "<td>" + searchByNameResult.role + "</td>" +
-                            "<td>" + searchByNameResult.ename + "</td>" +
-                            "</tr>"
-                        $("#resultTableBody").append(row);
-                    });
-                },
-                error:function (){
-
-                }
-            })
-        })
-        //searchEmpno에서 ename클릭시
-        $(document).on("click", "#resultTableBody td:nth-child(4)", function() {
-            // 클릭된 행의 empNo 값을 가져옴
-            var empNoValue = $(this).closest("tr").find("td:eq(0)").text();
-
-            // input 요소의 값을 변경
-            $("#empNo").val(empNoValue);
-            $("#exampleModalToggle").modal("show");
-            $("#exampleModalToggle2").modal("hide");
-        });
-    })
 </script>
 <%@include file="../include/right_side_info.jsp" %>
