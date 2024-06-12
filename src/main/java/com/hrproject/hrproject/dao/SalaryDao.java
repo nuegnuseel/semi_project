@@ -85,4 +85,16 @@ public class SalaryDao {
         sqlSession.close();
         return result;
     }
+
+    public int updateSalaryDao(SalaryPlusEmpNameDto salaryPlusEmpNameDto) {
+        int result =0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("updateSalary",salaryPlusEmpNameDto);
+
+        if (result>0){
+            System.out.println("salary update Qry is successfully");
+        }
+        sqlSession.close();
+        return result;
+    }
 }
