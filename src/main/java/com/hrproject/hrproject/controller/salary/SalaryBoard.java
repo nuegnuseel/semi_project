@@ -21,7 +21,7 @@ public class SalaryBoard extends HttpServlet {
         SalaryDao salaryDao = new SalaryDao();
         List<SalaryPlusEmpNameDto> salaryList = salaryDao.getSalaryList();
 
-        System.out.println("SalaryBaord.java__salaryList >>> "+salaryList);
+//        System.out.println("SalaryBaord.java__salaryList >>> "+salaryList);
         req.setAttribute("salaryList",salaryList);
 
         RequestDispatcher dispatcher =

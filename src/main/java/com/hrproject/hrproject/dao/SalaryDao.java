@@ -27,7 +27,7 @@ public class SalaryDao {
         salaryList = sqlSession.selectList("getSalaryList");
         if (salaryList !=null){
             System.out.println("salary select query is successfully");
-            System.out.println("SalaryDao.java__salaryList >>> "+salaryList);
+//            System.out.println("SalaryDao.java__salaryList >>> "+salaryList);
         }
         sqlSession.close();
         return salaryList;
