@@ -2,14 +2,10 @@
 <style>
     .employee-card {
         border: 1px solid #ddd;
-        padding: 20px;
+        padding: 10px;
     }
     .profile-container {
         display: flex;
-    }
-    .profile-upload {
-        flex: 0 0 200px;
-        text-align: center;
     }
     .profile-details {
         flex: 1;
@@ -23,18 +19,20 @@
         flex: 1;
         padding: 5px;
     }
-    .preview img {
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
+    .reduce-gap {
+        margin-bottom: 0.25rem; /* 기본 마진보다 작게 설정 */
     }
-    .profile-upload-text {
-        margin-top: 10px;
-        font-size: 14px;
-        color: #777;
+
+    .reduce-gap .col-form-label {
+        margin-bottom: 0; /* 레이블 하단 마진 제거 */
+    }
+
+    .reduce-gap .col-sm-2, .reduce-gap .col-sm-4 {
+        padding-left: 0.25rem; /* 왼쪽 패딩 줄이기 */
+        padding-right: 0.25rem; /* 오른쪽 패딩 줄이기 */
     }
 </style>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropViw" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -45,97 +43,76 @@
                 <div class="employee-card">
                     <h1 class="text-center">사원 카드</h1>
                     <div class="profile-container">
-                        <div class="profile-upload">
-                            <img id="profileImagePreview" src="../../../images/profile01.jpg" alt="Profile Image" style="width: 100%; height: auto; border: 1px solid #ddd;">
-                            <input type="file" id="profile" name="profile" accept="image/jpg, image/png, image/gif" class="form-control mt-2">
-                            <div class="profile-upload-text">업로드할 이미지를 선택해주세요</div>
-                        </div>
+                            <li class="nav-item">
+                                <img src="../../../images/profile01.jpg">
+                            </li>
                         <div class="profile-details">
                             <form action="../hrm/board" id="modalForm" method="post" enctype="multipart/form-data">
-                                <div class="form-row">
-                                    <div class="col">입사일자</div>
-                                    <div class="col"><input type="date" class="form-control" name="hireDate"></div>
-                                    <div class="col">주민등록번호</div>
-                                    <div class="col"><input type="text" class="form-control" name="idNumber"></div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">성명</div>
-                                    <div class="col"><input type="text" class="form-control" name="eName"></div>
-                                    <div class="col">부서</div>
-                                    <div class="col">
-                                        <select class="form-select" name="deptNo">
-                                            <option value="10">회계팀</option>
-                                            <option value="20">기획팀</option>
-                                            <option value="30">인사팀</option>
-                                            <option value="40">개발팀</option>
-                                        </select>
+                                <div class="row mb-sm-1 reduce-gap">
+                                    <label for="hireDate" class="col-sm col-form-label">입사일</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="hireDate" value="$hiredate" readonly>
+                                    </div>
+                                    <label for="birth" class="col-sm col-form-label">생일</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="birth" value="$birth" readonly>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col">Email</div>
-                                    <div class="col"><input type="email" class="form-control" name="email"></div>
-                                    <div class="col">생년월일</div>
-                                    <div class="col"><input type="date" class="form-control" name="birthDate"></div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">주소</div>
-                                    <div class="col"><input type="text" class="form-control" name="address"></div>
-                                    <div class="col">전화</div>
-                                    <div class="col"><input type="text" class="form-control" name="phone"></div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">직위/직급</div>
-                                    <div class="col">
-                                        <select class="form-select" name="positionNo">
-                                            <option value="10">사원</option>
-                                            <option value="20">대리</option>
-                                            <option value="30">과장</option>
-                                            <option value="40">차장</option>
-                                            <option value="50">대표이사</option>
-                                        </select>
+                                <div class="row mb-sm-1 reduce-gap">
+                                    <label for="eName" class="col-sm col-form-label">성명</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ename" value="$ename" readonly>
                                     </div>
-                                    <div class="col">직책</div>
-                                    <div class="col">
-                                        <select class="form-select" name="role">
-                                            <option value="팀원">팀원</option>
-                                            <option value="팀장">팀장</option>
-                                        </select>
+                                    <label for="deptName" class="col-sm col-form-label">부서명</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="deptName" value="$deptname" readonly>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col">연락처</div>
-                                    <div class="col"><input type="text" class="form-control" name="contact"></div>
+                                <div class="row mb-sm-1 reduce-gap">
+                                    <label for="email" class="col-sm col-form-label">Email</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="email" value="$email" readonly>
+                                    </div>
+                                    <label for="postcode" class="col-sm col-form-label">우편</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="postcode" value="$postcode" readonly>
+                                    </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col">병역구분</div>
-                                    <div class="col"><input type="text" class="form-control" name="militaryStatus"></div>
-                                    <div class="col">군별</div>
-                                    <div class="col"><input type="text" class="form-control" name="militaryBranch"></div>
-                                    <div class="col">미필사유</div>
-                                    <div class="col"><input type="text" class="form-control" name="militaryExemption"></div>
-                                    <div class="col">계급</div>
-                                    <div class="col"><input type="text" class="form-control" name="militaryRank"></div>
+                                <div class="row mb-3-sm-1">
+                                    <label for="long" class="col-sm-2 col-form-label">주소</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="long" value="address + address detail" readonly>
+                                    </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col">추천인</div>
-                                    <div class="col"><input type="text" class="form-control" name="referrerName"></div>
-                                    <div class="col">회사</div>
-                                    <div class="col"><input type="text" class="form-control" name="referrerCompany"></div>
-                                    <div class="col">관계</div>
-                                    <div class="col"><input type="text" class="form-control" name="referrerRelation"></div>
-                                    <div class="col">연락처</div>
-                                    <div class="col"><input type="text" class="form-control" name="referrerContact"></div>
+                                <div class="row mb-sm-1 reduce-gap">
+                                    <label for="mobile" class="col-sm col-form-label">전화</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="mobile" value="$mobile" readonly>
+                                    </div>
+                                    <label for="position" class="col-sm col-form-label">직급</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="position" value="$postion" readonly>
+                                    </div>
+                                </div>
+                                <div class="row mb-sm-1 reduce-gap">
+                                    <label for="passport" class="col-sm col-form-label">여권</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="passport" value="$passport" readonly>
+                                    </div>
+                                    <label for="role" class="col-sm col-form-label">직책</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="role" value="$role" readonly>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-12">
                                         <label for="remarks" class="form-label">비고</label>
-                                        <textarea class="form-control" id="remarks" name="remarks">...</textarea>
+                                        <textarea class="form-control" id="remarks" name="remarks" readonly>비고란</textarea>
                                     </div>
                                 </div>
                                 <div class="text-end mt-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                    <button type="submit" class="btn btn-primary">사원정보변경</button>
                                 </div>
                             </form>
                         </div>

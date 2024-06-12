@@ -16,10 +16,11 @@ public class HrmView extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int empNo = 0;
         if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
+        System.out.println(empNo);
 
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
-        req.setAttribute("hrmDto", hrmDto);
+        req.setAttribute("hrmViewDto", hrmDto);
         req.getRequestDispatcher("/WEB-INF/hrm/hrm-view.jsp").forward(req, resp);
     }
 }

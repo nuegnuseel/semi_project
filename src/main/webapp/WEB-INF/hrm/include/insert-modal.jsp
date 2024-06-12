@@ -23,7 +23,7 @@
                         </div>
                         <div class="col">성명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="이름" aria-label="ename" name="eName">
+                            <input type="text" class="form-control" placeholder="이름" aria-label="ename" name="ename">
                         </div>
                     </div>
                     <div class="row mt-3">

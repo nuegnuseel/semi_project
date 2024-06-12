@@ -43,8 +43,13 @@
                     <%--                    <label class="btn btn-outline-secondary"--%>
                     <%--                           for="btn-check-${loop.count}">${((page -1) * listPerPage) + loop.count}</label></td>--%>
                 <td>${hrmDto.hireDate}</td>
-                <td><a href="">${hrmDto.empNo}</a></td>
-                <td><a href="">${hrmDto.EName}</a></td>
+                    <%--                <td><a href="">${hrmDto.empNo}</a></td>--%>
+                    <%--                <td><a href="../hrm/view" id="openViewModal" data-bs-toggle="viewModal" data-bs-target="#staticBackdrop2">${hrmDto.empNo}</a></td>--%>
+                    <%--                <td><a href="../hrm/view">${hrmDto.EName}</a></td>--%>
+                <td><a href="#" data-bs-toggle="modal" class="openModal" data-bs-target="#staticBackdropView"
+                       data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
+                <td><a href="#" data-bs-toggle="modal" class="openModal" data-bs-target="#staticBackdropView"
+                       data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
                 <td>${hrmDto.deptName}</td>
                 <td>${hrmDto.position}</td>
                 <td>${hrmDto.email}</td>
@@ -142,20 +147,57 @@
                 data-bs-target="#staticBackdrop">신규
         </button>
     </div>
-    <!-- Modal -->
-    <jsp:include page="include/insert-modal123.jsp" flush="true"/>
-    <%--                <form action="../hrm/board-update" method="post" enctype="multipart/form-data">--%>
-    <%--                    <input type="hidden" value="${hrmDto.empNo}" name="empNo">--%>
-    <%--                </form>--%>
+    <!-- insert-Modal -->
+    <jsp:include page="include/insert-modal.jsp" flush="true"/>
+
+    <%-- Modal view.jsp --%>
+    <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">사원 카드</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 여기에 Ajax로 페이지 내용이 로드됩니다. -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 <script>
+
+<%--    <td><a href="#" data-bs-toggle="openModal" class="openModal" data-bs-target="#staticBackdropView"
+                       data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td> --%>
+
+    // 모달을 열기 위한 스크립트
+    $(document).ready(function () {
+        $('.openModal').on('click', function (event) {
+            event.preventDefault();
+            var empNo = $(this).data('empno');
+            var url = '../hrm/view?empNo=' + empNo;
+
+            // Ajax로 페이지 내용을 가져와 모달(modal-body 부분???)에 로드
+            $.get(url, function (data) {
+                $('#staticBackdropView .modal-body').html(data);
+                var myModal = new bootstrap.Modal(document.getElementById('staticBackdropView'));
+                myModal.show();
+            });
+        });
+        $('#staticBackdropView').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    });
+
+
     $("#check-all").on("change", function () {
 
-        //  is(":checked") - 제이쿼리에서 체크박스 감지할때 씀
+// is(":checked") - 제이쿼리에서 체크박스 감지할때 씀
         if ($(this).is(":checked")) {
             $(".chk").prop("checked", true);
-            // while문 안의 checkbox들 class명으로 접근
+// while문 안의 checkbox들 class명으로 접근
         } else {
             $(".chk").prop("checked", false);
         }
@@ -177,7 +219,7 @@
             const profileReader = new FileReader();
             profileReader.onload = function (e) {
                 console.log(e)
-                // currentTarget or target에의 result 가 image임
+// currentTarget or target에의 result 가 image임
                 const img = e.currentTarget.result;
                 /* jsp의 자바스크립트에서 달러{} 을 쓰려면 $앞에 \를 넣어줘야함 = \$ {} */
                 $("#preview").html(`<img src="\${img}">`)
@@ -192,47 +234,47 @@
     function makePostCode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 let addr = ""; // 주소 변수
                 let extraAddr = ""; // 참고항목 변수
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
 
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if (data.userSelectedType === 'R') {
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                         extraAddr += data.bname;
                     }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
+// 건물명이 있고, 공동주택일 경우 추가한다.
                     if (data.buildingName !== '' && data.apartment === 'Y') {
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if (extraAddr !== '') {
                         extraAddr = ' (' + extraAddr + ')';
                     }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
+// 조합된 참고항목을 해당 필드에 넣는다.
                     $("#extra-address").val(extraAddr);
 
                 } else {
                     $("#extra-address").val("");
                 }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+// 우편번호와 주소 정보를 해당 필드에 넣는다.
                 $("#postCode").val(data.zonecode);
                 $("#address").val(addr);
 
-                // 커서를 상세주소 필드로 이동한다.
+// 커서를 상세주소 필드로 이동한다.
                 $("#detail-address").focus();
             }
         }).open()({});

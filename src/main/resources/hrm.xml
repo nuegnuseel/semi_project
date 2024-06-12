@@ -66,7 +66,7 @@
         OUTREASONS, BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, ORIGINAL_PROFILE, RENAME_PROFILE,
         ETC_FILE, REMARKS, POSITION_NO, ROLE
         ) VALUES (
-        #{empNo}, #{eName}, #{foreignName}, #{deptNo}, #{deptName}, #{position}, #{mobile}, #{passport}, #{email},
+        #{empNo}, #{ename}, #{foreignName}, #{deptNo}, #{deptName}, #{position}, #{mobile}, #{passport}, #{email},
         #{hireDate}, #{hireType}, #{resignDate}, #{outReasons}, #{bankName}, #{account}, #{accountHolder}, #{postCode},
         #{address}, #{addressDetail}, #{originalProfile}, #{renameProfile}, #{etcFile}, #{remarks}, #{positionNo}, #{role}
         )
@@ -75,7 +75,7 @@
     <update id="updateHrm" parameterType="HrmDto">
         UPDATE HRM
         SET
-        ENAME = #{eName},
+        ENAME = #{ename},
         FOREIGN_NAME = #{foreignName},
         DEPTNO = #{deptNo},
         DEPTNAME = #{deptName},

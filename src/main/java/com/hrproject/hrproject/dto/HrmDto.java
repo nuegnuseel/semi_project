@@ -10,7 +10,7 @@ import lombok.*;
 public class HrmDto {
     private int num;
     private int empNo; // 사원번호
-    private String eName; // 이름
+    private String ename; // 이름
     private String foreignName; // 영문성명
     private int deptNo; // 부서번호
     private String deptName; // 부서명
