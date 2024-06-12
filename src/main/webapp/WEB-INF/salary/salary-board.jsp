@@ -14,7 +14,6 @@
     <h2 class="mt-5 mb-5  ">LIST</h2>
     <form action="../board/delete-all" method="post">
         <table class="table table-striped">
-
             <thead>
             <tr>
                 <th>번호</th>
@@ -43,15 +42,14 @@
                     <td>${salaryDto.salaryDay}</td>
                     <td>${salaryDto.accountingPeriod}</td>
                     <td>${salaryDto.salary}</td>
-
-
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </form>
-    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
-
+    <div>
+    <button class="insertSalary btn btn-primary " data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+    </div>
 </div>
 
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
