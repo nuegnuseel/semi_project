@@ -35,7 +35,7 @@ public class SalaryInsert extends HttpServlet {
                 .salaryDay(req.getParameter("salaryDay"))
                 .salary(Integer.parseInt(req.getParameter("salary")))
                 .salaryInfo(req.getParameter("salaryInfo"))
-                .bonus(Integer.parseInt(req.getParameter("bonus")))
+
                 .build();
 
         SalaryDao salaryDao = new SalaryDao();

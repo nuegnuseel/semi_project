@@ -19,14 +19,17 @@ public class AttendDao {
     }
 
     public List<AttendDto> getAttendList() {
-        List<AttendDto> attendList = null;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        attendList = sqlSession.selectList("getAttendList");
-        if (attendList !=null){
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> attendList = sqlSession.selectList("getAttendList");
             System.out.println("select query is successfully");
-            System.out.println(attendList);
+            System.out.println(attendList); // 가져온 데이터 로깅
+
+            return attendList;
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace(); // 혹은 로깅
+            return null; // 또는 예외를 상위로 다시 throw
         }
-        sqlSession.close();
-        return attendList;
     }
+
 }
