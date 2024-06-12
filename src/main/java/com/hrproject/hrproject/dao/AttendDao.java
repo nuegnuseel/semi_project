@@ -56,4 +56,12 @@ public class AttendDao {
         }
     }
 
+    public AttendDto getUpdateInfo(String atdNo){
+        AttendDto attendDto = null;
+
+
+        return attendDto;
+    }
+
+
 }
