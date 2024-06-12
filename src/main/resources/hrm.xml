@@ -75,6 +75,7 @@
     <update id="updateHrm" parameterType="HrmDto">
         UPDATE HRM
         SET
+        EMPNO = #{empNo},
         ENAME = #{ename},
         FOREIGN_NAME = #{foreignName},
         DEPTNO = #{deptNo},
@@ -97,9 +98,8 @@
         RENAME_Profile = #{renameProfile},
         ETC_FILE = #{etcFile},
         REMARKS = #{remarks},
-        POSITION_NO = #{positionNo}
-        WHERE EMPNO = #{empNo}
+        POSITION_NO = #{positionNo},
+        ROLE = #{role}
+        WHERE EMPNO = #{oldEmpNo}
     </update>
-
-
 </mapper>

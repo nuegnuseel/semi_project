@@ -20,7 +20,8 @@
             <th scope="col">Email</th>
             <th scope="col">계좌번호</th>
             <th scope="col">새로운 항목 추가???</th>
-            <th scope="col">인쇄</th>
+            <th scope="col">회원정보변경</th>
+            <th scope="col">삭제</th>
         </tr>
         </thead>
         <tbody>
@@ -38,24 +39,24 @@
                                for="${loop.count}">${((page -1) * listPerPage) + loop.count}</label>
                     </div>
                 </td>
-
-                    <%--                <td><input type="checkbox" class="chk btn-check" id="btn-check-${loop.count}" autocomplete="off">--%>
-                    <%--                    <label class="btn btn-outline-secondary"--%>
-                    <%--                           for="btn-check-${loop.count}">${((page -1) * listPerPage) + loop.count}</label></td>--%>
                 <td>${hrmDto.hireDate}</td>
-                    <%--                <td><a href="">${hrmDto.empNo}</a></td>--%>
-                    <%--                <td><a href="../hrm/view" id="openViewModal" data-bs-toggle="viewModal" data-bs-target="#staticBackdrop2">${hrmDto.empNo}</a></td>--%>
-                    <%--                <td><a href="../hrm/view">${hrmDto.EName}</a></td>--%>
-                <td><a href="#" data-bs-toggle="modal" class="openModal" data-bs-target="#staticBackdropView"
+                <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
+                       data-bs-target="#staticBackdropView"
                        data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
-                <td><a href="#" data-bs-toggle="modal" class="openModal" data-bs-target="#staticBackdropView"
+                <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
+                       data-bs-target="#staticBackdropView"
                        data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
                 <td>${hrmDto.deptName}</td>
                 <td>${hrmDto.position}</td>
                 <td>${hrmDto.email}</td>
                 <td>${hrmDto.account}</td>
                 <td><input type="text" value="일단빈칸"></td>
-                <td><a href="">인쇄</a></td>
+                <td><a href="#" data-bs-toggle="modal" class="openModal"
+                       data-bs-target="#staticBackdropView"
+                       data-empno="${hrmDto.empNo}" data-show="update">정보변경</a></td>
+                <td><a href="#" data-bs-toggle="modal" class="openModal"
+                       data-bs-target="#staticBackdropView"
+                       data-empno="${hrmDto.empNo}" data-show="delete">삭제</a></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -141,43 +142,55 @@
             </div>
         </form>
 
+
+        <%-- 삭제 모달 --%>
         <!-- Scrollable modal -->
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop">신규
         </button>
-    </div>
-    <!-- insert-Modal -->
-    <jsp:include page="include/insert-modal.jsp" flush="true"/>
 
-    <%-- Modal view.jsp --%>
+    </div>
+
+    <%-- Modal !!! --%>
+    <jsp:include page="include/insert-modal.jsp" flush="true"/>
     <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">사원 카드</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- 여기에 Ajax로 페이지 내용이 로드됩니다. -->
-                </div>
-            </div>
-        </div>
+        <%--        <c:choose>--%>
+        <%--        <c:when test="조건문 들어가서 view update delete 중에 하나만 include 해야함">--%>
+        <jsp:include page="include/view-modal.jsp" flush="true"/>
+        <jsp:include page="include/update-modal.jsp" flush="true"/>
+        <jsp:include page="include/delete-modal.jsp" flush="true"/>
     </div>
-</div>
+
+    <%-- Modal view.jsp --%>
+    <%--    <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"--%>
+    <%--         aria-labelledby="staticBackdropLabel" aria-hidden="true">--%>
+    <%--        <div class="modal-dialog modal-lg modal-dialog-scrollable">--%>
+    <%--            <div class="modal-content">--%>
+    <%--                <div class="modal-header">--%>
+    <%--                    <h1 class="modal-title fs-5" id="staticBackdropLabel">사원 카드</h1>--%>
+    <%--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
+    <%--                </div>--%>
+    <%--                <div class="modal-body">--%>
+    <%--                    <!-- 여기에 Ajax로 페이지 내용이 로드됩니다. -->--%>
+    <%--                </div>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
+
 </div>
 <script>
-
-<%--    <td><a href="#" data-bs-toggle="openModal" class="openModal" data-bs-target="#staticBackdropView"
-                       data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td> --%>
-
     // 모달을 열기 위한 스크립트
     $(document).ready(function () {
         $('.openModal').on('click', function (event) {
             event.preventDefault();
             var empNo = $(this).data('empno');
-            var url = '../hrm/view?empNo=' + empNo;
+            var show = $(this).data('show');
+            // var url = '../hrm/view?empNo=' + empNo;
+            var url = '../hrm/' + show + '?empNo=' + empNo;
+            console.log(url)
+
 
             // Ajax로 페이지 내용을 가져와 모달(modal-body 부분???)에 로드
             $.get(url, function (data) {
@@ -193,7 +206,6 @@
 
 
     $("#check-all").on("change", function () {
-
 // is(":checked") - 제이쿼리에서 체크박스 감지할때 씀
         if ($(this).is(":checked")) {
             $(".chk").prop("checked", true);

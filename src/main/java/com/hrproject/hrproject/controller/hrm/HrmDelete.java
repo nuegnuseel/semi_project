@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/hrm/view")
-public class HrmView extends HttpServlet {
+@WebServlet("/hrm/delete")
+public class HrmDelete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int empNo = 0;
@@ -19,7 +19,12 @@ public class HrmView extends HttpServlet {
 
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
-        req.setAttribute("hrmViewDto", hrmDto);
-        req.getRequestDispatcher("/WEB-INF/hrm/hrm-view.jsp").forward(req, resp);
+        req.setAttribute("hrmDeleteDto", hrmDto);
+        req.getRequestDispatcher("/WEB-INF/hrm/hrm-delete.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 }
