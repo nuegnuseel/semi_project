@@ -58,7 +58,7 @@
             <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
                 <tr>
                     <td>${attendDto.empNo}</td>
-                    <td><a href="" id="updateModal" data-bs-target="#editModal" data-bs-toggle="modal" >${attendDto.atdNo}</a></td> <%--근태번호 수정키--%>
+                    <td id="updateModal"> ${attendDto.atdNo}</td> <%--근태번호 수정키--%>
                     <td>${attendDto.ename}</td>
                     <td>${attendDto.atdCode}</td>
                     <td>${attendDto.atdNum}</td>
@@ -178,54 +178,54 @@
                     <!-- 근태 정보 수정 폼 -->
                     <form id="editForm" action="../board/attend-modify" method="post">
                         <!-- 사원번호 -->
-                        <input type="hidden" id="editEmpNo" name="empNo">
+                        <input type="hidden" id="editEmpNo" name="empNo" value="${updateInfoDto.empNo}">
 
                         <!-- 근태번호 -->
                         <div class="mb-3">
                             <label for="editDate" class="form-label">근태일자</label>
-                            <input type="date" class="form-control" id="editDate" name="atdDate">
+                            <input type="date" class="form-control" id="editDate" name="atdDate" value="${updateInfoDto.atdNo}">
                         </div>
 
                         <!-- 사원명 -->
                         <div class="mb-3">
                             <label for="editEname" class="form-label">사원</label>
-                            <input type="text" class="form-control" id="editEname" name="ename" readonly>
+                            <input type="text" class="form-control" id="editEname" name="ename" readonly value="${updateInfoDto.ename}">
                         </div>
 
                         <!-- 근태코드 -->
                         <div class="mb-3">
                             <label for="editAtdCode" class="form-label">근태(코드)</label>
-                            <input type="text" class="form-control" id="editAtdCode" name="atdCode">
+                            <input type="text" class="form-control" id="editAtdCode" name="atdCode" value="atdCode">
                         </div>
 
                         <!-- 근태수 -->
                         <div class="mb-3">
                             <label for="editAtdNum" class="form-label">근태수</label>
-                            <input type="text" class="form-control" id="editAtdNum" name="atdNum">
+                            <input type="text" class="form-control" id="editAtdNum" name="atdNum" value="atdNum">
                         </div>
 
                         <!-- 근태기간 -->
                         <div class="mb-3">
                             <label for="editAtdDate" class="form-label">근태기간</label>
-                            <input type="text" class="form-control" id="editAtdDate" name="atdDate">
+                            <input type="text" class="form-control" id="editAtdDate" name="atdDate" value="atdDate">
                         </div>
 
                         <!-- 휴가명 -->
                         <div class="mb-3">
                             <label for="editOffDay" class="form-label">휴가명</label>
-                            <input type="text" class="form-control" id="editOffDay" name="offDay" readonly>
+                            <input type="text" class="form-control" id="editOffDay" name="offDay" readonly value="offDay">
                         </div>
 
                         <!-- 휴가사유 -->
                         <div class="mb-3">
                             <label for="editOffDayRs" class="form-label">휴가사유</label>
-                            <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" readonly>
+                            <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" readonly value="offDayRs">
                         </div>
 
                         <!-- 인쇄 -->
                         <div class="mb-3">
                             <label for="editPrint" class="form-label">인쇄</label>
-                            <input type="text" class="form-control" id="editPrint" name="print" readonly>
+                            <input type="text" class="form-control" id="editPrint" name="print" readonly value="">
                         </div>
 
                         <!-- 저장과 취소 버튼 -->
@@ -247,8 +247,9 @@
                 url:"/attend/attendUpdateInfo",
                 method:"POST",
                 data:{ATDNO:selectName},
-                success:function (){
-
+                success:function (response){
+                    console.log(response)
+                    $("#editModal").modal("show")
                 },
                 error:function (){
 

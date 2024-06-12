@@ -53,5 +53,7 @@
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
     </select>
-
+    <select id="getUpdateInfo" resultType="AttendDto" parameterType="String">
+        SELECT * FROM ATTEND WHERE ATDNO = #{selectName}
+    </select>
 </mapper>
