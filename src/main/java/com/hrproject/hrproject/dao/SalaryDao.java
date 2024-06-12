@@ -1,6 +1,7 @@
 package com.hrproject.hrproject.dao;
 
 import com.hrproject.hrproject.dto.SalaryDto;
+import com.hrproject.hrproject.dto.SalaryLogDto;
 import com.hrproject.hrproject.dto.SalaryPlusEmpNameDto;
 import com.hrproject.hrproject.dto.SalarySearchDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
@@ -44,5 +45,44 @@ public class SalaryDao {
         }
         sqlSession.close();
         return searchSalaryList;
+    }
+
+    public SalaryPlusEmpNameDto getSalaryOne(int salaryNo) {
+        SalaryPlusEmpNameDto salaryPlusEmpNameDto = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        salaryPlusEmpNameDto=sqlSession.selectOne("salarySelect",salaryNo);
+        if (salaryPlusEmpNameDto!=null){
+            System.out.println("salarySelect Qry successfully");
+        }else {
+            System.out.println("salarySelact qry failed");
+        }
+        sqlSession.close();
+        return salaryPlusEmpNameDto;
+    }
+
+    public int insertSalaryLogDao(SalaryLogDto salaryLogDto) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("insertSalaryLog",salaryLogDto);
+        //sqlSession.commit();
+        if (result>0){
+            System.out.println("salary insert Qry is successfully");
+        }
+        sqlSession.close();
+        return result;
+
+
+    }
+
+    public int deleteSalary(int salary_No) {
+        int result =0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("deleteSalary",salary_No);
+
+        if (result>0){
+            System.out.println("salary del Qry is successfully");
+        }
+        sqlSession.close();
+        return result;
     }
 }

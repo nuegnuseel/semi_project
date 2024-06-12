@@ -204,7 +204,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="confirmModifyPassword(${salaryDto.salary_No})">확인</button>
+                <button type="button" class="btn btn-primary" onclick="confirmModifyPassword()">확인</button>
             </div>
         </div>
     </div>
@@ -379,14 +379,17 @@
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', function() {
             salary_No = this.getAttribute('data-salary-no');
+            console.log(salary_No)
         });
     });
+
 
 
     function confirmDelete() {
         const password = document.getElementById('deletePasswordInput').value;
         if (password === '1234') {
-            window.location.href = `../salary/delete?salary_No=${salary_No}`;
+            console.log("confirmFunc >>>"+salary_No)
+            window.location.href = '../salary/delete?salary_No='+salary_No;
         } else {
             alert('비밀번호가 틀렸습니다.');
             return false;
@@ -395,7 +398,7 @@
     function confirmModifyPassword() {
         const password = document.getElementById('modifyPasswordInput').value;
         if (password === '1234') {
-            window.location.href = `../salary/modify?salary_No=${salary_No}`;
+            window.location.href = '../salary/modify?salary_No='+salary_No;
         } else {
             alert('비밀번호가 틀렸습니다.');
             return false;

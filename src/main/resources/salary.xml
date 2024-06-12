@@ -17,6 +17,29 @@
     </insert>
 
 
+    <insert id="insertSalaryLog" parameterType="SalaryLogDto">
+        INSERT INTO SALARY_MODIFY_LOG ( salary_No, empNo, ename, accountingPeriod, salaryCategory, salaryName,
+        salaryDay, salary, salaryInfo, modifyReason, whoModify, logDate, logStatus
+        ) VALUES (
+        #{salary_No},
+        #{empNo},
+        #{ename},
+        #{accountingPeriod},
+        #{salaryCategory},
+        #{salaryName},
+        #{salaryDay},
+        #{salary},
+        #{salaryInfo},
+        #{modifyReason},
+        #{whoModify},
+        DATE_FORMAT(SYSDATE(), '%Y-%m-%d %H:%i:%s'),
+        #{logStatus}
+        )
+
+    </insert>
+
+
+
 
     <select id="getSearchSalaryList" resultType="SalarySearchDto" parameterType="SalarySearchDto">
         SELECT
@@ -68,7 +91,24 @@
 
     </select>
 
-
+<select id="salarySelect" resultType="SalaryPlusEmpNameDto" parameterType="int">
+    SELECT
+    S.SALARY_NO,
+    S.EMPNO,
+    H.ENAME as ename,
+    S.ACCOUNTINGPERIOD,
+    S.SALARYCATEGORY,
+    S.SALARYNAME,
+    S.SALARYDAY,
+    S.SALARY,
+    S.SALARYINFO
+    FROM
+    SALARY S
+    JOIN
+    HRM H ON S.EMPNO = H.EMPNO
+    WHERE
+    S.SALARY_NO = #{salary_No}
+</select>
 
 
 
@@ -88,5 +128,11 @@
         JOIN
         HRM H ON S.EMPNO = H.EMPNO
     </select>
+
+
+
+    <delete id="deleteSalary" parameterType="int">
+        delete from salary where salary_No = #{salary_No}
+    </delete>
 
 </mapper>
