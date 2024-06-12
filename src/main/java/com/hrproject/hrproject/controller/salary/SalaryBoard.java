@@ -1,8 +1,7 @@
 package com.hrproject.hrproject.controller.salary;
 
 import com.hrproject.hrproject.dao.SalaryDao;
-import com.hrproject.hrproject.dto.SalaryDto;
-import com.hrproject.hrproject.dto.SalaryPlusEmpNameDto;
+import com.hrproject.hrproject.dto.SalarySearchDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,7 +20,7 @@ public class SalaryBoard extends HttpServlet {
 
 
         SalaryDao salaryDao = new SalaryDao();
-        List<SalaryPlusEmpNameDto> salaryList = salaryDao.getSalaryList();
+        List<SalarySearchDto> salaryList = salaryDao.getSalaryList();
 
         System.out.println("SalaryBaord.java__salaryList >>> "+salaryList);
         req.setAttribute("salaryList",salaryList);

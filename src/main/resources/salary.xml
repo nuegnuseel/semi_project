@@ -18,7 +18,7 @@
 
 
 
-    <select id="getSearchSalaryList" resultType="SalaryPlusEmpNameDto" parameterType="SalaryPlusEmpNameDto">
+    <select id="getSearchSalaryList" resultType="SalarySearchDto" parameterType="SalarySearchDto">
         SELECT
         S.SALARY_NO,
         S.EMPNO,
@@ -61,6 +61,9 @@
         </if>
         <if test="salaryInfo != null and salaryInfo != ''">
             AND S.SALARYINFO LIKE CONCAT('%', #{salaryInfo}, '%')
+        </if>
+        <if test="salaryMin != null and salaryMin != 0 and salaryMax != null and salaryMax != 0 and salaryMax &gt; salaryMin">
+            AND S.SALARY BETWEEN #{salaryMin} AND #{salaryMax}
         </if>
 
     </select>

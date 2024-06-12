@@ -2,6 +2,7 @@ package com.hrproject.hrproject.dao;
 
 import com.hrproject.hrproject.dto.SalaryDto;
 import com.hrproject.hrproject.dto.SalaryPlusEmpNameDto;
+import com.hrproject.hrproject.dto.SalarySearchDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
@@ -21,8 +22,8 @@ public class SalaryDao {
 
     }
 
-    public List<SalaryPlusEmpNameDto> getSalaryList() {
-        List<SalaryPlusEmpNameDto> salaryList = null;
+    public List<SalarySearchDto> getSalaryList() {
+        List<SalarySearchDto> salaryList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         salaryList = sqlSession.selectList("getSalaryList");
         if (salaryList !=null){
@@ -33,7 +34,7 @@ public class SalaryDao {
         return salaryList;
     }
 
-    public List<SalaryPlusEmpNameDto> getSearchSalaryList(SalaryPlusEmpNameDto salarySearchDto) {
+    public List<SalaryPlusEmpNameDto> getSearchSalaryList(SalarySearchDto salarySearchDto) {
         List<SalaryPlusEmpNameDto> searchSalaryList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         searchSalaryList = sqlSession.selectList("getSearchSalaryList",salarySearchDto);

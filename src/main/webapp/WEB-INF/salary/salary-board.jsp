@@ -1,4 +1,4 @@
-<%@ page import="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto" %>
+<%@ page import="com.hrproject.hrproject.dto.SalarySearchDto" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: jhta
@@ -47,9 +47,26 @@
                 <td>${salaryDto.accountingPeriod}</td>
                 <td>${salaryDto.salary}</td>
                 <td>
-                    <button class="btn btn-primary edit-button" type="button">수정</button>
-                    <button class="btn btn-danger delete-button" type="button">삭제</button>
+                    <button type="button" class="btn btn-primary modify-button" data-salary-no="${salaryDto.salary_No}" data-bs-toggle="modal" data-bs-target="#modifyConfirmModal">수정</button>
+
+                    <button type="button" class="btn btn-primary delete-button" data-salary-no="${salaryDto.salary_No}" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+
                 </td>
+
+                    <%--                <td>--%>
+                    <%--                    <!-- Form for Edit -->--%>
+                    <%--                    <form action="../salary/modify" method="post" class="d-inline">--%>
+                    <%--                        <input type="hidden" name="salary_No" value="${salaryDto.salary_No}">--%>
+                    <%--                        <button class="btn btn-primary edit-button" type="submit">수정</button>--%>
+                    <%--                    </form>--%>
+
+                    <%--
+                    <%--                    <!-- Form for Delete -->--%>
+                    <%--                    <form action="../salary/delete" method="post" class="d-inline">--%>
+                    <%--                        <input type="hidden" name="salary_No" value="${salaryDto.salary_No}">--%>
+                    <%--                        <button class="btn btn-danger delete-button" type="submit">삭제</button>--%>
+                    <%--                    </form>--%>
+                    <%--                </td>--%>
 
 
             </tr>
@@ -61,7 +78,7 @@
 
 </div>
 
-<%--급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색--%>
+<%--급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색--%>
 <div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="searchModal"
      data-bs-backdrop="static"
      tabindex="-1">
@@ -77,21 +94,24 @@
                         <%-- form body --%>
                         <div class="col">지급번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="00008" aria-label="" name="searchSalary_No">
+                            <input type="text" class="form-control" placeholder="00008" aria-label=""
+                                   name="searchSalary_No">
                         </div>
                     </div>
                     <div class="row">
                         <%-- form body --%>
                         <div class="col">사원번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="searchEmpNo">
+                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo"
+                                   name="searchEmpNo">
                         </div>
                     </div>
                     <div class="row">
                         <%-- form body --%>
                         <div class="col">사원 명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="searchEName">
+                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo"
+                                   name="searchEName">
                         </div>
                     </div>
                     <div class="row">
@@ -129,7 +149,8 @@
                         <%-- form body --%>
                         <div class="col">지급월</div>
                         <div class="col col-md-4">
-                            <input type="month" class="form-control" id="testtesttestteset" placeholder="select paymentDay"
+                            <input type="month" class="form-control" id="testtesttestteset"
+                                   placeholder="select paymentDay"
                                    name="searchSalaryDay">
                         </div>
                     </div>
@@ -143,19 +164,18 @@
                         </div>
                     </div>
 
-<%--0612에 내일 작업할거임 0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임0612에 내일 작업할거임--%>
-<%--                    <div class="row">--%>
-<%--                        &lt;%&ndash; form body &ndash;%&gt;--%>
-<%--                        <div class="col">지급액</div>--%>
-<%--                        <div class="col col-md-4">--%>
-<%--                            <input type="number" class="form-control" placeholder="최소 금액" aria-label="minSalary" name="searchMinSalary">--%>
-<%--                        </div>--%>
-<%--                        <div class="col col-md-4">--%>
-<%--                            <input type="number" class="form-control" placeholder="최대 금액" aria-label="maxSalary" name="searchMaxSalary">--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-
+                    <div class="row">
+                        <%-- form body --%>
+                        <div class="col">지급액</div>
+                        <div class="col col-md-4">
+                            <input type="number" class="form-control" placeholder="최소 금액" aria-label="minSalary"
+                                   name="searchMinSalary">
+                        </div>
+                        <div class="col col-md-4">
+                            <input type="number" class="form-control" placeholder="최대 금액" aria-label="maxSalary"
+                                   name="searchMaxSalary">
+                        </div>
+                    </div>
                 </form>
             </div>
 
@@ -171,15 +191,42 @@
     </div>
 </div>
 
+<%--수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달수정 컨펌 모달 수정 컨펌 모달 수정 컨펌 모달--%>
+<div class="modal fade" id="modifyConfirmModal" tabindex="-1" aria-labelledby="modifyConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modifyConfirmModalLabel">Modify Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="password" class="form-control" id="modifyPasswordInput" placeholder="비밀번호 1234/ 로그인 세션에서 값 받아서 비교해야함">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="confirmModifyPassword(${salaryDto.salary_No})">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-
-
-
-
-
-
-
+<%-- 삭제 모달   삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달  삭제 모달 --%>
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="delete_h1">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="password" class="form-control" id="deletePasswordInput" placeholder="비밀번호 1234/ 로그인 세션에서 값 받아서 비교해야함">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="confirmDelete()">확인</button>
+            </div>
+    </div>
+</div>
 
 
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
@@ -325,5 +372,35 @@
     </div>
 </div>
 
+
+<script>
+    let salary_No;
+
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            salary_No = this.getAttribute('data-salary-no');
+        });
+    });
+
+
+    function confirmDelete() {
+        const password = document.getElementById('deletePasswordInput').value;
+        if (password === '1234') {
+            window.location.href = `../salary/delete?salary_No=${salary_No}`;
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+            return false;
+        }
+    }
+    function confirmModifyPassword() {
+        const password = document.getElementById('modifyPasswordInput').value;
+        if (password === '1234') {
+            window.location.href = `../salary/modify?salary_No=${salary_No}`;
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+            return false;
+        }
+    }
+</script>
 
 <%@include file="../include/right_side_info.jsp" %>

@@ -2,8 +2,8 @@ package com.hrproject.hrproject.controller.salary;
 
 
 import com.hrproject.hrproject.dao.SalaryDao;
-import com.hrproject.hrproject.dto.SalaryDto;
 import com.hrproject.hrproject.dto.SalaryPlusEmpNameDto;
+import com.hrproject.hrproject.dto.SalarySearchDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,8 +17,9 @@ import java.util.List;
 public class SalarySearchBoard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SalaryPlusEmpNameDto.SalaryPlusEmpNameDtoBuilder builder = SalaryPlusEmpNameDto.builder();
 
+
+        SalarySearchDto.SalarySearchDtoBuilder builder =SalarySearchDto.builder();
         String empNoParam = req.getParameter("searchEmpNo");
         if (empNoParam != null && !empNoParam.isEmpty()) {
             try {
@@ -75,8 +76,20 @@ public class SalarySearchBoard extends HttpServlet {
             System.out.println("SalaryInfo: " + salaryInfo);
         }
 
-        SalaryPlusEmpNameDto salarySearchDto = builder.build();
-        System.out.println("salarySerachDto >>>> "+ salarySearchDto);
+        String strSalaryMin = req.getParameter("searchMinSalary");
+        if (strSalaryMin != null && !strSalaryMin.isEmpty()) {
+            builder.salaryMin(Integer.parseInt(strSalaryMin));
+        }
+
+        String strSalaryMax = req.getParameter("searchMaxSalary");
+        if (strSalaryMax != null && !strSalaryMax.isEmpty()) {
+            builder.salaryMax(Integer.parseInt(strSalaryMax));
+        }
+
+
+
+        SalarySearchDto salarySearchDto = builder.build();
+        System.out.println("salarySearchDto >>>> " + salarySearchDto);
         SalaryDao salaryDao = new SalaryDao();
         List<SalaryPlusEmpNameDto> searchDtoList = salaryDao.getSearchSalaryList(salarySearchDto);
 
