@@ -161,8 +161,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">사원 찾기
-                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 <button type="submit" form="searchModalForm" class="btn btn-primary">검색</button>
                 <button type="reset" form="searchModalForm" class="btn btn-danger">리셋</button>
