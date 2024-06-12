@@ -69,7 +69,7 @@
                         <%-- form body --%>
                         <div class="col">대상 사원번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo">
+                            <input type="text" class="form-control" placeholder="00008" aria-label="empNo" name="empNo" id="empNo">
                         </div>
                     </div>
                     <div class="row">
@@ -156,12 +156,10 @@
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">사원 찾기</h1>
                     <div class="col-6">
-                <form action="/hrm/searchEmpNo">
-                    <div class="input-group mt-3 mx-5">
-                        <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" name="searchEmpNo">
-                        <button class="btn btn-primary" type="submit">찾기</button>
-                    </div>
-                </form>
+                        <div class="input-group mt-3 mx-5">
+                            <input type="text" class="form-control" placeholder="ex)홍길동" aria-label="empNo" id="searchName">
+                            <button class="btn btn-primary" type="submit" id="searchEmpNoByName">찾기</button>
+                        </div>
                     </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -181,15 +179,8 @@
                         <th>사원 명</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
-                        <tr>
-                            <td><input type="checkbox" id="check-all"></td>
-                            <td>${hrmDto.empNo}</td>
-                            <td>${hrmDto.deptName}</td>
-                                <%--                            <td>${hrmDto.eName}</td>--%>
-                        </tr>
-                    </c:forEach>
+                    <tbody id="resultTableBody">
+                    <!-- 동적으로 데이터 추가 -->
                     </tbody>
                 </table>
             </div>
@@ -201,6 +192,47 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function (){
+        //salary insert modal 에서 searchEmpno시
+        $("#searchEmpNoByName").on("click",function (){
+            console.log("searchEmpNoByName clicked")
+            const name = $("#searchName").val();
 
+            $.ajax({
+                url:"/hrm/searchEmpNoByName",
+                type:"POST",
+                data:{searchName:name},
+                success:function (response){
+                    console.log(response)
 
+                    $("#resultTableBody").empty();
+
+                    response.forEach(function (searchByNameResult){
+                        const row="<tr>" +
+                            "<td>" + searchByNameResult.empNo +"</td>" +
+                            "<td>" + searchByNameResult.deptName + "</td>" +
+                            "<td>" + searchByNameResult.role + "</td>" +
+                            "<td>" + searchByNameResult.ename + "</td>" +
+                            "</tr>"
+                        $("#resultTableBody").append(row);
+                    });
+                },
+                error:function (){
+
+                }
+            })
+        })
+        //searchEmpno에서 ename클릭시
+        $(document).on("click", "#resultTableBody td:nth-child(4)", function() {
+            // 클릭된 행의 empNo 값을 가져옴
+            var empNoValue = $(this).closest("tr").find("td:eq(0)").text();
+
+            // input 요소의 값을 변경
+            $("#empNo").val(empNoValue);
+            $("#exampleModalToggle").modal("show");
+            $("#exampleModalToggle2").modal("hide");
+        });
+    })
+</script>
 <%@include file="../include/right_side_info.jsp" %>
