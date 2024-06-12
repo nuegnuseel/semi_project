@@ -13,12 +13,12 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/attend/insert" class="nav-link link-body-emphasis p-5">
+            <a href="/attend/board" class="nav-link link-body-emphasis p-5">
                 커뮤니티
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link link-body-emphasis p-5">
+            <a href="/notice/board" class="nav-link link-body-emphasis p-5">
                 공지사항
             </a>
         </li>

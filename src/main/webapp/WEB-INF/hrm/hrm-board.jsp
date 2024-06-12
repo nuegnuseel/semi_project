@@ -5,9 +5,9 @@
     <table class="table table-sm">
         <thead>
         <tr>
-            <%-- 10개 --%>
-            <th scope="col"><input type="checkbox" id="check-all"></th>
-            <th scope="col">idx</th>
+            <%-- 9개 --%>
+            <th scope="col"><input type="checkbox" class="btn-check" id="check-all" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="check-all">-</label><br></th>
             <th scope="col">입사일자</th>
             <th scope="col">사원번호</th>
             <th scope="col">성명</th>
@@ -22,15 +22,16 @@
         <tbody>
         <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
             <c:choose>
+                <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
                 <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
                 <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
             </c:choose>
             <tr>
-                <td><input type="checkbox" class="chk"></td>
-                <td>${((page -1) * listPerPage) + loop.count}</td>
+                <td><input type="checkbox" class="chk btn-check" id="btn-check-${loop.count}" autocomplete="off" >
+                    <label class="btn btn-outline-secondary" for="btn-check-${loop.count}">${((page -1) * listPerPage) + loop.count}</label></td>
                 <td>${hrmDto.hireDate}</td>
                 <td><a href="">${hrmDto.empNo}</a></td>
-                <td><a href="">${hrmDto.EName}</a></td>
+                <td><a href="">${hrmDto.ename}</a></td>
                 <td>${hrmDto.deptName}</td>
                 <td>${hrmDto.position}</td>
                 <td>${hrmDto.email}</td>
@@ -67,12 +68,12 @@
                 <c:if test="${startPage ne 1}">
                     <li class="page-item">
                         <a class="page-link" href="${firstPage}" aria-label="Previous">
-                            <i class="bi bi-chevron-double-left"></i>
+                            First
                         </a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="${prePage}" aria-label="Previous">
-                            <i class="bi bi-chevron-left"></i>
+                            <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 </c:if>
@@ -89,12 +90,12 @@
                 <c:if test="${endPage ne totalPage}">
                     <li class="page-item">
                         <a class="page-link" href="${nextPage}" aria-label="Next">
-                            <i class="bi bi-chevron-right"></i>
+                            <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="${lastPage}" aria-label="Next">
-                            <i class="bi bi-chevron-double-right"></i>
+                            Last
                         </a>
                     </li>
                 </c:if>
@@ -142,61 +143,78 @@
                         <div class="row mt-3">
                             <div class="col">사원번호</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="사원번호" aria-label="empno">
+                                <input type="text" class="form-control" placeholder="사원번호" aria-label="empno" name="empNo">
                             </div>
                             <div class="col">성명</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="이름" aria-label="ename">
+                                <input type="text" class="form-control" placeholder="이름" aria-label="ename" name="eName">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">영문성명</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="영문이름" aria-label="empno">
+                                <input type="text" class="form-control" placeholder="영문이름" aria-label="empno" name="foreignName">
                             </div>
-                            <div class="col">부서번호</div>
+                            <div class="col">부서</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="부서코드" aria-label="deptno">
+                                <select class="form-select form-select" aria-label="select" name="deptNo">
+                                    <option value="10">부서코드:10 | 부서명:개발팀</option>
+                                    <option value="20">부서코드:20 | 부서명:기획팀</option>
+                                    <option value="30">부서코드:30 | 부서명:인사팀</option>
+                                    <option value="40">부서코드:40 | 부서명:회계팀</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">직위/직급</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="직위/직급" aria-label="">
+                                <select class="form-select form-select" aria-label="select" name="positionNo">
+                                    <option value="10">직급코드:10 | 직급명:사원</option>
+                                    <option value="20">직급코드:20 | 직급명:대리</option>
+                                    <option value="30">직급코드:30 | 직급명:과장</option>
+                                    <option value="40">직급코드:40 | 직급명:차장</option>
+                                    <option value="50">직급코드:50 | 직급명:대표이사</option>
+                                </select>
                             </div>
                             <div class="col">직책</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="직책" aria-label="">
+                                <select class="form-select form-select" aria-label="select" name="role">
+                                    <option value="팀원">직책 | 팀원</option>
+                                    <option value="팀장">직책 | 팀장</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">휴대폰번호</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="휴대폰번호" aria-label="empno">
+                                <input type="text" class="form-control" placeholder="휴대폰번호" aria-label="empno" name="mobile">
                             </div>
                             <div class="col">여권번호</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="여권번호" aria-label="name">
+                                <input type="text" class="form-control" placeholder="여권번호" aria-label="passport" name="passport">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">Email</div>
                             <div class="col col-md-4">
-                                <input type="email" class="form-control" placeholder="Email" aria-label="">
+                                <input type="email" class="form-control" placeholder="Email" aria-label="email" name="email">
                             </div>
                             <div class="col">입사일자</div>
                             <div class="col col-md-4">
-                                <input type="date" class="form-control" aria-label="">
+                                <input type="date" class="form-control" aria-label="hiredate" name="hireDate">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">입사구분</div>
                             <div class="col col-md-4">
-                                <input type="text" class="form-control" placeholder="입사구분 (신입/경력)" aria-label="">
+                                <select class="form-select form-select" aria-label="hireType" name="hireType">
+                                    <option value="10">신입</option>
+                                    <option value="20">경력</option>
+                                </select>
                             </div>
                             <div class="col">퇴사일자</div>
                             <div class="col col-md-4">
-                                <input type="date" class="form-control" aria-label="">
+                                <input type="date" class="form-control" aria-label="resigndate" name="resignDate">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -209,14 +227,24 @@
                             <label for="bankAccount" class="form-label">급여통장</label>
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text" name="bankAccount" id="bankAccount">은행명</span>
-                                <input type="text" class="form-control" aria-label="Sizing example input"
-                                       aria-describedby="inputGroup-sizing-sm">
+                                <select class="form-select form-select-sm" aria-label="bankname" name="bankName">
+                                    <option value="한국은행">은행명: 한국은행</option>
+                                    <option value="산업은행">은행명: 산업은행</option>
+                                    <option value="기업은행">은행명: 기업은행</option>
+                                    <option value="국민은행">은행명: 국민은행</option>
+                                    <option value="외환은행">은행명: 외환은행</option>
+                                    <option value="수협중앙회">은행명: 수협중앙회</option>
+                                    <option value="수출입은행">은행명: 수출입은행</option>
+                                    <option value="농협은행">은행명: 농협은행</option>
+                                    <option value="지역농.축협">은행명: 지역농.축협</option>
+                                    <option value="우리은행">은행명: 우리은행</option>
+                                </select>
                                 <span class="input-group-text">통장번호</span>
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                       aria-describedby="inputGroup-sizing-sm">
+                                       aria-describedby="inputGroup-sizing-sm" name="account">
                                 <span class="input-group-text">예금주</span>
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                       aria-describedby="inputGroup-sizing-sm">
+                                       aria-describedby="inputGroup-sizing-sm" name="accountHolder">
                             </div>
                         </div>
                         <div class="row g-3 mt-3 mb-3">
@@ -245,8 +273,12 @@
                             <input class="form-control" type="file" id="profile" name="profile"
                                    accept="image/jpg, image/png, image/gif">
                         </div>
-                        <div class="mb-3 preview">
-                            <div id="preview">프로필 미리보기</div>
+                        <div class="mb-3 preview" style="width: 38px; height: 38px; object-fit: contain">
+                            <div id="preview"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="remarks" class="form-label">비고</label>
+                            <textarea class="form-control" id="remarks" name="remarks">...</textarea>
                         </div>
                     </form>
                 </div>
@@ -270,11 +302,34 @@
             $(".chk").prop("checked", false);
         }
     })
+
+    $("#profile").on("change", function (e) {
+        const file = e.currentTarget.files[0];
+        if(!file){ // 파일이 선택되지 않은 경우 (지운 경우)
+            $("#preview").html(""); // 미리보기 영역 비우기
+            return false;
+        }
+        const extension = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase(); // +1 안하면 .png, +1 하면 png 나옴
+        console.log(file);
+        if (!(extension === "png" || extension === "jpg" || extension === "gif")) {
+            alert("이미지 파일만 업로드 가능합니다.");
+            $(this).val("");
+            return false;
+        } else {
+            const profileReader = new FileReader();
+            profileReader.onload = function (e) {
+                console.log(e)
+                // currentTarget or target에의 result 가 image임
+                const img = e.currentTarget.result;
+                /* jsp의 자바스크립트에서 달러{} 을 쓰려면 $앞에 \를 넣어줘야함 = \$ {} */
+                $("#preview").html(`<img src="\${img}">`)
+            }
+            profileReader.readAsDataURL(file);
+        }
+    })
+
     /* postcode 버튼 눌러서 주소 팝업창 불러옴 */
     $("#btn-postcode").on("click", makePostCode);
-    // $("#btn-postcode").on("click", ()=>{ // 위에걸로 줄여쓸 수 있음
-    //     makePostCode();
-    // })
 
     function makePostCode() {
         new daum.Postcode({
