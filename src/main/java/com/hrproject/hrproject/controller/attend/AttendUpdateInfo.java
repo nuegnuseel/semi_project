@@ -1,5 +1,6 @@
 package com.hrproject.hrproject.controller.attend;
 
+import com.google.gson.Gson;
 import com.hrproject.hrproject.dao.AttendDao;
 import com.hrproject.hrproject.dto.AttendDto;
 import jakarta.servlet.ServletException;
@@ -19,5 +20,11 @@ public class AttendUpdateInfo extends HttpServlet {
         AttendDao attendDao = new AttendDao();
         AttendDto updateInfoDto = attendDao.getUpdateInfo(selectName);
 
+        Gson gson = new Gson();
+        String json=gson.toJson(updateInfoDto);
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
     }
 }
