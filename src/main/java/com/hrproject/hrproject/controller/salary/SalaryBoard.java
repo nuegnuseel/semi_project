@@ -16,6 +16,8 @@ import java.util.List;
 public class SalaryBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String url = req.getRequestURL().toString().substring(22);
+
 
         SalaryDao salaryDao = new SalaryDao();
         List<SalarySearchDto> salaryList = salaryDao.getSalaryList();
@@ -31,7 +33,7 @@ public class SalaryBoard extends HttpServlet {
 
 //        System.out.println("SalaryBaord.java__salaryList >>> "+salaryList);
         req.setAttribute("salaryList",salaryList);
-
+        req.setAttribute("url", url);
         RequestDispatcher dispatcher =
                 req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp");
         dispatcher.forward(req,resp);

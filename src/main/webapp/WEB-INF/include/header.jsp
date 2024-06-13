@@ -18,24 +18,129 @@
 <body>
 <%--헤더 처음--%>
 <c:choose>
-    <c:when test="${sessionMember eq null}">
+    <c:when test="${url eq 'index/index'}">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom">
             <div class="col-md-2">
                 <a href="/index/index"><img src="../../images/logo.png"></a>
             </div>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <h2>첫화면은 슬로건 좌측 사이드메뉴 클릭시 카테고리 </h2>
+                <h2> 슬로건 </h2>
             </ul>
             <div class="col-md-3 text-end">
                 <h2>뭔가넣는곳</h2>
             </div>
         </header>
     </c:when>
+    <c:when test="${url eq 'attend/board'}">
+<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
+    <!-- 로고 영역 시작 -->
+    <div class="col-md-2">
+        <a href="/index/index"><img src="../../images/logo.png"></a>
+    </div>
+        <%--      로고영역 끝      --%>
+    <!-- 카테고리 영역 -->
+    <div class="col-md-8">
+        <ul class="nav justify-content-center mb-0">
+            <li class="nav-item">
+                <a href="" class="nav-link p-5 bg-body-tertiary">attend1</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">attend2</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">attend3</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">attend4</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">attend5</a>
+            </li>
+        </ul>
+    </div>
+        <%--      카테고리영역 끝      --%>
+    <!-- 기타 영역 -->
+    <div class="col-md-2 text-end">
+        <h2>뭔가넣는곳</h2>
+    </div>
+        <%--      기타영역 끝      --%>
+</header>
+    </c:when>
+<c:when test="${url eq 'hrm/board'}">
+<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
+    <!-- 로고 영역 시작 -->
+    <div class="col-md-2">
+        <a href="/index/index"><img src="../../images/logo.png"></a>
+    </div>
+        <%--      로고영역 끝      --%>
+    <!-- 카테고리 영역 -->
+    <div class="col-md-8">
+        <ul class="nav justify-content-center mb-0">
+            <li class="nav-item">
+                <a href="" class="nav-link p-5 bg-body-tertiary">hrm1</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm2</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm3</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm4</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm5</a>
+            </li>
+        </ul>
+    </div>
+        <%--      카테고리영역 끝      --%>
+    <!-- 기타 영역 -->
+    <div class="col-md-2 text-end">
+        <h2>뭔가넣는곳</h2>
+    </div>
+        <%--      기타영역 끝      --%>
+</header>
+</c:when>
+<c:when test="${url eq 'salary/board'}">
+<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
+    <!-- 로고 영역 시작 -->
+    <div class="col-md-2">
+        <a href="/index/index"><img src="../../images/logo.png"></a>
+    </div>
+        <%--      로고영역 끝      --%>
+    <!-- 카테고리 영역 -->
+    <div class="col-md-8">
+        <ul class="nav justify-content-center mb-0">
+            <li class="nav-item">
+                <a href="" class="nav-link p-5 bg-body-tertiary">salary1</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">salary2</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">salary3</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">salary4</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link p-5 bg-body-tertiary">salary5</a>
+            </li>
+        </ul>
+    </div>
+        <%--      카테고리영역 끝      --%>
+    <!-- 기타 영역 -->
+    <div class="col-md-2 text-end">
+        <h2>뭔가넣는곳</h2>
+    </div>
+        <%--      기타영역 끝      --%>
+</header>
+</c:when>
     <c:otherwise>
         <header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
             <!-- 로고 영역 시작 -->
             <div class="col-md-2">
-                <img src="../../images/logo.png">
+                <a href="/index/index"><img src="../../images/logo.png"></a>
             </div>
                 <%--      로고영역 끝      --%>
             <!-- 카테고리 영역 -->

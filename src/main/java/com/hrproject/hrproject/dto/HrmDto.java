@@ -35,8 +35,8 @@ public class HrmDto {
     private String remarks; // 비고?
     private int positionNo; // 직급코드
     private int role; // 직책
-
-
+    private int oldEmpNo; // 직책
+    private int showAble;
 
     // 생성자, getter, setter 등의 필요한 메서드 추가
 }
