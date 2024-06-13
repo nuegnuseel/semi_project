@@ -43,6 +43,10 @@
         SELECT * FROM HRM WHERE EMPNO = ${empNo} AND showAble = 1
     </select>
 
+    <select id="getMaxEmpNo" resultType="int">
+        SELECT MAX(empno) FROM HRM
+    </select>
+
     <select id="getHrmList" resultType="HrmDto" parameterType="HrmPageDto">
         SELECT * FROM (
         SELECT *, ROW_NUMBER() OVER () AS num FROM HRM WHERE showAble = 1

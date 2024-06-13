@@ -17,8 +17,13 @@ public class HrmView extends HttpServlet {
         int empNo = 0;
         if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
 
+        HrmDto getHrmDto = HrmDto.builder()
+                .empNo(empNo)
+                .build();
+
         HrmDao hrmDao = new HrmDao();
-        HrmDto hrmDto = hrmDao.getHrm(empNo);
+        HrmDto hrmDto = hrmDao.getHrm(getHrmDto);
+
         req.setAttribute("hrmViewDto", hrmDto);
         req.getRequestDispatcher("/WEB-INF/hrm/hrm-view.jsp").forward(req, resp);
     }

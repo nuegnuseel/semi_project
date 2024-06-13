@@ -39,11 +39,11 @@ public class HrmDao {
         return result;
     }
 
-    public HrmDto getHrm(int no) {
+    public HrmDto getHrm(HrmDto getHrmDto) {
         HrmDto hrmDto = null;
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        hrmDto = sqlSession.selectOne("getHrm", no);
+        hrmDto = sqlSession.selectOne("getHrm", getHrmDto);
         sqlSession.close();
 
         return hrmDto;
@@ -91,5 +91,15 @@ public class HrmDao {
         empNoList=sqlSession.selectList("getSearchEmpNoByName",searchName);
         sqlSession.close();
         return empNoList;
+    }
+
+    public int getMaxEmpNo() {
+        int maxEmpNo = 1;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        maxEmpNo = sqlSession.selectOne("getMaxEmpNo");
+        sqlSession.close();
+
+        return maxEmpNo;
     }
 }

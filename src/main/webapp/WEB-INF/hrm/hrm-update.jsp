@@ -7,11 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form action="../hrm/update" method="post" enctype="multipart/form-data">
+    ${hrmUpdateDto.addressDetail}
     <div class="row mt-3">
         <div class="col">사원번호</div>
         <div class="col col-md-4">
-            <input type="text" class="form-control" placeholder="사원번호" value="${hrmUpdateDto.empNo}" aria-label="empno" name="empNo">
-            <input type="hidden" class="form-control" placeholder="사원번호" value="${param.empNo}" varia-label="paramEmpNo" name="oldEmpNo">
+            <input type="text" class="form-control is-valid" placeholder="사원번호" value="${hrmUpdateDto.empNo}" aria-label="empno" name="empNo" readonly>
+<%--            <input type="hidden" class="form-control" placeholder="사원번호" value="${param.empNo}" varia-label="paramEmpNo" name="oldEmpNo">--%>
 
         </div>
         <div class="col">성명</div>
@@ -123,7 +124,7 @@
     <div class="row g-3 mt-3 mb-3">
         <label for="postCode" class="form-label">POST CODE</label>
         <div class="row">
-            <div class="col-auto"><input type="text" class="form-control" id="postCode"
+            <div class="col-auto"><input type="text" class="form-control" id="postCode" value="${hrmUpdateDto.postCode}"
                                          placeholder="post code"
                                          name="postCode" readonly></div>
             <div class="col-auto">
@@ -133,17 +134,17 @@
     </div>
     <div class="col-sm-6">
         <label for="address" class="form-label">ADDRESS</label>
-        <input type="text" class="form-control" id="address" placeholder="address" name="address"
+        <input type="text" class="form-control" id="address" placeholder="address" name="address" value="${hrmUpdateDto.address}"
                readonly>
     </div>
     <div class="col-sm-6">
-        <label for="detail-address" class="form-label">DETAIL ADDRESS</label>
-        <input type="text" class="form-control" id="detail-address" placeholder="detail address"
+        <label for="addressDetail" class="form-label">DETAIL ADDRESS</label>
+        <input type="text" class="form-control" id="addressDetail" placeholder="detail address" value="${hrmUpdateDto.addressDetail}"
                name="addressDetail">
     </div>
     <div class="mb-3">
         <label for="profile" class="form-label">PROFILE</label>
-        <input class="form-control" type="file" id="profile" name="profile"
+        <input class="form-control" type="file" id="profile" name="profile" value="${hrmUpdateDto.renameProfile}"
                accept="image/jpg, image/png, image/gif">
     </div>
     <div class="mb-3 preview" style="width: 38px; height: 38px; object-fit: contain">
@@ -151,7 +152,7 @@
     </div>
     <div class="col-sm-12">
         <label for="remarks" class="form-label">비고</label>
-        <textarea class="form-control" id="remarks" name="remarks">...</textarea>
+        <textarea class="form-control" id="remarks" name="remarks" value="${hrmUpdateDto.remarks}">...</textarea>
     </div>
     <div class="text-end mt-3">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
