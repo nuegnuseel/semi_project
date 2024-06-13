@@ -21,44 +21,42 @@
             <th scope="col">계좌번호</th>
             <th scope="col">새로운 항목 추가???</th>
             <th scope="col">회원정보변경</th>
-            <th scope="col">삭제</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
-            <c:choose>
-                <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
-                <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
-                <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
-            </c:choose>
-            <tr>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="chk form-check-input" type="checkbox" id="${loop.count}" value="option1">
-                        <label class="chk form-check-label"
-                               for="${loop.count}">${((page -1) * listPerPage) + loop.count}</label>
-                    </div>
-                </td>
-                <td>${hrmDto.hireDate}</td>
-                <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                       data-bs-target="#staticBackdropView"
-                       data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
-                <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                       data-bs-target="#staticBackdropView"
-                       data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
-                <td>${hrmDto.deptName}</td>
-                <td>${hrmDto.position}</td>
-                <td>${hrmDto.email}</td>
-                <td>${hrmDto.account}</td>
-                <td><input type="text" value="일단빈칸"></td>
-                <td><a href="#" data-bs-toggle="modal" class="openModal"
-                       data-bs-target="#staticBackdropView"
-                       data-empno="${hrmDto.empNo}" data-show="update">정보변경</a></td>
-                <td><a href="#" data-bs-toggle="modal" class="openModal"
-                       data-bs-target="#staticBackdropView"
-                       data-empno="${hrmDto.empNo}" data-show="delete">삭제</a></td>
-            </tr>
-        </c:forEach>
+        <form action="../hrm/delete" method="post" id="delete">
+            <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
+                <c:choose>
+                    <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
+                    <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
+                    <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
+                </c:choose>
+                <tr>
+                    <td>
+                        <input type="hidden" name="test" value="test">
+                        <div class="form-check form-check-inline">
+                            <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">
+                            <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>
+                        </div>
+                    </td>
+                    <td>${hrmDto.hireDate}</td>
+                    <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
+                           data-bs-target="#staticBackdropView"
+                           data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
+                    <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
+                           data-bs-target="#staticBackdropView"
+                           data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
+                    <td>${hrmDto.deptName}</td>
+                    <td>${hrmDto.position}</td>
+                    <td>${hrmDto.email}</td>
+                    <td>${hrmDto.account}</td>
+                    <td><input type="text" value="일단빈칸"></td>
+                    <td><a href="#" data-bs-toggle="modal" class="openModal"
+                           data-bs-target="#staticBackdropView"
+                           data-empno="${hrmDto.empNo}" data-show="update">정보변경</a></td>
+                </tr>
+            </c:forEach>
+        </form>
         </tbody>
     </table>
 
@@ -146,6 +144,10 @@
         <%-- 삭제 모달 --%>
         <!-- Scrollable modal -->
         <!-- Button trigger modal -->
+        <a href="#" data-bs-toggle="modal" class="openModal btn btn-danger"
+           data-bs-target="#staticBackdropView" onclick="return chk_form()"
+           data-show="delete">삭제</a>
+        </button>
         <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop">신규
         </button>
@@ -161,26 +163,15 @@
         <jsp:include page="include/view-modal.jsp" flush="true"/>
         <jsp:include page="include/update-modal.jsp" flush="true"/>
         <jsp:include page="include/delete-modal.jsp" flush="true"/>
-    </div>
 
-    <%-- Modal view.jsp --%>
-    <%--    <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"--%>
-    <%--         aria-labelledby="staticBackdropLabel" aria-hidden="true">--%>
-    <%--        <div class="modal-dialog modal-lg modal-dialog-scrollable">--%>
-    <%--            <div class="modal-content">--%>
-    <%--                <div class="modal-header">--%>
-    <%--                    <h1 class="modal-title fs-5" id="staticBackdropLabel">사원 카드</h1>--%>
-    <%--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-    <%--                </div>--%>
-    <%--                <div class="modal-body">--%>
-    <%--                    <!-- 여기에 Ajax로 페이지 내용이 로드됩니다. -->--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
+    </div>
 
 </div>
 <script>
+    function chk_form() {
+        document.getElementById('delete').submit();
+    }
+
     // 모달을 열기 위한 스크립트
     $(document).ready(function () {
         $('.openModal').on('click', function (event) {
@@ -188,7 +179,11 @@
             var empNo = $(this).data('empno');
             var show = $(this).data('show');
             // var url = '../hrm/view?empNo=' + empNo;
-            var url = '../hrm/' + show + '?empNo=' + empNo;
+            if (empNo == null) {
+                var url = '../hrm/' + show;
+            } else {
+                var url = '../hrm/' + show + '?empNo=' + empNo;
+            }
             console.log(url)
 
 

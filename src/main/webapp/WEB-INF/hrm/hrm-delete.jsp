@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form action="../hrm/delete" method="post">
     <div class="col-sm-6">
-        <label for="empNo" class="form-label">사원번호 : ${hrmDeleteDto.empNo} 삭제</label>
-        <input type="text" class="form-control" id="empNo" placeholder="사원 삭제하려면 사원번호 재입력" name="empNo">
+        <label for="empNo" class="form-label">삭제 확인</label>
+        <input type="text" class="form-control" id="empNo" placeholder="사원삭제" name="empNo">
         <input type="hidden" name="targetEmpNo" value="${hrmDeleteDto.empNo}">
     </div>
 </form>

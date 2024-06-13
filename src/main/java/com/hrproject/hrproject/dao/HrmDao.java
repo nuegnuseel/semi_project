@@ -30,6 +30,15 @@ public class HrmDao {
         return result;
     }
 
+    public int setShowAbleHrm(int[] noArray) {
+        int result = 0;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.delete("setShowAbleHrm", noArray);
+        sqlSession.close();
+        return result;
+    }
+
     public HrmDto getHrm(int no) {
         HrmDto hrmDto = null;
 
