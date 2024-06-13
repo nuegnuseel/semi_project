@@ -67,14 +67,14 @@
                     <td>${attendDto.offDayRs}</td>
                     <td>${attendDto.print}</td>
                     <td>
-                        <button type="button" class="btn btn-primary delete-button" data-id="${attendDto.atdNo}">삭제</button>
+                        <button type="button" class="btn btn-danger delete-button" data-id="${attendDto.atdNo}">삭제</button>
                     </td>
 
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-
+<%--삽입 모달--%>
     <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -88,7 +88,7 @@
                         <div class="row mb-3">
                             <label for="empNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="empNo" name="empNo">
+                                <input type="number" class="form-control" id="empNo" name="empNo">
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
                         <div class="row mb-3">
                             <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="atdNum" name="atdNum">
+                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
                             </div>
                         </div>
 
@@ -186,25 +186,25 @@
                         <!-- 근태번호 -->
                         <div class="mb-3">
                             <label for="editAtdno" class="form-label">근태번호</label>
-                            <input type="text" class="form-control" id="editAtdno" name="atdNo" value="">
+                            <input type="text" class="form-control" id="editAtdno" name="atdNo" value="" readonly>
                         </div>
 
                         <!-- 사원명 -->
                         <div class="mb-3">
-                            <label for="editEname" class="form-label">사원</label>
-                            <input type="text" class="form-control" id="editEname" name="ename"  value="">
+                            <label for="editEname" class="form-label">사원명</label>
+                            <input type="text" class="form-control" id="editEname" name="ename"  value="" readonly>
                         </div>
 
                         <!-- 근태코드 -->
                         <div class="mb-3">
-                            <label for="editAtdCode" class="form-label">근태(코드)</label>
+                            <label for="editAtdCode" class="form-label">근태코드</label>
                             <input type="text" class="form-control" id="editAtdCode" name="atdCode" value="">
                         </div>
 
                         <!-- 근태수 -->
                         <div class="mb-3">
                             <label for="editAtdNum" class="form-label">근태수</label>
-                            <input type="text" class="form-control" id="editAtdNum" name="atdNum" value="">
+                            <input type="number" class="form-control" id="editAtdNum" name="atdNum" value="" step="0.1">
                         </div>
 
                         <!-- 근태기간 -->
@@ -222,7 +222,7 @@
                         <!-- 휴가사유 -->
                         <div class="mb-3">
                             <label for="editOffDayRs" class="form-label">휴가사유</label>
-                            <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" readonly value="">
+                            <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" value="">
                         </div>
 
                         <!-- 인쇄 -->
