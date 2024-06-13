@@ -56,4 +56,16 @@
     <select id="getUpdateInfo" resultType="AttendDto" parameterType="String">
         SELECT * FROM ATTEND WHERE ATDNO = #{selectName}
     </select>
+    <update id="updateAttend" parameterType="AttendDto">
+        UPDATE ATTEND
+        SET
+        ATDNUM = #{atdNum},
+        ATDDATE = #{atdDate},
+        OFFDAY = #{offDay},
+        OFFDAYRS = #{offDayRs},
+        PRINT = #{print}
+        WHERE
+        EMPNO = #{empNo} AND
+        ATDNO = #{atdNo}
+    </update>
 </mapper>

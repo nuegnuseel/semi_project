@@ -174,11 +174,11 @@
                 </div>
                 <div class="modal-body">
                     <!-- 근태 정보 수정 폼 -->
-                    <form id="editForm" action="../board/attend-modify" method="post">
+                    <form id="editForm" action="/attend/update" method="post">
                         <!-- 사원번호 -->
                         <input type="hidden" id="editEmpNo" name="empNo" value="">
 
-                        <!-- 근태일자 -->
+                        <!-- 근태번호 -->
                         <div class="mb-3">
                             <label for="editAtdno" class="form-label">근태번호</label>
                             <input type="text" class="form-control" id="editAtdno" name="atdNo" value="">

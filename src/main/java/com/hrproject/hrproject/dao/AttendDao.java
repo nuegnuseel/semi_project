@@ -65,5 +65,14 @@ public class AttendDao {
         return attendDto;
     }
 
-
+    public int updateAttend(AttendDto attendDto) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            int result = sqlSession.update("updateAttend", attendDto);
+            sqlSession.commit();  // Ensure the transaction is committed
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
