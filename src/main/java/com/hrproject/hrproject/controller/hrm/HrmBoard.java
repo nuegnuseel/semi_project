@@ -32,7 +32,7 @@ public class HrmBoard extends HttpServlet {
 
         int total = getTotalHrmCount(search, searchWord); // DB에서 가져온 총 사원수
         int currentPage = getCurrentPage(req);
-        int listPerPage = 20; // 페이지당 보여지는 게시물 수
+        int listPerPage = 15; // 페이지당 보여지는 게시물 수
         int paginationPerPage = 5; // 보여지는 페이지 수 ex : 1 ~ 5, 6 ~ 10
 
         int totalPage = calculateTotalPage(total, listPerPage);
@@ -117,6 +117,8 @@ public class HrmBoard extends HttpServlet {
         req.setAttribute("search", search);
         req.setAttribute("searchWord", searchWord);
         req.setAttribute("hrmList", hrmList);
+
+        req.setAttribute("showModal", "view");
     }
 
     @Override
@@ -177,7 +179,8 @@ public class HrmBoard extends HttpServlet {
 
         HrmDto hrmDto = HrmDto.builder()
                 .empNo(Integer.parseInt(req.getParameter("empNo")))
-                .ename(req.getParameter("eName"))
+                .ename(req.getParameter("ename"))
+
                 .foreignName(req.getParameter("foreignName"))
 
                 .deptNo(deptNo)
@@ -208,7 +211,7 @@ public class HrmBoard extends HttpServlet {
         HrmDao hrmDao = new HrmDao();
         int result = hrmDao.insertHrm(hrmDto);
         if (result > 0) {
-            ScriptWriter.alertAndNext(resp, "회원가입 되었습니다.", "../hrm/board");
+            ScriptWriter.alertAndNext(resp, "사원 정보가 입력되었습니다.", "../hrm/board");
         } else {
             ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
         }
