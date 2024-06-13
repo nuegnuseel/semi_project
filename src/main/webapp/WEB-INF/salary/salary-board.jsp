@@ -14,6 +14,18 @@
 <div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8"
      style="width: calc(100% - 520px);">
     <h2 class="mt-5 mb-5  ">LIST</h2>
+<%--    <div class="col-5">--%>
+<%--        <div class="input-group mt-3 mb-3">--%>
+<%--            <select class="form-select col-2" aria-label="Default select example">--%>
+<%--                <option selected>사원번호</option>--%>
+<%--                <option value="1">사원명</option>--%>
+<%--                <option value="2">날짜</option>--%>
+<%--                <option value="3">Three</option>--%>
+<%--            </select>--%>
+<%--            <input type="text" class="form-control col-2 " placeholder="ex)홍길동" aria-label="empNo" >--%>
+<%--            <button class="btn btn-primary col-1" type="submit" >찾기</button>--%>
+<%--        </div>--%>
+<%--    </div>--%>
     <div>
         <button class="btn btn-primary insertSalary " data-bs-target="#searchModal" data-bs-toggle="modal">검색</button>
         <a class="btn btn-primary insertSalary" href="../salary/board">전체보기</a>
