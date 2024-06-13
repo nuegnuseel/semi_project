@@ -180,6 +180,7 @@ public class HrmBoard extends HttpServlet {
         HrmDto hrmDto = HrmDto.builder()
                 .empNo(Integer.parseInt(req.getParameter("empNo")))
                 .ename(req.getParameter("ename"))
+
                 .foreignName(req.getParameter("foreignName"))
 
                 .deptNo(deptNo)

@@ -109,4 +109,8 @@
             #{item}
         </foreach>
     </update>
+
+    <select id="getSearchEmpNoByName" resultType="HrmDto" parameterType="String">
+        SELECT * FROM HRM WHERE ENAME = #{searchName}
+    </select>
 </mapper>

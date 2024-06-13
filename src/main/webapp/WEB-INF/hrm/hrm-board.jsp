@@ -24,6 +24,7 @@
         </tr>
         </thead>
         <tbody>
+
         <form action="../hrm/delete" method="post" id="delete">
             <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
                 <c:choose>
