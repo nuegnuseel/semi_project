@@ -19,7 +19,5 @@ public class AttendUpdateInfo extends HttpServlet {
         AttendDao attendDao = new AttendDao();
         AttendDto updateInfoDto = attendDao.getUpdateInfo(selectName);
 
-
-
     }
 }

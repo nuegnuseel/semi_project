@@ -374,7 +374,7 @@
                         <div class="col">급여</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salary"
-                                   name="salary">
+                               id="salary"    name="salary">
                         </div>
                     </div>
                     <div class="row">
@@ -382,7 +382,7 @@
                         <div class="col">급여 대장명칭</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salaryInfo"
-                                   name="salaryInfo">
+                                 id="salaryInfo"  name="salaryInfo">
                         </div>
                     </div>
                 </form>
@@ -520,8 +520,6 @@
             return false;
         }
     }
-
-
     // 수정 버튼 클릭 이벤트 핸들러
     $('.modify-button').click(function () {
         // 클릭된 버튼이 속한 행을 찾기 위해 가장 가까운 tr 요소를 선택
@@ -560,5 +558,119 @@
         $('input#salary_orig').val(selectedSalary.salary);
         $('input#salaryInfo_orig').val(selectedSalary.salaryInfo);
     });
+
+    // 검색에서 급액으로 검색할 때 음수 최대값 최소값 검사하는 로직
+    document.addEventListener('DOMContentLoaded', function () {
+        const minSalaryInput = document.querySelector('input[name="searchMinSalary"]');
+        const maxSalaryInput = document.querySelector('input[name="searchMaxSalary"]');
+        const form = document.getElementById('searchModalForm');
+
+        form.addEventListener('submit', function (event) {
+            let minSalary = parseFloat(minSalaryInput.value);
+            let maxSalary = parseFloat(maxSalaryInput.value);
+
+            if (isNaN(minSalary)) minSalary = 0;
+            if (isNaN(maxSalary)) maxSalary = 0;
+
+            if (minSalary < 0 || maxSalary < 0) {
+                alert("금액은 음수일 수 없습니다.");
+                event.preventDefault();
+            } else if (minSalary > maxSalary) {
+                alert("최대값과 최소값을 확인해주세요");
+                event.preventDefault();
+            }
+        });
+    });
+
+// 신규 값 넣을 때 예외 확인하는 로직
+        document.addEventListener('DOMContentLoaded', function() {
+        const modalForm = document.getElementById('modalForm');
+        const empNoInput = document.getElementById('empNo');
+        const accountingPeriodInput = document.getElementById('accountingPeriod');
+        const paymentTypeSelect = document.getElementById('paymentType');
+        const paymentType02Select = document.getElementById('paymentType02');
+        const salaryDayInput = document.getElementById('salaryDay');
+        const salaryInput = document.getElementById('salary');
+        const salaryInfoInput = document.getElementById('salaryInfo');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        modalForm.addEventListener('submit', function(event) {
+            // Check if all required fields have values
+            if (!empNoInput.value || !accountingPeriodInput.value || !paymentTypeSelect.value ||
+                !paymentType02Select.value || !salaryDayInput.value || !salaryInput.value || !salaryInfoInput.value) {
+                event.preventDefault(); // Prevent form submission
+
+                // Show alert or message about missing fields
+                alert('모든 필수 입력란을 작성하세요.');
+
+                // Set focus on the first missing input field
+                if (!empNoInput.value) {
+                    empNoInput.focus();
+                } else if (!accountingPeriodInput.value) {
+                    accountingPeriodInput.focus();
+                } else if (!paymentTypeSelect.value) {
+                    paymentTypeSelect.focus();
+                } else if (!paymentType02Select.value) {
+                    paymentType02Select.focus();
+                } else if (!salaryDayInput.value) {
+                    salaryDayInput.focus();
+                } else if (!salaryInput.value) {
+                    salaryInput.focus();
+                } else if (!salaryInfoInput.value) {
+                    salaryInfoInput.focus();
+                }
+            } else {
+                const empNoValue = parseInt(empNoInput.value, 10);
+                if (isNaN(empNoValue) || empNoValue < 0) {
+                    event.preventDefault();
+                    alert('사원번호에는 양수의 숫자만 입력해야 합니다.');
+                    empNoInput.focus();
+                }
+
+                const accountingPeriodValue = accountingPeriodInput.value; // Assuming input format is YYYY-MM
+
+                // Current date
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth = currentDate.getMonth() + 1;
+                const [year, month] = accountingPeriodValue.split('-').map(Number);
+
+                if (year > currentYear || (year === currentYear && month > currentMonth)) {
+                    event.preventDefault();
+                    alert('미래에서 근무했나요?');
+                    accountingPeriodInput.focus();
+                }
+
+                const salaryValue = parseFloat(salaryInput.value);
+                if (isNaN(salaryValue) || salaryValue < 0) {
+                    event.preventDefault();
+                    alert('급여는 양수이어야 하며, 숫자만 입력해야 합니다.');
+                    salaryInput.focus();
+                }
+
+                const salaryInfoValue = salaryInfoInput.value.trim();
+                const koreanRegex = /^[가-힣\s]*$/; // Regular expression for Korean characters including spaces
+
+                if (salaryInfoValue.length === 0 || salaryInfoValue.length > 20 || !koreanRegex.test(salaryInfoValue)) {
+                    event.preventDefault();
+                    alert('급여 대장명칭은 한글로만 입력하고, 1자 이상 20자 이하로 작성해야 합니다.');
+                    salaryInfoInput.focus();
+                }
+
+                const salaryYear = parseInt(salaryDayInput.value.substring(0, 4));
+                const salaryMonth = parseInt(salaryDayInput.value.substring(5, 7));
+                const accountingYear = parseInt(accountingPeriodInput.value.substring(0, 4));
+                const accountingMonth = parseInt(accountingPeriodInput.value.substring(5, 7));
+
+
+                if (salaryYear < accountingYear || (salaryYear === accountingYear && salaryMonth < accountingMonth)) {
+                    event.preventDefault();
+                    alert('지급일자는 근무 연월보다 과거의 날짜일 수 없습니다.');
+                    salaryDayInput.focus();
+                }
+            }
+        });
+    });
+
 </script>
 <%@include file="../include/right_side_info.jsp" %>

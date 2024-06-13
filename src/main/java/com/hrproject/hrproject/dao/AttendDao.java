@@ -59,6 +59,8 @@ public class AttendDao {
     public AttendDto getUpdateInfo(String atdNo){
         AttendDto attendDto = null;
 
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        attendDto=sqlSession.selectOne("getUpdateInfo",atdNo);
 
         return attendDto;
     }
