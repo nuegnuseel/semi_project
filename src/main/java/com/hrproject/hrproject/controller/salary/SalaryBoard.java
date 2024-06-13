@@ -18,7 +18,6 @@ public class SalaryBoard extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-
         SalaryDao salaryDao = new SalaryDao();
         List<SalarySearchDto> salaryList = salaryDao.getSalaryList();
 

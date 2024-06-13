@@ -374,7 +374,8 @@
                         <div class="col">급여</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salary"
-                                   id="salary"    name="salary">
+                               id="salary"    name="salary">
+
                         </div>
                     </div>
                     <div class="row">
@@ -382,7 +383,8 @@
                         <div class="col">급여 대장명칭</div>
                         <div class="col col-md-4">
                             <input type="text" class="form-control" placeholder="00008" aria-label="salaryInfo"
-                                   id="salaryInfo"  name="salaryInfo">
+                                 id="salaryInfo"  name="salaryInfo">
+
                         </div>
                     </div>
                 </form>
@@ -582,8 +584,9 @@
         });
     });
 
-    // 신규 값 넣을 때 예외 확인하는 로직
-    document.addEventListener('DOMContentLoaded', function() {
+
+// 신규 값 넣을 때 예외 확인하는 로직
+        document.addEventListener('DOMContentLoaded', function() {
         const modalForm = document.getElementById('modalForm');
         const empNoInput = document.getElementById('empNo');
         const accountingPeriodInput = document.getElementById('accountingPeriod');
