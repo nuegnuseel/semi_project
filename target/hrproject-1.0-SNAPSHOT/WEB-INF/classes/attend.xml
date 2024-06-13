@@ -3,6 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
+
+    <!-- 삭제 쿼리 추가 -->
+    <delete id="deleteAttend" parameterType="String">
+        DELETE FROM ATTEND WHERE ATDNO = #{atdNo}
+    </delete>
+
+
     <sql id="searchCondition">
         <choose>
             <when test="search == 'empNo'">

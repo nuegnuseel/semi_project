@@ -51,6 +51,7 @@
                 <th scope="col">휴가명</th>
                 <th scope="col">휴가사유</th>
                 <th scope="col">인쇄</th>
+                <th scope="col">삭제</th>
             </tr>
             </thead>
             <tbody>
@@ -65,6 +66,10 @@
                     <td>${attendDto.offDay}</td>
                     <td>${attendDto.offDayRs}</td>
                     <td>${attendDto.print}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary delete-button" data-id="${attendDto.atdNo}">삭제</button>
+                    </td>
+
                 </tr>
             </c:forEach>
             </tbody>
@@ -238,6 +243,7 @@
 
 
 <script>
+    //수정
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
             const selectName=$(this).text();
@@ -264,7 +270,33 @@
             })
         })
     })
+
+    // 삭제 버튼 처리
+    $(document).on("click", ".delete-button", function () {
+        const atdNo = $(this).closest("tr").find(".updateModal").text();  // 근태번호 가져오기
+        const row = $(this).closest("tr");
+
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            $.ajax({
+                url: "/attend/delete",
+                method: "POST",
+                data: { atdNo: atdNo },
+                success: function (response) {
+                    if (response.success) {
+                        row.remove(); // 성공적으로 삭제되면 해당 행을 제거
+                        alert("삭제되었습니다.");
+                    } else {
+                        alert("삭제에 실패했습니다.");
+                    }
+                },
+                error: function () {
+                    alert("삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    });
 </script>
+
 
 
 <%@include file="../include/right_side_info.jsp"%>

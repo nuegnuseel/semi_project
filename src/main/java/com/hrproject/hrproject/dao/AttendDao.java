@@ -10,6 +10,19 @@ import java.util.Map;
 
 public class AttendDao {
 
+    // 삭제 메서드 추가
+    public int deleteAttend(String atdNo) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            int result = sqlSession.delete("deleteAttend", atdNo);
+            sqlSession.commit();  // Ensure the transaction is committed
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
     public List<AttendDto> searchAttend(String search, String searchWord) {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             Map<String, Object> parameterMap = new HashMap<>();
