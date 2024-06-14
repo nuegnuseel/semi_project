@@ -6,7 +6,9 @@
     <title>Title</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/include.css" rel="stylesheet">
+    <link href="../../css/hrm.css" rel="stylesheet">
     <link href="../../css/salary.css" rel="stylesheet">
+    <link href="../../css/attend.css" rel="stylesheet">
     <link href="../../css/notice.css" rel="stylesheet">
     <link href="../../css/index.css" rel="stylesheet">
     <script src="../../js/bootstrap.bundle.min.js"></script>
@@ -17,161 +19,69 @@
 </head>
 <body>
 <%--헤더 처음--%>
-<c:choose>
-    <c:when test="${url eq 'index/index'}">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom">
-            <div class="col-md-2">
-                <a href="/index/index"><img src="../../images/logo.png"></a>
+<nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <div class="row w-100">
+            <!-- Offcanvas Toggle Button -->
+            <div class="col-auto">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <h2> 슬로건 </h2>
+            <!-- Login Button -->
+            <div class="header-user-info d-flex col-auto ms-auto text-end">
+                <img src="../../images/profile01.jpg" class="profile">
+                <a href="" class="user-name btn btn-outline-light">홍길동</a>
+                <a href="" class="btn btn-outline-light me-2">로그인</a>
+            </div>
+        </div>
+    </div>
+    <!-- Offcanvas Component -->
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="width:200px">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">메뉴</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="left-side-link nav-item=">
+                    <a class="nav-link" aria-current="page" href="/index/index">홈으로</a>
+                </li>
+                <li class="left-side-link nav-item=" >
+                    <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        조회
+                    </button>
+                    <div class="collapse" id="dashboard-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="nav-link text-decoration-none rounded">근태 조회</a></li>
+                            <li><a href="#" class="nav-link text-decoration-none rounded">급여 조회</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="left-side-link nav-item=" >
+                    <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#workDropDown" aria-expanded="false">
+                        업무
+                    </button>
+                    <div class="collapse" id="workDropDown" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="/attend/board" class="nav-link text-decoration-none rounded">근태 업무</a></li>
+                            <li><a href="/salary/board" class="nav-link text-decoration-none rounded">급여 업무</a></li>
+                            <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="left-side-link nav-item">
+                    <a class="nav-link" href="#">공지사항</a>
+                </li>
+                <li class="left-side-link nav-item">
+                    <a class="nav-link" href="#">커뮤니티</a>
+                </li>
             </ul>
-            <div class="col-md-3 text-end">
-                <h2>뭔가넣는곳</h2>
-            </div>
-        </header>
-    </c:when>
-    <c:when test="${url eq 'attend/board'}">
-<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
-    <!-- 로고 영역 시작 -->
-    <div class="col-md-2">
-        <a href="/index/index"><img src="../../images/logo.png"></a>
+        </div>
+        <hr>
     </div>
-        <%--      로고영역 끝      --%>
-    <!-- 카테고리 영역 -->
-    <div class="col-md-8">
-        <ul class="nav justify-content-center mb-0">
-            <li class="nav-item">
-                <a href="" class="nav-link p-5 bg-body-tertiary">attend1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">attend2</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">attend3</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">attend4</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">attend5</a>
-            </li>
-        </ul>
-    </div>
-        <%--      카테고리영역 끝      --%>
-    <!-- 기타 영역 -->
-    <div class="col-md-2 text-end">
-        <h2>뭔가넣는곳</h2>
-    </div>
-        <%--      기타영역 끝      --%>
-</header>
-    </c:when>
-<c:when test="${url eq 'hrm/board'}">
-<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
-    <!-- 로고 영역 시작 -->
-    <div class="col-md-2">
-        <a href="/index/index"><img src="../../images/logo.png"></a>
-    </div>
-        <%--      로고영역 끝      --%>
-    <!-- 카테고리 영역 -->
-    <div class="col-md-8">
-        <ul class="nav justify-content-center mb-0">
-            <li class="nav-item">
-                <a href="" class="nav-link p-5 bg-body-tertiary">hrm1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm2</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm3</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm4</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">hrm5</a>
-            </li>
-        </ul>
-    </div>
-        <%--      카테고리영역 끝      --%>
-    <!-- 기타 영역 -->
-    <div class="col-md-2 text-end">
-        <h2>뭔가넣는곳</h2>
-    </div>
-        <%--      기타영역 끝      --%>
-</header>
-</c:when>
-<c:when test="${url eq 'salary/board'}">
-<header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
-    <!-- 로고 영역 시작 -->
-    <div class="col-md-2">
-        <a href="/index/index"><img src="../../images/logo.png"></a>
-    </div>
-        <%--      로고영역 끝      --%>
-    <!-- 카테고리 영역 -->
-    <div class="col-md-8">
-        <ul class="nav justify-content-center mb-0">
-            <li class="nav-item">
-                <a href="" class="nav-link p-5 bg-body-tertiary">salary1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">salary2</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">salary3</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">salary4</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link p-5 bg-body-tertiary">salary5</a>
-            </li>
-        </ul>
-    </div>
-        <%--      카테고리영역 끝      --%>
-    <!-- 기타 영역 -->
-    <div class="col-md-2 text-end">
-        <h2>뭔가넣는곳</h2>
-    </div>
-        <%--      기타영역 끝      --%>
-</header>
-</c:when>
-    <c:otherwise>
-        <header class="header d-flex flex-wrap align-items-center justify-content-between border-bottom">
-            <!-- 로고 영역 시작 -->
-            <div class="col-md-2">
-                <a href="/index/index"><img src="../../images/logo.png"></a>
-            </div>
-                <%--      로고영역 끝      --%>
-            <!-- 카테고리 영역 -->
-            <div class="col-md-8">
-                <ul class="nav justify-content-center mb-0">
-                    <li class="nav-item">
-                        <a href="" class="nav-link p-5 bg-body-tertiary">카테고리1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link p-5 bg-body-tertiary">카테고리5</a>
-                    </li>
-                </ul>
-            </div>
-                <%--      카테고리영역 끝      --%>
-            <!-- 기타 영역 -->
-            <div class="col-md-2 text-end">
-                <h2>뭔가넣는곳</h2>
-            </div>
-                <%--      기타영역 끝      --%>
-        </header>
-    </c:otherwise>
-</c:choose>
+</nav>
 <%--헤더 끝--%>
 <div class="position-relative col-12">
 

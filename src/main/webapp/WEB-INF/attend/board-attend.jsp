@@ -1,20 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/left_side_menu.jsp"%>
-<style>
-
-    .insert-btn {
-        width: 80px;
-    }
-
-</style>
-
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8" style="width: calc(100% - 520px);">
-    <h2 class="mt-5 mb-5">Attend list</h2>
-    <%--검색--%>
-    <form action="../attend/board" class="row g-3 d-flex align-items-center justify-content-end">
-        <div class="col-sm-5">
-            <div class="row g-3">
+<%--attend 내용 영역--%>
+<div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+<%--  제목 영역  --%>
+    <div class="board-title">
+    <h2 class="title">Attend list</h2>
+    </div>
+    <%--검색 영역--%>
+    <div class="attend-content-area p-3 bg-body-tertiary">
+    <form action="../attend/board" class="row d-flex align-items-center justify-content-start m-0">
+        <div class="attend-search-area col-sm-5">
+            <div class="row">
                 <div class="col">
                     <select class="form-select" aria-label="Default select example" name="search">
                         <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
@@ -27,17 +23,14 @@
                 <div class="col w-auto">
                     <input type="text" name="searchWord" class="form-control" value="${searchWord}">
                 </div>
-
                 <div class="col-sm-3">
                     <button class="btn btn-primary w-100">SEARCH</button>
                 </div>
-
             </div>
         </div>
-
     </form>
 
-    <%--보드--%>
+    <%--attend list table--%>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -67,14 +60,16 @@
                 <td>${attendDto.offDayRs}</td>
                 <td>${attendDto.print}</td>
                 <td>
-                    <button type="button" class="btn btn-danger delete-button" data-id="${attendDto.atdNo}">삭제</button>
+                    <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
                 </td>
-
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <%--삽입 모달--%>
+        <%--신규 버튼--%>
+        <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
+    </div>
+    <%--attend insert 모달--%>
     <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -156,7 +151,6 @@
                         </div>
                     </form>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
@@ -166,8 +160,7 @@
         </div>
     </div>
 
-    <%--신규--%>
-    <button class="btn btn-primary insert-btn" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
+
 </div>
 <%--수정모달--%>
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -240,10 +233,8 @@
     </div>
 </div>
 
-
-
 <script>
-    //수정
+    //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
             const selectName=$(this).text();
@@ -271,8 +262,8 @@
         })
     })
 
-    // 삭제 버튼 처리
-    $(document).on("click", ".delete-button", function () {
+    // 삭제 버튼 클릭 이벤트
+    $(document).on("click", ".attend-delete-button", function () {
         const atdNo = $(this).closest("tr").find(".updateModal").text();  // 근태번호 가져오기
         const row = $(this).closest("tr");
 
@@ -296,7 +287,3 @@
         }
     });
 </script>
-
-
-
-<%@include file="../include/right_side_info.jsp"%>
