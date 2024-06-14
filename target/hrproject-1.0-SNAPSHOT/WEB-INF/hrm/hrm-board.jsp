@@ -1,10 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
+<%--   내용 영역  --%>
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+    <%--  hrm 제목 영역  --%>
     <div class="board-title">
         <h2 class="title">Hrm list</h2>
     </div>
-    <div class="attend-content-area p-3 bg-body-tertiary">
+    <%--  hrm 내용 영역  --%>
+    <div class="hrm-content-area p-3 bg-body-tertiary">
+        <%--    hrm 검색 영역    --%>
         <div class="hrm-search-area">
             <form action="../hrm/board" class="row d-flex align-items-center">
                 <div class="col-sm-3">
@@ -28,6 +32,8 @@
                 </div>
             </form>
         </div>
+        <%--    hrm 검색 영역  끝   --%>
+<%--      hrm list table 영역      --%>
         <table class="table table-sm">
             <thead>
             <tr>
@@ -87,7 +93,9 @@
             </form>
             </tbody>
         </table>
+            <%--      hrm list table 영역 끝      --%>
 
+                        <%--      hrm page 영역      --%>
         <div class="d-flex justify-content-between align-items-center ">
             <c:choose>
                 <c:when test="${empty search}">
@@ -157,8 +165,10 @@
                 </button>
             </div>
         </div>
+            <%--      hrm page 영역 끝      --%>
     </div>
-    <%-- Modal !!! --%>
+<%--    hrm 내용영역 끝    --%>
+    <%-- Modal 영역 !!! --%>
     <jsp:include page="include/insert-modal.jsp" flush="true"/>
     <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -167,7 +177,6 @@
         <jsp:include page="include/view-modal.jsp" flush="true"/>
         <jsp:include page="include/update-modal.jsp" flush="true"/>
         <jsp:include page="include/delete-modal.jsp" flush="true"/>
-
     </div>
 
 </div>

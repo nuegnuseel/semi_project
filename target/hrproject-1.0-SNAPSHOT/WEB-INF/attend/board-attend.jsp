@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp"%>
+<%--attend 내용 영역--%>
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+<%--  제목 영역  --%>
     <div class="board-title">
     <h2 class="title">Attend list</h2>
     </div>
-    <%--검색--%>
+    <%--검색 영역--%>
     <div class="attend-content-area p-3 bg-body-tertiary">
     <form action="../attend/board" class="row d-flex align-items-center justify-content-start m-0">
         <div class="attend-search-area col-sm-5">
@@ -28,7 +30,7 @@
         </div>
     </form>
 
-    <%--보드--%>
+    <%--attend list table--%>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -60,15 +62,14 @@
                 <td>
                     <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
                 </td>
-
             </tr>
         </c:forEach>
         </tbody>
     </table>
-        <%--신규--%>
+        <%--신규 버튼--%>
         <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
     </div>
-    <%--삽입 모달--%>
+    <%--attend insert 모달--%>
     <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -150,7 +151,6 @@
                         </div>
                     </form>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
@@ -233,10 +233,8 @@
     </div>
 </div>
 
-
-
 <script>
-    //수정
+    //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
             const selectName=$(this).text();
@@ -264,7 +262,7 @@
         })
     })
 
-    // 삭제 버튼 처리
+    // 삭제 버튼 클릭 이벤트
     $(document).on("click", ".attend-delete-button", function () {
         const atdNo = $(this).closest("tr").find(".updateModal").text();  // 근태번호 가져오기
         const row = $(this).closest("tr");
