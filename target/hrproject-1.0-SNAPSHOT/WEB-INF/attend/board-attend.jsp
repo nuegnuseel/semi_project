@@ -153,7 +153,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
+                    <button type="submit" form="modalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
                     <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
                 </div>
             </div>
@@ -232,17 +232,16 @@
         </div>
     </div>
 </div>
-
 <script>
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
             const selectName=$(this).text();
             $.ajax({
-                url:"/attend/attendUpdateInfo",
-                method:"POST",
-                data:{ATDNO:selectName},
-                success:function (response){
+                url: "/attend/attendUpdateInfo",
+                method: "POST",
+                data: {ATDNO: selectName},
+                success: function (response) {
                     $("#editEmpNo").val(response.empNo);
                     $("#editAtdno").val(response.atdNo);
                     $("#editEname").val(response.ename);
@@ -255,7 +254,7 @@
                     // Show the modal
                     $("#editModal").modal("show");
                 },
-                error:function (){
+                error: function () {
 
                 }
             })
@@ -271,7 +270,7 @@
             $.ajax({
                 url: "/attend/delete",
                 method: "POST",
-                data: { atdNo: atdNo },
+                data: {atdNo: atdNo},
                 success: function (response) {
                     if (response.success) {
                         row.remove(); // 성공적으로 삭제되면 해당 행을 제거
@@ -285,5 +284,70 @@
                 }
             });
         }
+    });
+    //외래키 사원번호 예외처리
+    $(document).ready(function() {
+        $("#modalForm").on('submit', function(event) {
+            var empNo = $('#empNo').val();
+            var atdNo = $('#atdNo').val();
+            var ename = $('#ename').val();
+            var atdCode = $('#atdCode').val();
+            var atdNum = $('#atdNum').val();
+            var atdDate = $('#atdDate').val();
+            var offDay = $('#offDay').val();
+            var offDayRs = $('#offDayRs').val();
+
+            //사원번호를 입력하지 않은경우
+            if (!empNo) {
+                event.preventDefault();
+                alert('사원번호를 입력해주세요.');
+                $('#empNo').val('');
+                $('#empNo').focus();
+                return;
+            }
+
+            //근태번호를 입력하지 않은경우
+            if (!atdNo) {
+                event.preventDefault();
+                alert('근태번호를 입력해주세요.');
+                $('#atdNo').val('');
+                $('#atdNo').focus();
+                return;
+            }
+
+            //사원명을 입력하지 않은경우
+            if (!ename) {
+                event.preventDefault();
+                alert('사원명을 입력해주세요.');
+                $('#ename').val('');
+                return;
+            }
+
+            //존재하지 않는 사원번호를 입력한 경우
+            if (empNo && atdNo) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/attend/checkInsert',
+                    type: 'POST',
+                    data: { empNo: empNo,
+                            atdNo: atdNo
+                    },
+                    dataType: 'json',
+                    async: false, // 동기식으로 처리
+                    success: function(response) {
+                        if(response!==1){
+                            alert("존재하지 않는 사원번호이거나 중복된 근태번호입니다.")
+                        }
+                        else {
+                            $("#modalForm").unbind('submit').submit();
+                        }
+                    },
+                    error: function() {
+                        alert('서버와의 통신에 문제가 발생했습니다.');
+                    }
+
+                });
+            }
+        });
     });
 </script>
