@@ -2,70 +2,70 @@
 <%@include file="../include/header.jsp"%>
 <%--attend 내용 영역--%>
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
-<%--  제목 영역  --%>
+    <%--  제목 영역  --%>
     <div class="board-title">
-    <h2 class="title">Attend list</h2>
+        <h2 class="title">Attend list</h2>
     </div>
     <%--검색 영역--%>
     <div class="attend-content-area p-3 bg-body-tertiary">
-    <form action="../attend/board" class="row d-flex align-items-center justify-content-start m-0">
-        <div class="attend-search-area col-sm-5">
-            <div class="row">
-                <div class="col">
-                    <select class="form-select" aria-label="Default select example" name="search">
-                        <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
-                        <option value="empNo" ${search eq "empno" ? "selected": ""}>사원번호</option>
-                        <option value="aptNo" ${search eq "aptNo" ? "selected": ""}>근태번호</option>
-                        <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
-                        <option value="atdCode" ${search eq "atdCode" ? "selected": ""}>근태코드</option>
-                    </select>
-                </div>
-                <div class="col w-auto">
-                    <input type="text" name="searchWord" class="form-control" value="${searchWord}">
-                </div>
-                <div class="col-sm-3">
-                    <button class="btn btn-primary w-100">SEARCH</button>
+        <form action="../attend/board" class="row d-flex align-items-center justify-content-start m-0">
+            <div class="attend-search-area col-sm-5">
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" name="search">
+                            <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
+                            <option value="empNo" ${search eq "empno" ? "selected": ""}>사원번호</option>
+                            <option value="aptNo" ${search eq "aptNo" ? "selected": ""}>근태번호</option>
+                            <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
+                            <option value="atdCode" ${search eq "atdCode" ? "selected": ""}>근태코드</option>
+                        </select>
+                    </div>
+                    <div class="col w-auto">
+                        <input type="text" name="searchWord" class="form-control" value="${searchWord}">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary w-100">SEARCH</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <%--attend list table--%>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <%-- 10개 --%>
-            <th scope="col">사원번호</th>
-            <th scope="col">근태번호</th>
-            <th scope="col">사원명</th>
-            <th scope="col">근태코드</th>
-            <th scope="col">근태수</th>
-            <th scope="col">근태기간</th>
-            <th scope="col">휴가명</th>
-            <th scope="col">휴가사유</th>
-            <th scope="col">인쇄</th>
-            <th scope="col">삭제</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
+        <%--attend list table--%>
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>${attendDto.empNo}</td>
-                <td class="updateModal">${attendDto.atdNo}</td> <%--근태번호 수정키--%>
-                <td>${attendDto.ename}</td>
-                <td>${attendDto.atdCode}</td>
-                <td>${attendDto.atdNum}</td>
-                <td>${attendDto.atdDate}</td>
-                <td>${attendDto.offDay}</td>
-                <td>${attendDto.offDayRs}</td>
-                <td>${attendDto.print}</td>
-                <td>
-                    <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
-                </td>
+                <%-- 10개 --%>
+                <th scope="col">사원번호</th>
+                <th scope="col">근태번호</th>
+                <th scope="col">사원명</th>
+                <th scope="col">근태코드</th>
+                <th scope="col">근태수</th>
+                <th scope="col">근태기간</th>
+                <th scope="col">휴가명</th>
+                <th scope="col">휴가사유</th>
+                <th scope="col">인쇄</th>
+                <th scope="col">삭제</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
+                <tr>
+                    <td>${attendDto.empNo}</td>
+                    <td class="updateModal">${attendDto.atdNo}</td> <%--근태번호 수정키--%>
+                    <td>${attendDto.ename}</td>
+                    <td>${attendDto.atdCode}</td>
+                    <td>${attendDto.atdNum}</td>
+                    <td>${attendDto.atdDate}</td>
+                    <td>${attendDto.offDay}</td>
+                    <td>${attendDto.offDayRs}</td>
+                    <td>${attendDto.print}</td>
+                    <td>
+                        <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
         <%--신규 버튼--%>
         <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
     </div>
@@ -330,7 +330,7 @@
                     url: '/attend/checkInsert',
                     type: 'POST',
                     data: { empNo: empNo,
-                            atdNo: atdNo
+                        atdNo: atdNo
                     },
                     dataType: 'json',
                     async: false, // 동기식으로 처리
