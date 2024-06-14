@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1"
+<div class="modal fade" id="insertModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -15,21 +15,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../hrm/board" id="modalForm" method="post" enctype="multipart/form-data">
+                <form action="../hrm/insert" id="modalForm" method="post" enctype="multipart/form-data">
                     <div class="row mt-3">
                         <div class="col">사원번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="사원번호" aria-label="empno" name="empNo">
+                            <input type="text" class="form-control is-valid" id="empNo" placeholder="사원번호"
+                                   aria-label="empno" name="empNo"
+                                   value="${maxEmpNo + 1}" readonly>
                         </div>
                         <div class="col">성명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="이름" aria-label="ename" name="ename">
+                            <input type="text" class="form-control is-invalid" id="ename" placeholder="이름"
+                                   aria-label="ename" name="ename">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">영문성명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="영문이름" aria-label="empno"
+                            <input type="text" class="form-control" id="foreignName" placeholder="영문이름"
+                                   aria-label="foreignName"
                                    name="foreignName">
                         </div>
                         <div class="col">부서</div>
@@ -64,7 +68,8 @@
                     <div class="row mt-3">
                         <div class="col">휴대폰번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="휴대폰번호" aria-label="empno"
+                            <input type="text" class="form-control is-invalid" id="mobile" placeholder="휴대폰번호 중복체크넣을예정"
+                                   aria-label="empno"
                                    name="mobile">
                         </div>
                         <div class="col">여권번호</div>
@@ -76,12 +81,17 @@
                     <div class="row mt-3">
                         <div class="col">Email</div>
                         <div class="col col-md-4">
-                            <input type="email" class="form-control" placeholder="Email" aria-label="email"
-                                   name="email">
+                            <input type="email" class="form-control is-invalid" id="email" placeholder="Email 중복체크넣을예정"
+                                   aria-label="email" name="email" aria-describedby="basic-addon2">
+                            <%--                            <input type="text" class="form-control" placeholder="Recipient's username"--%>
+                            <%--                                   aria-label="Recipient's username" aria-describedby="basic-addon2">--%>
+<%--                            <span class="input-group-text" id="basic-addon2">@example.com</span>--%>
                         </div>
+
                         <div class="col">입사일자</div>
                         <div class="col col-md-4">
-                            <input type="date" class="form-control" aria-label="hiredate" name="hireDate">
+                            <input type="date" class="form-control is-invalid" id="hireDate" aria-label="hiredate"
+                                   name="hireDate">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -92,17 +102,17 @@
                                 <option value="20">경력</option>
                             </select>
                         </div>
-                        <div class="col">퇴사일자</div>
-                        <div class="col col-md-4">
-                            <input type="date" class="form-control" aria-label="resigndate" name="resignDate">
-                        </div>
+                        <%--                        <div class="col">퇴사일자</div>--%>
+                        <%--                        <div class="col col-md-4">--%>
+                        <%--                            <input type="date" class="form-control" aria-label="resigndate" name="resignDate">--%>
+                        <%--                        </div>--%>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col">퇴사사유</div>
-                        <div class="col col-md-10">
-                            <input type="text" class="form-control" placeholder="" aria-label="">
-                        </div>
-                    </div>
+                    <%--                    <div class="row mt-3">--%>
+                    <%--                        <div class="col">퇴사사유</div>--%>
+                    <%--                        <div class="col col-md-10">--%>
+                    <%--                            <input type="text" class="form-control" placeholder="" aria-label="">--%>
+                    <%--                        </div>--%>
+                    <%--                    </div>--%>
                     <div class="row mt-3">
                         <label for="bankAccount" class="form-label">급여통장</label>
                         <div class="input-group input-group-sm mb-3">
@@ -127,25 +137,26 @@
                                    aria-describedby="inputGroup-sizing-sm" name="accountHolder">
                         </div>
                     </div>
-                    <div class="row g-3 mt-3 mb-3">
+                    <div class="row mt-3">
                         <label for="postCode" class="form-label">POST CODE</label>
                         <div class="row">
-                            <div class="col-auto"><input type="text" class="form-control" id="postCode"
-                                                         placeholder="post code"
-                                                         name="postCode" readonly></div>
+                            <div class="col-auto"><input type="text" class="form-control postCode" id="postCode"
+                                                         placeholder="post code" name="postCode" readonly></div>
                             <div class="col-auto">
-                                <button type="button" id="btn-postcode" class="btn btn-dark">우편번호 찾기</button>
+                                <button type="button" class="btn btn-dark btn-post">우편번호 찾기</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <label for="address" class="form-label">ADDRESS</label>
-                        <input type="text" class="form-control" id="address" placeholder="address" name="address"
+                        <input type="text" class="form-control address" id="address" placeholder="address"
+                               name="address"
                                readonly>
                     </div>
                     <div class="col-sm-6">
                         <label for="detail-address" class="form-label">DETAIL ADDRESS</label>
-                        <input type="text" class="form-control" id="detail-address" placeholder="detail address"
+                        <input type="text" class="form-control detail-address" id="detail-address"
+                               placeholder="detail address"
                                name="addressDetail">
                     </div>
                     <div class="mb-3">
@@ -164,10 +175,88 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
+                <button type="submit" form="modalForm" class="btn btn-primary" id="btn-insert">Submit</button>
                 <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
-                <%--                    <button type="submit" form="modalForm" class="btn btn-danger">Update</button>--%>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $("#btn-insert").on("click", () => {
+        /* 필수 입력 사항 체크 */
+        if ($("#ename").val().trim() === "") {
+            alert("성명은 필수입력 사항입니다.");
+            $("#ename").focus();
+            return false;
+        }
+        if ($("#mobile").val().trim() === "") {
+            alert("휴대폰번호는 필수입력 사항입니다.");
+            $("#mobile").focus();
+            return false;
+        }
+        if ($("#email").val().trim() === "") {
+            alert("Email은 필수입력 사항입니다.");
+            $("#email").focus();
+            return false;
+        }
+        /* 아이디 중복 체크 */
+        if (!isIdChecked) {
+            alert("아이디 중복 체크 ㄱㄱ")
+            $("#userID").focus();
+            return false;
+        }
+    });
+
+
+    $("#ename").on("keyup", function () {
+        if ($(this).val() !== '') {
+            $(this).removeClass('is-invalid');
+        } else {
+            $(this).addClass('is-invalid');
+        }
+    });
+    $("#mobile").on("keyup", function () {
+        if ($(this).val() !== '') {
+            $(this).removeClass('is-invalid');
+        } else {
+            $(this).addClass('is-invalid');
+        }
+    });
+    $("#email").on("keyup", function () {
+        if ($(this).val() !== '') {
+            $(this).removeClass('is-invalid');
+        } else {
+            $(this).addClass('is-invalid');
+        }
+    });
+    $(document).ready(function () {
+        // 오늘 날짜를 yyyy-mm-dd 형식으로 가져오기
+        var today = new Date().toISOString().split('T')[0];
+
+        // max 속성을 오늘 날짜로 설정
+        $("#hireDate").attr('max', today);
+
+        $("#hireDate").on("change", function () {
+            if ($(this).val() !== '') {
+                $(this).removeClass('is-invalid');
+                $(".invalid-feedback").hide();
+            } else {
+                $(this).addClass('is-invalid');
+                $(".invalid-feedback").show();
+            }
+        });
+    });
+
+    // var empNoInput = document.getElementById('empNo');
+    // var submitBtn = document.getElementById('submitBtn');
+    //
+    // // 제출 버튼 클릭 시 유효성 검사
+    // submitBtn.addEventListener('click', function (event) {
+    //     if (empNoInput.value.trim() === '') {
+    //         empNoInput.classList.add('is-invalid');
+    //     } else {
+    //         empNoInput.classList.remove('is-invalid');
+    //     }
+    // });
+</script>
