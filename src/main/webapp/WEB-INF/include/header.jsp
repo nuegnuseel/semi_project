@@ -33,7 +33,7 @@
             <div class="header-user-info d-flex col-auto ms-auto text-end">
                 <img src="../../images/profile01.jpg" class="profile">
                 <a href="" class="user-name btn btn-outline-light">홍길동</a>
-                <a href="../hrm/mypage?sessionEmpNo=1" class="btn btn-outline-light me-2">로그인</a>
+<%--                <a href="../hrm/mypage?sessionEmpNo=1" class="btn btn-outline-light me-2">로그인</a>--%>
                 <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
             </div>
         </div>
@@ -108,6 +108,8 @@
         <hr>
     </div>
 </nav>
+
 <%--헤더 끝--%>
 <div class="position-relative col-12">
 
+</div>

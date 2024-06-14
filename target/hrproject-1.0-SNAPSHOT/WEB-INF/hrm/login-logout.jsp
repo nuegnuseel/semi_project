@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
     <c:when test="${sessionDto eq null}">
-<div class="modal fade" id="loginModalToggle" data-bs-backdrop="static" tabindex="-1"
-     aria-labelledby="loginModal" aria-hidden="true">
+<div class="modal fade" id="loginModalToggle" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +10,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../hrm/login-logout" id="loginModal" method="post">
+                <form action="../hrm/login-logout" id="loginModalLabel" method="post">
                     <div class="row mt-8">
                         <div class="col">사원번호</div>
                         <div class="col col-md-8">

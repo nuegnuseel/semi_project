@@ -165,8 +165,9 @@
                    data-bs-target="#staticBackdropView" onclick="return chk_form()"
                    data-show="delete">삭제</a>
                 <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">신규
+                        data-bs-target="#insertModal">신규
                 </button>
+                <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
             </div>
         </div>
             <%--      hrm page 영역 끝      --%>
