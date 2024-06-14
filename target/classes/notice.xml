@@ -3,7 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.dao.NoticeDao">
-<select id="getNoticeList">
-    SELECT * FROM NOTICEBOARD
-</select>
+
+    <select id="getNoticeList">
+         SELECT * FROM NOTICE
+    </select>
+
+    <select id="getNoticeByNoticeNo" parameterType="int" resultType="com.hrproject.hrproject.dto.NoticeDto">
+        SELECT * FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+
+    <insert id="insertNotice" parameterType="com.hrproject.hrproject.dto.NoticeDto">
+        INSERT INTO NOTICE (TITLE, AUTHOR, CONTENT)
+        VALUES (
+        #{title}, <!--제목 -->
+        #{author}, <!--작성자-->
+        #{content}<!--내용-->
+        )
+    </insert>
+
 </mapper>
