@@ -10,8 +10,8 @@
         </div>
         <div>
             <li>
-                <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
-                <%--                    <button class="btn btn-outline-primary">마이페이지</button>--%>
+                <button class="btn btn-outline-primary">로그인</button>
+                <button class="btn btn-outline-primary">마이페이지</button>
             </li>
         </div>
         <div>
@@ -26,6 +26,3 @@
         </div>
     </ul>
 </div>
-</div>
-</body>
-</html>

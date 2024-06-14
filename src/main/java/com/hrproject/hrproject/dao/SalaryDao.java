@@ -5,6 +5,7 @@ import com.hrproject.hrproject.dto.SalaryLogDto;
 import com.hrproject.hrproject.dto.SalaryPlusEmpNameDto;
 import com.hrproject.hrproject.dto.SalarySearchDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -13,12 +14,22 @@ public class SalaryDao {
     public int insertSalaryDao(SalaryDto salaryDto) {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.insert("insertSalary",salaryDto);
-        //sqlSession.commit();
-        if (result>0){
-            System.out.println("salary insert Qry is successfully");
+        try {
+            result = sqlSession.insert("insertSalary", salaryDto);
+            sqlSession.commit();
+            if (result > 0) {
+                System.out.println("Salary insert query was successful.");
+            }
+        } catch (PersistenceException e) {
+            System.err.println("Error inserting salary: " + e.getMessage());
+            e.printStackTrace();
+            result = -1;
+            // Handle or rethrow the exception as needed
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
         }
-        sqlSession.close();
         return result;
 
     }

@@ -1,34 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
-<%@include file="../include/left_side_menu.jsp" %>
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8">
-<style>
-    .employee-card {
-        border: 1px solid #ddd;
-        padding: 20px;
-    }
-
-    .profile-container {
-        display: flex;
-    }
-
-    .profile-details {
-        flex: 1;
-        margin-left: 20px;
-    }
-
-    .profile-details .form-row {
-        display: flex;
-        margin-bottom: 10px;
-    }
-
-    .preview img {
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
-    }
-</style>
-
+<div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
 <div class="employee-card">
     <h1 class="text-center">사원 카드</h1>
     <div class="profile-container">
@@ -113,7 +85,4 @@
         </div>
     </div>
 </div>
-
 </div>
-
-<%@include file="../include/right_side_info.jsp" %>

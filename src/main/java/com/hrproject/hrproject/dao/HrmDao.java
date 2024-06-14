@@ -101,7 +101,6 @@ public class HrmDao {
         sqlSession.close();
         return empNoList;
     }
-
     public int getMaxEmpNo() {
         int maxEmpNo = 1;
 
@@ -122,5 +121,12 @@ public class HrmDao {
             hrmDto = hrmDao.getHrm(empNo);
         }
         return hrmDto;
+    }
+    public List<HrmDto> getEmpNoList() {
+        List<HrmDto> empNoList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        empNoList=sqlSession.selectList("getEmpNoList");
+        sqlSession.close();
+        return empNoList;
     }
 }
