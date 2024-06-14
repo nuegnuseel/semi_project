@@ -1,10 +1,32 @@
 .left-side-link{
     margin-top: 10px;
     margin-bottom: 10px;
+    .bi-house{
+        font-size: 24px;
+    }
+    .bi-search{
+        font-size: 24px;
+    }
+    .bi-person-workspace{
+        font-size: 24px;
+    }
+    .bi-exclamation-square{
+        font-size: 24px;
+    }
+    .bi-calendar4{
+        font-size: 24px;
+    }
 }
 .nav-link{
-    width:150px;
+    width:100%;
+    font-size: 24px;
     text-align: center;
+}
+.btn-toggle-nav .nav-item {
+    display: flex; /* 플렉스 박스 레이아웃 설정 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 100%; /* 필요에 따라 높이 설정 */
 }
 .nav-link-light {
     color: #f8f9fa; /* Text color for light outline button */
