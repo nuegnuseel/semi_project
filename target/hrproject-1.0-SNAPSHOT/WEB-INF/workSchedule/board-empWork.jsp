@@ -26,7 +26,7 @@
             <th scope="col">날짜</th>
             <th scope="col">출근 시간</th>
             <th scope="col">퇴근 시간</th>
-         
+
             <th scope="col">상태</th>
             <th scope="col">수정/삭제</th>
         </tr>

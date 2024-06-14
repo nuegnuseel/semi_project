@@ -568,7 +568,7 @@
         $('input#salary_orig').val(selectedSalary.salary);
         $('input#salaryInfo_orig').val(selectedSalary.salaryInfo);
     });
-<<<<<<< HEAD
+
 
     // 검색에서 급액으로 검색할 때 음수 최대값 최소값 검사하는 로직
     document.addEventListener('DOMContentLoaded', function () {
@@ -801,6 +801,5 @@
 
 </script>
 <%@include file="../include/right_side_info.jsp" %>
-=======
-</script>
->>>>>>> c7a68759cb208b9062831e015058e44909f59f57
+
+

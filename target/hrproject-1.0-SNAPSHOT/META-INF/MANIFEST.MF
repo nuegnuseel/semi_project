@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
 Built-By: jhta
-<<<<<<< HEAD
 Build-Jdk: Oracle OpenJDK version 22.0.1
-=======
-Build-Jdk: Oracle OpenJDK 22.0.1
->>>>>>> c7a68759cb208b9062831e015058e44909f59f57
 

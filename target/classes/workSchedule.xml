@@ -6,4 +6,19 @@
     <select id="getWorkList" resultType="WorkScheduleDto">
         select * from work_schedule where empNo = #{empNo}
     </select>
+
+
+    <select id="getTodaySchedule" resultType="WorkScheduleDto" parameterType="String">
+
+        select * from work_schedule where WORKDATE = #{date}
+
+    </select>
+
+    <insert id="createAllEmpSchedule" parameterType="list">
+        INSERT INTO WORK_SCHEDULE (EMPNO, WORKDATE) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.empNo}, CURDATE())
+        </foreach>
+    </insert>
+
 </mapper>
