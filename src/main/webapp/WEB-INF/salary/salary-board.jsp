@@ -1,19 +1,14 @@
 <%@ page import="com.hrproject.hrproject.dto.SalarySearchDto" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: jhta
-  Date: 2024-06-11
-  Time: 오전 10:36
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
-<%@include file="../include/left_side_menu.jsp" %>
 
 <%--테이블--%>
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8"
-     style="width: calc(100% - 520px);">
-    <h2 class="mt-5 mb-5  ">LIST</h2>
+<div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+    <div class="board-title">
+        <h2 class="title">Salary list</h2>
+    </div>
+    <div class="salary-content-area p-3 bg-body-tertiary">
 <%--    <div class="col-5">--%>
 <%--        <div class="input-group mt-3 mb-3">--%>
 <%--            <select class="form-select col-2" aria-label="Default select example">--%>
@@ -26,9 +21,9 @@
 <%--            <button class="btn btn-primary col-1" type="submit" >찾기</button>--%>
 <%--        </div>--%>
 <%--    </div>--%>
-    <div>
-        <button class="btn btn-primary insertSalary " data-bs-target="#searchModal" data-bs-toggle="modal">검색</button>
-        <a class="btn btn-primary insertSalary" href="../salary/board">전체보기</a>
+    <div class="salary-search-area">
+        <button class="salary-search-button btn btn-primary insertSalary " data-bs-target="#searchModal" data-bs-toggle="modal">검색</button>
+        <a class="salary-search-button btn btn-primary insertSalary" href="../salary/board">전체보기</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -70,9 +65,10 @@
         </c:forEach>
         </tbody>
     </table>
-    <button class="insertSalary btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
+    <button class="salary-insert-button btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">신규</button>
     <button class="btn btn-primary" data-bs-target="#modifyModalToggle" data-bs-toggle="modal" hidden="hidden">수정버튼 히든
     </button>
+</div>
 </div>
 <%--급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색 모달 급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색급여정보 검색--%>
 <div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="searchModal"
@@ -575,4 +571,3 @@
         $('input#salaryInfo_orig').val(selectedSalary.salaryInfo);
     });
 </script>
-<%@include file="../include/right_side_info.jsp" %>
