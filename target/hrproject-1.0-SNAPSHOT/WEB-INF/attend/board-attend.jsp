@@ -234,17 +234,10 @@
 </div>
 
 <script>
-<<<<<<< HEAD
-    //수정
-    $(document).ready(function () {
-        $(document).on("click", ".updateModal", function () {
-            const selectName = $(this).text();
-=======
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
             const selectName=$(this).text();
->>>>>>> 982004ed95f644f1c16309358c9a68ad2b9b24fe
             $.ajax({
                 url: "/attend/attendUpdateInfo",
                 method: "POST",
@@ -293,9 +286,6 @@
             });
         }
     });
-<<<<<<< HEAD
-
-
     //외래키 사원번호 예외처리
     $(document).ready(function() {
         $("#modalForm").on('submit', function(event) {
@@ -363,9 +353,3 @@
     });
 
 </script>
-
-
-<%@include file="../include/right_side_info.jsp" %>
-=======
-</script>
->>>>>>> 982004ed95f644f1c16309358c9a68ad2b9b24fe
