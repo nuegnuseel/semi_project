@@ -88,4 +88,17 @@ public class AttendDao {
             return 0;
         }
     }
+    public int checkEmpNo(String empNo){
+        int result =0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        result=sqlSession.selectOne("countByEmpNo",empNo);
+        return result;
+    }
+
+    public int checkAtdNo(String atdNo){
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        result=sqlSession.selectOne("countByAtdNo",atdNo);
+        return result;
+    }
 }
