@@ -97,4 +97,27 @@ public class SalaryDao {
         sqlSession.close();
         return result;
     }
+    public int getTotalSalaryCount(String search , String searchWord){
+        SalaryDao salaryTotalDao = new SalaryDao();
+        if (search != null && searchWord != null) {
+            return salaryTotalDao.getSalaryTotal(search, searchWord);
+        } else {
+            return salaryTotalDao.getSalaryTotal();
+        }
+    }
+    public int getSalaryTotal() { //salary list 의 개수 얻기
+        int total = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        total = sqlSession.selectOne("getSalaryTotal");
+        sqlSession.close();
+
+        return total;
+    }
+    public int getSalaryTotal(String search , String searchWord) { //salary list 의 개수 얻기
+        int total = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        total = sqlSession.selectOne("getSalaryTotal");
+        sqlSession.close();
+        return total;
+    }
 }

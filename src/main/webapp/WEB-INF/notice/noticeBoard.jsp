@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/left_side_menu.jsp"%>
-<div class="content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8" style="width: calc(100% - 520px);">
-    <h2>noticeboard</h2>
-    <div>
-        <table class="table table-striped">
+<div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+    <div class="board-title">
+        <h2 class="title">Notice list</h2>
+    </div>
+    <div class="notice-content-area p-3 bg-body-tertiary">
+        <table class="table table-sm">
             <thead>
             <tr>
                 <%-- 10개 --%>
@@ -38,5 +39,3 @@
         window.location.href = "/notice/insert"; // 클릭 시 이동할 페이지 URL 설정
     });
 </script>
-
-<%@include file="../include/right_side_info.jsp"%>
