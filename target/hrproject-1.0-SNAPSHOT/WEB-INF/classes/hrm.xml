@@ -45,7 +45,7 @@
     </select>
 
     <select id="getMaxEmpNo" resultType="int">
-        SELECT MAX(empno) FROM HRM
+        SELECT IFNULL(MAX(empno), 0) FROM HRM
     </select>
 
     <select id="getHrmList" resultType="HrmDto" parameterType="HrmPageDto">
@@ -82,7 +82,6 @@
     <update id="updateHrm" parameterType="HrmDto">
         UPDATE HRM
         SET
-        EMPNO = #{empNo},
         ENAME = #{ename},
         FOREIGN_NAME = #{foreignName},
         DEPTNO = #{deptNo},
@@ -107,15 +106,20 @@
         REMARKS = #{remarks},
         POSITION_NO = #{positionNo},
         ROLE = #{role}
-        WHERE EMPNO = #{oldEmpNo}
+        WHERE EMPNO = #{empNo}
     </update>
 
-    <update id="setShowAbleHrm">
+<!--    <update id="setShowAbleHrm">-->
+<!--        &lt;!&ndash; 한번에 여러개 삭제할때 씀 &ndash;&gt;-->
+<!--        UPDATE HRM SET SHOWABLE = 0 WHERE EMPNO IN-->
+<!--        <foreach collection="array" item="item" open="(" close=")" separator=",">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+    <update id="setShowAbleHrm" parameterType="HrmDto">
         <!-- 한번에 여러개 삭제할때 씀 -->
-        UPDATE HRM SET SHOWABLE = 0 WHERE EMPNO IN
-        <foreach collection="array" item="item" open="(" close=")" separator=",">
-            #{item}
-        </foreach>
+        UPDATE HRM SET SHOWABLE = 0, RESIGNDATE = #{resignDate}, OUTREASONS = #{outReasons} WHERE EMPNO = #{empNo}
     </update>
 
     <select id="getSearchEmpNoByName" resultType="HrmDto" parameterType="String">

@@ -32,7 +32,6 @@ public class HrmUpdate extends HttpServlet {
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
         req.setAttribute("hrmUpdateDto", hrmDto);
-        req.getRequestDispatcher("/WEB-INF/hrm/hrm-update.jsp").forward(req, resp);
     }
 
     @Override
@@ -41,6 +40,8 @@ public class HrmUpdate extends HttpServlet {
         String renameProfile = "";
         //String originalProfile = "";
 
+        System.out.println(req.getParameter("empNo"));
+        System.out.println(req.getParameter("ename"));
 
         String fileName = profile.getSubmittedFileName();
         String serverUploadDir = this.getServletContext().getRealPath("upload");
@@ -119,7 +120,6 @@ public class HrmUpdate extends HttpServlet {
 
                 .originalProfile(fileName)
                 .renameProfile(renameProfile)
-                .oldEmpNo(Integer.parseInt(req.getParameter("oldEmpNo")))
                 .build();
 
         HrmDao updateHrmDao = new HrmDao();

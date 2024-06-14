@@ -31,11 +31,19 @@ public class HrmDao {
         return result;
     }
 
-    public int setShowAbleHrm(int[] noArray) {
+//    public int setShowAbleHrm(int[] noArray) {
+    /* 일괄 삭제 할때 쓸거 */
+//        int result = 0;
+//
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+//        result = sqlSession.delete("setShowAbleHrm", noArray);
+//        sqlSession.close();
+//        return result;
+//    }
+    public int setShowAbleHrm(HrmDto hrmDto) {
         int result = 0;
-
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.delete("setShowAbleHrm", noArray);
+        result = sqlSession.update("setShowAbleHrm", hrmDto);
         sqlSession.close();
         return result;
     }
