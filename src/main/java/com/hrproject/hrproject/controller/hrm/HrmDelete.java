@@ -37,11 +37,8 @@ public class HrmDelete extends HttpServlet {
 
         if (result > 0) {
             ScriptWriter.alertAndNext(resp, "사원 삭제가 완료되었습니다.", "../hrm/board");
-            ScriptWriter.alertAndNext(resp, "사원정보 삭제가 완료되었습니다.", "../hrm/board");
         } else {
             ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
         }
-
-
     }
 }

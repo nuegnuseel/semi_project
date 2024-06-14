@@ -4,6 +4,7 @@ import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.HrmPageDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +40,11 @@ public class HrmDao {
         return result;
     }
 
-    public HrmDto getHrm(HrmDto getHrmDto) {
+    public HrmDto getHrm(int empNo) {
         HrmDto hrmDto = null;
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        hrmDto = sqlSession.selectOne("getHrm", getHrmDto);
+        hrmDto = sqlSession.selectOne("getHrm", empNo);
         sqlSession.close();
 
         return hrmDto;
@@ -101,5 +102,17 @@ public class HrmDao {
         sqlSession.close();
 
         return maxEmpNo;
+    }
+
+    public HrmDto login(int empNo, int password) {
+        HrmDto hrmDto = null;
+        HrmDao hrmDao = new HrmDao();
+        hrmDto = null;
+//        String hashPW = hrmDao.getHrm(empNo).getPassword(); DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
+//        if (BCrypt.checkpw(password, hashPW)){  DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
+        if (empNo == password){
+            hrmDto = hrmDao.getHrm(empNo);
+        }
+        return hrmDto;
     }
 }

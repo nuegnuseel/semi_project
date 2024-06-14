@@ -28,12 +28,9 @@ public class HrmUpdate extends HttpServlet {
         int empNo = 0;
         if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
 
-        HrmDto getHrmDto = HrmDto.builder()
-                .empNo(empNo)
-                .build();
 
         HrmDao hrmDao = new HrmDao();
-        HrmDto hrmDto = hrmDao.getHrm(getHrmDto);
+        HrmDto hrmDto = hrmDao.getHrm(empNo);
         req.setAttribute("hrmUpdateDto", hrmDto);
         req.getRequestDispatcher("/WEB-INF/hrm/hrm-update.jsp").forward(req, resp);
     }
