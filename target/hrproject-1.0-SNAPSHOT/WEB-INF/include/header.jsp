@@ -72,7 +72,7 @@
                     </div>
                 </li>
                 <li class="left-side-link nav-item">
-                    <a class="nav-link" href="#">공지사항</a>
+                    <a class="nav-link" href="/notice/board">공지사항</a>
                 </li>
                 <li class="left-side-link nav-item">
                     <a class="nav-link" href="#">커뮤니티</a>

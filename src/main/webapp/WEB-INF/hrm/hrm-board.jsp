@@ -7,7 +7,7 @@
         <h2 class="title">Hrm list</h2>
     </div>
     <%--  hrm 내용 영역  --%>
-    <div class="attend-content-area p-3 bg-body-tertiary">
+    <div class="hrm-content-area p-3 bg-body-tertiary">
         <%--    hrm 검색 영역    --%>
         <div class="hrm-search-area">
             <form action="../hrm/board" class="row d-flex align-items-center">
