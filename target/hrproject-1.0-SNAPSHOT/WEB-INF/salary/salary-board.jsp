@@ -2,7 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
-
 <%--테이블--%>
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
     <div class="board-title">
@@ -800,6 +799,5 @@
     });
 
 </script>
-<%@include file="../include/right_side_info.jsp" %>
 
 
