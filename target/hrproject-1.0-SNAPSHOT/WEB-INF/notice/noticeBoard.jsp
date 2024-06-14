@@ -39,4 +39,3 @@
         window.location.href = "/notice/insert"; // 클릭 시 이동할 페이지 URL 설정
     });
 </script>
-

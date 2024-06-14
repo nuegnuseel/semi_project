@@ -232,7 +232,6 @@
         </div>
     </div>
 </div>
-
 <script>
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
@@ -351,5 +350,4 @@
             }
         });
     });
-
 </script>
