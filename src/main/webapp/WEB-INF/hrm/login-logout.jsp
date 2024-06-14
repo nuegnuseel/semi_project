@@ -12,13 +12,15 @@
             </div>
             <div class="modal-body">
                 <form action="../hrm/login-logout" id="loginModal" method="post">
-                    <div class="row mt-3">
+                    <div class="row mt-8">
                         <div class="col">사원번호</div>
-                        <div class="col col-md-4">
+                        <div class="col col-md-8">
                             <input type="text" class="form-control" id="empNo" placeholder="사원번호 입력" aria-label="empno" name="empNo">
                         </div>
+                    </div>
+                    <div class="row mt-8">
                         <div class="col">비밀번호</div>
-                        <div class="col col-md-4">
+                        <div class="col col-md-8">
                             <input type="password" class="form-control" id="password" placeholder="비밀번호 = empNo"
                                    aria-label="password" name="password">
                         </div>

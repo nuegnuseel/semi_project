@@ -43,7 +43,7 @@ public class HrmUpdate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        boolean inputCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
+        boolean nullCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
                 || req.getParameter("ename") == null || req.getParameter("ename").equals("")
                 || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
                 || req.getParameter("email") == null || req.getParameter("email").equals("")
@@ -52,7 +52,7 @@ public class HrmUpdate extends HttpServlet {
         HrmDao hrmGetMaxDao = new HrmDao();
         int maxEmpNo = hrmGetMaxDao.getMaxEmpNo();
 
-        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo || !inputCheck) {
+        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo || !nullCheck) {
             Part profile = req.getPart("profile");
             String renameProfile = "";
             //String originalProfile = "";

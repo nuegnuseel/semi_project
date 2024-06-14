@@ -38,7 +38,8 @@
                         <%--                        <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">--%>
                         <%--                        <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>--%>
                         <%--                    </div>--%>
-                    <input type="checkbox" class="chk btn-check" id="btn-check-${loop.index}" autocomplete="off" value="${hrmDto.empNo}" name="check">
+                    <input type="checkbox" class="chk btn-check" id="btn-check-${loop.index}" autocomplete="off" value="${hrmDto.empNo}" name="check"
+                    style="width: 20px; height: 20px">
                     <label class="btn" for="btn-check-${loop.index}">${((page -1) * listPerPage) + loop.count}</label>
                 </td>
                 <td>${hrmDto.hireDate}</td>

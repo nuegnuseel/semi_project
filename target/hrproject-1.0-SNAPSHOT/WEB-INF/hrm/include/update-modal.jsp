@@ -149,23 +149,23 @@
                     <div class="row g-3 mt-3 mb-3">
                         <label for="postCode_update" class="form-label">POST CODE</label>
                         <div class="row">
-                            <div class="col-auto"><input type="text" id="postCode_update" class="form-control"
+                            <div class="col-auto"><input type="text" id="postCode_update" class="form-control postCode"
                                                          value=""
                                                          placeholder="post code"
                                                          name="postCode" readonly></div>
                             <div class="col-auto">
-                                <button type="button" id="btn-postcode" class="btn btn-dark">우편번호 찾기</button>
+                                <button type="button" id="btn-postcode" class="btn btn-dark btn-post">우편번호 찾기</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <label for="address_update" class="form-label">ADDRESS</label>
-                        <input type="text" class="form-control" id="address_update" placeholder="address" name="address"
+                        <label for="address_update" class="form-label address">ADDRESS</label>
+                        <input type="text" class="form-control address" id="address_update" placeholder="address" name="address"
                                value=""
                                readonly>
                     </div>
                     <div class="col-sm-6">
-                        <label for="addressDetail_update" class="form-label">DETAIL ADDRESS</label>
+                        <label for="addressDetail_update" class="form-label detail-address">DETAIL ADDRESS</label>
                         <input type="text" class="form-control" id="addressDetail_update" placeholder="detail address"
                                value=""
                                name="addressDetail">
