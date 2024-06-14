@@ -1,5 +1,6 @@
 package com.hrproject.hrproject.controller.hrm;
 
+import com.google.gson.Gson;
 import com.hrproject.hrproject.dao.HrmDao;
 import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.utils.ScriptWriter;
@@ -28,107 +29,121 @@ public class HrmUpdate extends HttpServlet {
         int empNo = 0;
         if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
 
-
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
-        req.setAttribute("hrmUpdateDto", hrmDto);
+        Gson gson = new Gson();
+        String json = gson.toJson(hrmDto);
+
+        // JSON 형식으로 응답 설정
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Part profile = req.getPart("profile");
-        String renameProfile = "";
-        //String originalProfile = "";
 
-        System.out.println(req.getParameter("empNo"));
-        System.out.println(req.getParameter("ename"));
+        boolean inputCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
+                || req.getParameter("ename") == null || req.getParameter("ename").equals("")
+                || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
+                || req.getParameter("email") == null || req.getParameter("email").equals("")
+                || req.getParameter("hireDate") == null || req.getParameter("hireDate").equals("");
 
-        String fileName = profile.getSubmittedFileName();
-        String serverUploadDir = this.getServletContext().getRealPath("upload");
-        File dir = new File(serverUploadDir);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        if (!fileName.isEmpty()) {
-            profile.write(serverUploadDir + File.separator + fileName); // 원본파일을 미리 써놓기
-            String first = fileName.substring(0, fileName.lastIndexOf(".")); // 파일명은 항상 파일명.확장자명 으로 들어올테니 .을 구분
-            String extension = fileName.substring(fileName.lastIndexOf("."));
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormatter.ofPattern("YYYYMMdd_hhmmss");
+        HrmDao hrmGetMaxDao = new HrmDao();
+        int maxEmpNo = hrmGetMaxDao.getMaxEmpNo();
 
-            String formatNow = now.format(dateTimeFormatter);
-            renameProfile = first + "_" + formatNow + extension;
+        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo || !inputCheck) {
+            Part profile = req.getPart("profile");
+            String renameProfile = "";
+            //String originalProfile = "";
 
-            File oldFile = new File(serverUploadDir + File.separator + fileName);
-            File newFile = new File(serverUploadDir + File.separator + renameProfile);
+            System.out.println(req.getParameter("empNo"));
+            System.out.println(req.getParameter("ename"));
 
-            Thumbnails.of(oldFile)
-                    //.sourceRegion(Positions.CENTER,100,200);
-                    .size(100, 200)
-                    .toFiles(dir, Rename.NO_CHANGE);
-            oldFile.renameTo(newFile);
-        }
-        // 서버에 이미지 올리는것도 다 돈이다.
+            String fileName = profile.getSubmittedFileName();
+            String serverUploadDir = this.getServletContext().getRealPath("upload");
+            File dir = new File(serverUploadDir);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            if (!fileName.isEmpty()) {
+                profile.write(serverUploadDir + File.separator + fileName); // 원본파일을 미리 써놓기
+                String first = fileName.substring(0, fileName.lastIndexOf(".")); // 파일명은 항상 파일명.확장자명 으로 들어올테니 .을 구분
+                String extension = fileName.substring(fileName.lastIndexOf("."));
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormatter.ofPattern("YYYYMMdd_hhmmss");
 
-        Map<Integer, String> deptMap = new HashMap<>();
-        deptMap.put(10, "개발팀");
-        deptMap.put(20, "영업팀");
-        deptMap.put(30, "인사팀");
-        deptMap.put(40, "회계팀");
-        int deptNo = Integer.parseInt(req.getParameter("deptNo"));
+                String formatNow = now.format(dateTimeFormatter);
+                renameProfile = first + "_" + formatNow + extension;
 
-        Map<Integer, String> positionMap = new HashMap<>();
-        // 사원 대리 과장 차장 대표이사
-        positionMap.put(10, "사원");
-        positionMap.put(20, "대리");
-        positionMap.put(30, "과장");
-        positionMap.put(40, "차장");
-        positionMap.put(50, "대표이사");
-        int positionNo = Integer.parseInt(req.getParameter("positionNo"));
+                File oldFile = new File(serverUploadDir + File.separator + fileName);
+                File newFile = new File(serverUploadDir + File.separator + renameProfile);
 
-        /*HrmDto hrmDto = HrmDto.builder()
-                .deptNo(10)
-                .deptName(deptMap.get(10))
-                .build();*/
+                Thumbnails.of(oldFile)
+                        //.sourceRegion(Positions.CENTER,100,200);
+                        .size(100, 200)
+                        .toFiles(dir, Rename.NO_CHANGE);
+                oldFile.renameTo(newFile);
+            }
+            // 서버에 이미지 올리는것도 다 돈이다.
 
-        HrmDto hrmDto = HrmDto.builder()
-                .empNo(Integer.parseInt(req.getParameter("empNo")))
-                .ename(req.getParameter("ename"))
-                .foreignName(req.getParameter("foreignName"))
+            Map<Integer, String> deptMap = new HashMap<>();
+            deptMap.put(10, "개발팀");
+            deptMap.put(20, "영업팀");
+            deptMap.put(30, "인사팀");
+            deptMap.put(40, "회계팀");
+            int deptNo = Integer.parseInt(req.getParameter("deptNo"));
 
-                .deptNo(deptNo)
-                .deptName(deptMap.get(deptNo))
+            Map<Integer, String> positionMap = new HashMap<>();
+            // 사원 대리 과장 차장 대표이사
+            positionMap.put(10, "사원");
+            positionMap.put(20, "대리");
+            positionMap.put(30, "과장");
+            positionMap.put(40, "차장");
+            positionMap.put(50, "대표이사");
+            int positionNo = Integer.parseInt(req.getParameter("positionNo"));
 
-                .positionNo(positionNo)
-                .position(positionMap.get(positionNo))
 
-                .mobile(req.getParameter("mobile"))
-                .passport(req.getParameter("passport"))
-                .email(req.getParameter("email"))
+            HrmDto hrmDto = HrmDto.builder()
+                    .empNo(Integer.parseInt(req.getParameter("empNo")))
+                    .ename(req.getParameter("ename"))
+                    .foreignName(req.getParameter("foreignName"))
 
-                .hireDate(req.getParameter("hireDate"))
-                .hireType(req.getParameter("hireType"))
+                    .deptNo(deptNo)
+                    .deptName(deptMap.get(deptNo))
 
-                .bankName(req.getParameter("bankName"))
-                .account(req.getParameter("account"))
-                .accountHolder(req.getParameter("accountHolder"))
+                    .positionNo(positionNo)
+                    .position(positionMap.get(positionNo))
 
-                .postCode(req.getParameter("postCode"))
-                .address(req.getParameter("address"))
-                .addressDetail(req.getParameter("addressDetail"))
+                    .mobile(req.getParameter("mobile"))
+                    .passport(req.getParameter("passport"))
+                    .email(req.getParameter("email"))
 
-                .originalProfile(fileName)
-                .renameProfile(renameProfile)
-                .build();
+                    .hireDate(req.getParameter("hireDate"))
+                    .hireType(req.getParameter("hireType"))
 
-        HrmDao updateHrmDao = new HrmDao();
-        int updateHrmResult = updateHrmDao.updateHrm(hrmDto);
-        if (updateHrmResult > 0) {
-            ScriptWriter.alertAndNext(resp, "회원가입 되었습니다.", "../hrm/board");
+                    .bankName(req.getParameter("bankName"))
+                    .account(req.getParameter("account"))
+                    .accountHolder(req.getParameter("accountHolder"))
+
+                    .postCode(req.getParameter("postCode"))
+                    .address(req.getParameter("address"))
+                    .addressDetail(req.getParameter("addressDetail"))
+
+                    .originalProfile(fileName)
+                    .renameProfile(renameProfile)
+                    .build();
+
+            HrmDao updateHrmDao = new HrmDao();
+            int updateHrmResult = updateHrmDao.updateHrm(hrmDto);
+            if (updateHrmResult > 0) {
+                ScriptWriter.alertAndNext(resp, "사원 정보가 수정되었습니다.", "../hrm/board");
+            } else {
+                ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
+            }
         } else {
-            ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
+            ScriptWriter.alertAndBack(resp, "오류가 발생했습니다a. 다시 시도해주세요.");
         }
-
     }
 }

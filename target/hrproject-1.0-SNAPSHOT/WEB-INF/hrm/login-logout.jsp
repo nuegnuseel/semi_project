@@ -19,7 +19,7 @@
                         </div>
                         <div class="col">비밀번호</div>
                         <div class="col col-md-4">
-                            <input type="password" class="form-control" id="password" placeholder="비밀번호 입력"
+                            <input type="password" class="form-control" id="password" placeholder="비밀번호 = empNo"
                                    aria-label="password" name="password">
                         </div>
                     </div>

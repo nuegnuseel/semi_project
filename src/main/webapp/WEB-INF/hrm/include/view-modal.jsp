@@ -61,9 +61,9 @@
                         </li>
                         <div class="profile-details">
                             <div class="row mb-sm-1 reduce-gap">
-                                <label for="hireDate" class="col-sm col-form-label">입사일</label>
+                                <label for="hireDate_view" class="col-sm col-form-label">입사일</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="hireDate" value="${hrmViewDto.hireDate}"
+                                    <input type="text" class="form-control" id="hireDate_view" value="${hrmViewDto.hireDate}"
                                            readonly>
                                 </div>
                                 <label for="birth" class="col-sm col-form-label">생일</label>
@@ -74,8 +74,8 @@
                             <div class="row mb-sm-1 reduce-gap">
                                 <label for="ename_view" class="col-sm col-form-label">성명</label>
                                 <div class="col-sm-4">
-<%--                                    <input type="text" class="form-control" id="ename" value="${hrmViewDto.ename}"--%>
-<%--                                           readonly>--%>
+                                    <%--                                    <input type="text" class="form-control" id="ename" value="${hrmViewDto.ename}"--%>
+                                    <%--                                           readonly>--%>
                                     <input type="text" class="form-control" placeholder="사원 이름" aria-label="ename"
                                            readonly id="ename_view" name="ename_view" value="">
                                 </div>
@@ -98,40 +98,40 @@
                                 </div>
                             </div>
                             <div class="row mb-3-sm-1">
-                                <label for="long" class="col-sm-2 col-form-label">주소</label>
+                                <label for="address_view" class="col-sm-2 col-form-label">주소</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="long"
+                                    <input type="text" class="form-control" id="address_view"
                                            value="${hrmViewDto.address}" readonly>
                                 </div>
                             </div>
                             <div class="row mb-sm-1 reduce-gap">
-                                <label for="mobile" class="col-sm col-form-label">전화</label>
+                                <label for="mobile_view" class="col-sm col-form-label">전화</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="mobile" value="${hrmViewDto.mobile}"
+                                    <input type="text" class="form-control" id="mobile_view" value="${hrmViewDto.mobile}"
                                            readonly>
                                 </div>
-                                <label for="position" class="col-sm col-form-label">직급</label>
+                                <label for="position_view" class="col-sm col-form-label">직급</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="position" value="${hrmViewDto.position}"
+                                    <input type="text" class="form-control" id="position_view" value="${hrmViewDto.position}"
                                            readonly>
                                 </div>
                             </div>
                             <div class="row mb-sm-1 reduce-gap">
-                                <label for="passport" class="col-sm col-form-label">여권</label>
+                                <label for="passport_view" class="col-sm col-form-label">여권</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="passport" value="${hrmViewDto.passport}"
+                                    <input type="text" class="form-control" id="passport_view" value="${hrmViewDto.passport}"
                                            readonly>
                                 </div>
-                                <label for="role" class="col-sm col-form-label">직책</label>
+                                <label for="role_view" class="col-sm col-form-label">직책</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="role" value="${hrmViewDto.role}"
+                                    <input type="text" class="form-control" id="role_view" value="${hrmViewDto.role}"
                                            readonly>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12">
-                                    <label for="remarks" class="form-label">비고</label>
-                                    <textarea class="form-control" id="remarks" name="remarks"
+                                    <label for="remarks_view" class="form-label">비고</label>
+                                    <textarea class="form-control" id="remarks_view" name="remarks"
                                               value="${hrmViewDto.remarks}"
                                               readonly>비고란</textarea>
                                 </div>

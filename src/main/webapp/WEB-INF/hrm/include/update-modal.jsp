@@ -12,33 +12,35 @@
             </div>
             <div class="modal-body">
                 <form action="../hrm/update" id="modifyModalForm" method="post" enctype="multipart/form-data">
-                    <input type="text" hidden="hidden" id="salary_No_orig" name="salary_No_orig">
-                    <input type="text" hidden="hidden" id="empNo_orig" name="empNo_orig">
-                    <input type="text" hidden="hidden" id="ename_orig" name="ename_orig">
-                    <input type="date" hidden="hidden" id="accountingPeriod_orig" name="accountingPeriod_orig">
-                    <input type="text" hidden="hidden" id="paymentType_orig" name="salaryCategory_orig">
-                    <input type="text" hidden="hidden" id="paymentType02_orig" name="salaryName_orig">
-                    <input type="date" hidden="hidden" id="salaryDay_orig" name="salaryDay_orig">
-                    <input type="text" hidden="hidden" id="salary_orig" name="salary_orig">
-                    <input type="text" hidden="hidden" id="salaryInfo_orig" name="salaryInfo_orig">
+                    <%--                    <input type="text" hidden="hidden" id="salary_No_orig" name="salary_No_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="empNo_orig" name="empNo_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="ename_orig" name="ename_orig">--%>
+                    <%--                    <input type="date" hidden="hidden" id="accountingPeriod_orig" name="accountingPeriod_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="paymentType_orig" name="salaryCategory_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="paymentType02_orig" name="salaryName_orig">--%>
+                    <%--                    <input type="date" hidden="hidden" id="salaryDay_orig" name="salaryDay_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="salary_orig" name="salary_orig">--%>
+                    <%--                    <input type="text" hidden="hidden" id="salaryInfo_orig" name="salaryInfo_orig">--%>
 
                     <div class="row mt-3">
                         <div class="col">사원번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control is-valid" placeholder="사원번호" value="${hrmUpdateDto.empNo}" aria-label="empno" name="empNo">
-                            <%--            <input type="hidden" class="form-control" placeholder="사원번호" value="${param.empNo}" varia-label="paramEmpNo" name="oldEmpNo">--%>
+                            <input type="text" id="empNo_update" class="form-control is-valid" placeholder="사원번호"
+                                   aria-label="empno" name="empNo" readonly>
 
                         </div>
                         <div class="col">성명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="이름" value="${hrmUpdateDto.ename}" aria-label="ename" name="ename">
+                            <input type="text" id="ename_update" class="form-control" placeholder="이름"
+                                   aria-label="ename" name="ename">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">영문성명</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="영문이름" aria-label="empno"
-                                   name="foreignName" value="${hrmUpdateDto.foreignName}">
+                            <input type="text" id="foreignName_update" class="form-control" placeholder="영문이름"
+                                   aria-label="empno"
+                                   name="foreignName">
                         </div>
                         <div class="col">부서</div>
                         <div class="col col-md-4">
@@ -72,30 +74,35 @@
                     <div class="row mt-3">
                         <div class="col">휴대폰번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="휴대폰번호" aria-label="empno"
-                                   name="mobile" value="${hrmUpdateDto.mobile}">
+                            <input type="text" id="mobile_update" class="form-control" placeholder="휴대폰번호"
+                                   aria-label="empno"
+                                   name="mobile" value="">
                         </div>
                         <div class="col">여권번호</div>
                         <div class="col col-md-4">
-                            <input type="text" class="form-control" placeholder="여권번호" aria-label="passport"
-                                   name="passport" value="${hrmUpdateDto.passport}">
+                            <input type="text" id="passport_update" class="form-control" placeholder="여권번호"
+                                   aria-label="passport"
+                                   name="passport">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">Email</div>
                         <div class="col col-md-4">
-                            <input type="email" class="form-control" placeholder="Email" aria-label="email"
-                                   name="email" value="${hrmUpdateDto.email}">
+                            <input type="email" id="email_update" class="form-control" placeholder="Email"
+                                   aria-label="email"
+                                   name="email">
                         </div>
                         <div class="col">입사일자</div>
                         <div class="col col-md-4">
-                            <input type="date" class="form-control" aria-label="hiredate" name="hireDate" value="${hrmUpdateDto.hireDate}">
+                            <input type="date" id="hireDate_update" class="form-control" aria-label="hiredate"
+                                   name="hireDate">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">입사구분</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" aria-label="hireType" name="hireType" value="${hrmUpdateDto.hireType}">
+                            <select class="form-select form-select" id="hireType_update" aria-label="hireType"
+                                    name="hireType" value="">
                                 <option value="10">신입</option>
                                 <option value="20">경력</option>
                             </select>
@@ -128,17 +135,22 @@
                                 <option value="우리은행">은행명: 우리은행</option>
                             </select>
                             <span class="input-group-text">통장번호</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-sm" name="account" value="${hrmUpdateDto.account}">
+                            <input type="text" id="account_update" class="form-control"
+                                   aria-label="Sizing example input"
+                                   aria-describedby="inputGroup-sizing-sm" name="account"
+                                   value="">
                             <span class="input-group-text">예금주</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-sm" name="accountHolder" value="${hrmUpdateDto.accountHolder}">
+                            <input type="text" id="accountHolder_update" class="form-control"
+                                   aria-label="Sizing example input"
+                                   aria-describedby="inputGroup-sizing-sm" name="accountHolder"
+                                   value="">
                         </div>
                     </div>
                     <div class="row g-3 mt-3 mb-3">
-                        <label for="postCode" class="form-label">POST CODE</label>
+                        <label for="postCode_update" class="form-label">POST CODE</label>
                         <div class="row">
-                            <div class="col-auto"><input type="text" class="form-control" id="postCode" value="${hrmUpdateDto.postCode}"
+                            <div class="col-auto"><input type="text" id="postCode_update" class="form-control"
+                                                         value=""
                                                          placeholder="post code"
                                                          name="postCode" readonly></div>
                             <div class="col-auto">
@@ -147,34 +159,88 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <label for="address" class="form-label">ADDRESS</label>
-                        <input type="text" class="form-control" id="address" placeholder="address" name="address" value="${hrmUpdateDto.address}"
+                        <label for="address_update" class="form-label">ADDRESS</label>
+                        <input type="text" class="form-control" id="address_update" placeholder="address" name="address"
+                               value=""
                                readonly>
                     </div>
                     <div class="col-sm-6">
-                        <label for="addressDetail" class="form-label">DETAIL ADDRESS</label>
-                        <input type="text" class="form-control" id="addressDetail" placeholder="detail address" value="${hrmUpdateDto.addressDetail}"
+                        <label for="addressDetail_update" class="form-label">DETAIL ADDRESS</label>
+                        <input type="text" class="form-control" id="addressDetail_update" placeholder="detail address"
+                               value=""
                                name="addressDetail">
                     </div>
                     <div class="mb-3">
                         <label for="profile" class="form-label">PROFILE</label>
-                        <input class="form-control" type="file" id="profile" name="profile" value="${hrmUpdateDto.renameProfile}"
+                        <input class="form-control" type="file" id="profile" name="profile"
+                               value=""
                                accept="image/jpg, image/png, image/gif">
                     </div>
                     <div class="mb-3 preview" style="width: 38px; height: 38px; object-fit: contain">
                         <div id="preview"></div>
                     </div>
                     <div class="col-sm-12">
-                        <label for="remarks" class="form-label">비고</label>
-                        <textarea class="form-control" id="remarks" name="remarks" value="${hrmUpdateDto.remarks}">...</textarea>
+                        <label for="remarks_update" class="form-label">비고</label>
+                        <textarea class="form-control" id="remarks_update" name="remarks"
+                                  value="">...</textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="submit" form="modifyModalForm" class="btn btn-primary">수정</button>
+                <button type="submit" form="modifyModalForm" class="btn btn-primary" id="btn-update">수정</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $("#btn-update").on("click", () => {
+        /* 필수 입력 사항 체크 */
+        if ($("#ename_update").val().trim() === "") {
+            alert("성명은 필수입력 사항입니다.");
+            $("#ename_update").focus();
+            return false;
+        }
+        if ($("#mobile_update").val().trim() === "") {
+            alert("휴대폰번호는 필수입력 사항입니다.");
+            $("#mobile_update").focus();
+            return false;
+        }
+        if ($("#email_update").val().trim() === "") {
+            alert("Email은 필수입력 사항입니다.");
+            $("#email_update").focus();
+            return false;
+        }
+        // /* 중복 체크 */
+        // if (!isIdChecked) {
+        //     alert(" 중복 체크 ㄱㄱ")
+        //     $("#userID").focus();
+        //     return false;
+        // }
+    });
+
+
+    $("#ename_update").on("keyup", function () {
+        if ($(this).val() === '') {
+            $(this).addClass('is-invalid');
+        } else {
+            $(this).removeClass('is-invalid');
+        }
+    });
+    $("#mobile_update").on("keyup", function () {
+        if ($(this).val() === '') {
+            $(this).addClass('is-invalid');
+        } else {
+            $(this).removeClass('is-invalid');
+        }
+    });
+    $("#email_update").on("keyup", function () {
+        if ($(this).val() === '') {
+            $(this).addClass('is-invalid');
+        } else {
+            $(this).removeClass('is-invalid');
+        }
+    });
+</script>
