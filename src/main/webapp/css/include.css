@@ -49,15 +49,20 @@
     height:50px;
     object-fit: cover;
     overflow: hidden;
+    margin-right: 15px;
 }
 .header-user-info{
     justify-content: center;
     align-items: center;
+    margin-right: 100px;
     .user-name{
         font-size: 18px;
         margin-left: 20px;
         margin-right: 20px;
     }
+}
+.dropdown-btn-outline-light{
+    color:#ffffff;
 }
 .board-title{
     background: #ffffff;

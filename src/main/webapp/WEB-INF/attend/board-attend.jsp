@@ -29,7 +29,6 @@
                 </div>
             </div>
         </form>
-
         <%--attend list table--%>
         <table class="table table-striped">
             <thead>
@@ -80,9 +79,9 @@
                 <div class="modal-body">
                     <form action="../attend/insert" id="insertModalForm" method="post">
                         <div class="row mb-3">
-                            <label for="empNo" class="col-sm-2 col-form-label">사원번호</label>
+                            <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="empNo" name="empNo">
+                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
                         </div>
 
@@ -173,7 +172,7 @@
                 <!-- 근태 정보 수정 폼 -->
                 <form id="editForm" action="/attend/update" method="post">
                     <!-- 사원번호 -->
-                    <input type="hidden" id="editEmpNo" name="empNo" value="">
+                    <input type="hidden" id="editEmpNo" name="editEmpNo" value="">
 
                     <!-- 근태번호 -->
                     <div class="mb-3">
@@ -287,7 +286,7 @@
     //외래키 사원번호 예외처리
     $(document).ready(function() {
         $("#insertModalForm").on('submit', function(event) {
-            var empNo = $('#empNo').val();
+            var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
 
@@ -295,8 +294,8 @@
             if (!empNo) {
                 event.preventDefault();
                 alert('사원번호를 입력해주세요.');
-                $('#empNo').val('');
-                $('#empNo').focus();
+                $('#insertEmpNo').val('');
+                $('#insertEmpNo').focus();
                 return;
             }
             //근태번호를 입력하지 않은경우
@@ -322,7 +321,6 @@
                     method:"POST",
                     data:{empNo:empNo},
                     success: function (response){
-                        console.log(response)
                         if (response === 1){
                             $.ajax({
                                 url:"/attend/insertAtdNoCheck",
@@ -334,7 +332,7 @@
                                         $("#atdNo").focus();
                                         return false;
                                     }else {
-                                        $("#modalForm").unbind('submit').submit();
+                                        $("#insertModalForm").unbind('submit').submit();
                                     }
                                 },
                                 error:function (){
@@ -343,14 +341,14 @@
                             })
                         }else {
                             alert("존재하지않는 사원번호입니다.")
-                            $("#empNo").focus();
+                            $("#insertEmpNo").focus();
                             return false;
                         }
                     },
                     error: function (){
                         alert("알수없는 오류 발생");
                     }
-                })
+                });
             }
         });
     });
