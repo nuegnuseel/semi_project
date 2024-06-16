@@ -4,16 +4,6 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
 
-    <!--adtNo 예외처리-->
-    <select id="countByAtdNo" resultType="int" parameterType="java.lang.String" >
-        SELECT COUNT(*) FROM ATTEND WHERE ATDNO = #{atdNo}
-    </select>
-
-    <!--empNo 예외처리-->
-    <select id="countByEmpNo" resultType="int" parameterType="java.lang.String" >
-        SELECT COUNT(*) FROM HRM WHERE EMPNO = #{empNo}
-    </select>
-
     <!-- 삭제 쿼리 추가 -->
     <delete id="deleteAttend" parameterType="String">
         DELETE FROM ATTEND WHERE ATDNO = #{atdNo}
@@ -87,9 +77,20 @@
         ATDDATE = #{atdDate},
         OFFDAY = #{offDay},
         OFFDAYRS = #{offDayRs},
+        ATDCODE = #{atdCode},
         PRINT = #{print}
         WHERE
         EMPNO = #{empNo} AND
         ATDNO = #{atdNo}
     </update>
+
+    <!--adtNo 예외처리-->
+    <select id="countByAtdNo" resultType="int" parameterType="java.lang.String" >
+        SELECT COUNT(*) FROM ATTEND WHERE ATDNO = #{atdNo}
+    </select>
+
+    <!--empNo 예외처리-->
+    <select id="countByEmpNo" resultType="int" parameterType="java.lang.String" >
+        SELECT COUNT(*) FROM HRM WHERE EMPNO = #{empNo}
+    </select>
 </mapper>
