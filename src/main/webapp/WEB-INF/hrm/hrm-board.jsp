@@ -167,13 +167,13 @@
                 <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
                         data-bs-target="#insertModal">신규
                 </button>
-                <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
             </div>
         </div>
             <%--      hrm page 영역 끝      --%>
     </div>
 <%--    hrm 내용영역 끝    --%>
     <%-- Modal 영역 !!! --%>
+    <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
     <jsp:include page="include/insert-modal.jsp" flush="true"/>
     <jsp:include page="include/view-modal.jsp" flush="true"/>
     <jsp:include page="include/update-modal.jsp" flush="true"/>

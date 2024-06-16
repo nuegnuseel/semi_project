@@ -24,7 +24,7 @@ public class LoginLogout extends HttpServlet {
         } else {
 
             /* 로그인 */
-            String empNoStr = req.getParameter("empNo");
+            String empNoStr = req.getParameter("loginEmpNo");
             int empNo = 0;
             if (isInteger(resp, empNoStr)) empNo = Integer.parseInt(empNoStr);
             else {
@@ -32,7 +32,7 @@ public class LoginLogout extends HttpServlet {
                 return;
             }
 
-            String passwordStr = req.getParameter("password");
+            String passwordStr = req.getParameter("loginPassword");
             int password = 0;
             if (isInteger(resp, passwordStr)) password = Integer.parseInt(passwordStr);
             else {

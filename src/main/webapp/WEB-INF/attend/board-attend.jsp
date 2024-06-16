@@ -29,7 +29,6 @@
                 </div>
             </div>
         </form>
-
         <%--attend list table--%>
         <table class="table table-striped">
             <thead>
@@ -79,11 +78,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../attend/insert" id="modalForm" method="post">
+                    <form action="../attend/insert" id="insertModalForm" method="post">
                         <div class="row mb-3">
-                            <label for="empNo" class="col-sm-2 col-form-label">사원번호</label>
+                            <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="empNo" name="empNo">
+                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
                         </div>
 
@@ -153,8 +152,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="modalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
-                    <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
+                    <button type="submit" form="insertModalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
+                    <button type="reset" form="insertModalForm" class="btn btn-danger">Reset</button>
                 </div>
             </div>
         </div>
@@ -174,7 +173,7 @@
                 <!-- 근태 정보 수정 폼 -->
                 <form id="editForm" action="/attend/update" method="post">
                     <!-- 사원번호 -->
-                    <input type="hidden" id="editEmpNo" name="empNo" value="">
+                    <input type="hidden" id="editEmpNo" name="editEmpNo" value="">
 
                     <!-- 근태번호 -->
                     <div class="mb-3">
@@ -287,8 +286,8 @@
     });
     //외래키 사원번호 예외처리
     $(document).ready(function() {
-        $("#modalForm").on('submit', function(event) {
-            var empNo = $('#empNo').val();
+        $("#insertModalForm").on('submit', function(event) {
+            var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
             var atdCode = $('#atdCode').val();
@@ -301,8 +300,8 @@
             if (!empNo) {
                 event.preventDefault();
                 alert('사원번호를 입력해주세요.');
-                $('#empNo').val('');
-                $('#empNo').focus();
+                $('#insertEmpNo').val('');
+                $('#insertEmpNo').focus();
                 return;
             }
 
@@ -327,25 +326,38 @@
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
-                    url: '/attend/checkInsert',
-                    type: 'POST',
-                    data: { empNo: empNo,
-                        atdNo: atdNo
-                    },
-                    dataType: 'json',
-                    async: false, // 동기식으로 처리
-                    success: function(response) {
-                        if(response!==1){
-                            alert("존재하지 않는 사원번호이거나 중복된 근태번호입니다.")
+                    url:"/attend/insertEmpNoCheck",
+                    method:"POST",
+                    data:{empNo:empNo},
+                    success: function (response){
+                        console.log($("#insertModalForm").serialize());
+                        if (response === 1){
+                            $.ajax({
+                                url:"/attend/insertAtdNoCheck",
+                                method:"POST",
+                                data:{atdNo:atdNo},
+                                success:function (response){
+                                    if(response === 1){
+                                        alert("중복된 근태번호입니다.")
+                                        $("#atdNo").focus();
+                                        return false;
+                                    }else {
+                                        $("#insertModalForm").unbind('submit').submit();
+                                    }
+                                },
+                                error:function (){
+                                    alert("알수없는 오류 발생");
+                                }
+                            })
+                        }else {
+                            alert("존재하지않는 사원번호입니다.")
+                            $("#insertEmpNo").focus();
+                            return false;
                         }
-                        else {
-                            $("#modalForm").unbind('submit').submit();
-                        }
                     },
-                    error: function() {
-                        alert('서버와의 통신에 문제가 발생했습니다.');
+                    error: function (){
+                        alert("알수없는 오류 발생");
                     }
-
                 });
             }
         });
