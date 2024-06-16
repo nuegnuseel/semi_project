@@ -79,7 +79,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../attend/insert" id="modalForm" method="post">
+                    <form action="../attend/insert" id="insertModalForm" method="post">
                         <div class="row mb-3">
                             <label for="empNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
@@ -153,8 +153,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="modalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
-                    <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
+                    <button type="submit" form="insertModalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
+                    <button type="reset" form="insertModalForm" class="btn btn-danger">Reset</button>
                 </div>
             </div>
         </div>
@@ -287,15 +287,10 @@
     });
     //외래키 사원번호 예외처리
     $(document).ready(function() {
-        $("#modalForm").on('submit', function(event) {
+        $("#insertModalForm").on('submit', function(event) {
             var empNo = $('#empNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
-            var atdCode = $('#atdCode').val();
-            var atdNum = $('#atdNum').val();
-            var atdDate = $('#atdDate').val();
-            var offDay = $('#offDay').val();
-            var offDayRs = $('#offDayRs').val();
 
             //사원번호를 입력하지 않은경우
             if (!empNo) {
@@ -305,7 +300,6 @@
                 $('#empNo').focus();
                 return;
             }
-
             //근태번호를 입력하지 않은경우
             if (!atdNo) {
                 event.preventDefault();
@@ -314,7 +308,6 @@
                 $('#atdNo').focus();
                 return;
             }
-
             //사원명을 입력하지 않은경우
             if (!ename) {
                 event.preventDefault();
@@ -323,30 +316,43 @@
                 return;
             }
 
-            //존재하지 않는 사원번호를 입력한 경우
+            // empNo와 atdNo 입력후 조건검사
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
-                    url: '/attend/checkInsert',
-                    type: 'POST',
-                    data: { empNo: empNo,
-                            atdNo: atdNo
-                    },
-                    dataType: 'json',
-                    async: false, // 동기식으로 처리
-                    success: function(response) {
-                        if(response!==1){
-                            alert("존재하지 않는 사원번호이거나 중복된 근태번호입니다.")
+                    url:"/attend/insertEmpNoCheck",
+                    method:"POST",
+                    data:{empNo:empNo},
+                    success: function (response){
+                        console.log(response)
+                        if (response === 1){
+                            $.ajax({
+                                url:"/attend/insertAtdNoCheck",
+                                method:"POST",
+                                data:{atdNo:atdNo},
+                                success:function (response){
+                                    if(response === 1){
+                                        alert("중복된 근태번호입니다.")
+                                        $("#atdNo").focus();
+                                        return false;
+                                    }else {
+                                        $("#modalForm").unbind('submit').submit();
+                                    }
+                                },
+                                error:function (){
+                                    alert("알수없는 오류 발생");
+                                }
+                            })
+                        }else {
+                            alert("존재하지않는 사원번호입니다.")
+                            $("#empNo").focus();
+                            return false;
                         }
-                        else {
-                            $("#modalForm").unbind('submit').submit();
-                        }
                     },
-                    error: function() {
-                        alert('서버와의 통신에 문제가 발생했습니다.');
+                    error: function (){
+                        alert("알수없는 오류 발생");
                     }
-
-                });
+                })
             }
         });
     });
