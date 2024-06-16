@@ -4,6 +4,7 @@ import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.HrmPageDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,20 +31,28 @@ public class HrmDao {
         return result;
     }
 
-    public int setShowAbleHrm(int[] noArray) {
+//    public int setShowAbleHrm(int[] noArray) {
+    /* 일괄 삭제 할때 쓸거 */
+//        int result = 0;
+//
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+//        result = sqlSession.delete("setShowAbleHrm", noArray);
+//        sqlSession.close();
+//        return result;
+//    }
+    public int setShowAbleHrm(HrmDto hrmDto) {
         int result = 0;
-
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.delete("setShowAbleHrm", noArray);
+        result = sqlSession.update("setShowAbleHrm", hrmDto);
         sqlSession.close();
         return result;
     }
 
-    public HrmDto getHrm(int no) {
+    public HrmDto getHrm(int empNo) {
         HrmDto hrmDto = null;
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        hrmDto = sqlSession.selectOne("getHrm", no);
+        hrmDto = sqlSession.selectOne("getHrm", empNo);
         sqlSession.close();
 
         return hrmDto;
@@ -89,6 +98,34 @@ public class HrmDao {
         List<HrmDto>empNoList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         empNoList=sqlSession.selectList("getSearchEmpNoByName",searchName);
+        sqlSession.close();
+        return empNoList;
+    }
+    public int getMaxEmpNo() {
+        int maxEmpNo = 1;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        maxEmpNo = sqlSession.selectOne("getMaxEmpNo");
+        sqlSession.close();
+
+        return maxEmpNo;
+    }
+
+    public HrmDto login(int empNo, int password) {
+        HrmDto hrmDto = null;
+        HrmDao hrmDao = new HrmDao();
+        hrmDto = null;
+//        String hashPW = hrmDao.getHrm(empNo).getPassword(); DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
+//        if (BCrypt.checkpw(password, hashPW)){  DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
+        if (empNo == password){
+            hrmDto = hrmDao.getHrm(empNo);
+        }
+        return hrmDto;
+    }
+    public List<HrmDto> getEmpNoList() {
+        List<HrmDto> empNoList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        empNoList=sqlSession.selectList("getEmpNoList");
         sqlSession.close();
         return empNoList;
     }

@@ -1,31 +1,62 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
-<%@include file="../include/left_side_menu.jsp" %>
-<div class="container content-area d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-absolute top-0 col-8">
-    <table class="table table-sm">
-        <thead>
-        <tr>
-            <%-- 9개 --%>
-            <th scope="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check-all">
-                    <label class="form-check-label" for="check-all"></label>
+<%--   내용 영역  --%>
+<div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
+    <%--  hrm 제목 영역  --%>
+    <div class="board-title">
+        <h2 class="title">Hrm list</h2>
+    </div>
+    <%--  hrm 내용 영역  --%>
+    <div class="hrm-content-area p-3 bg-body-tertiary">
+        <%--    hrm 검색 영역    --%>
+        <div class="hrm-search-area">
+            <form action="../hrm/board" class="row d-flex align-items-center">
+                <div class="col-sm-3">
+                    <div class="row g-3">
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example" name="search">
+                                <option value="empno" ${search eq "empno" ? "selected": ""}>사원번호</option>
+                                <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
+                                <option value="deptname" ${search eq "deptname" ? "selected": ""}>부서명</option>
+                                <option value="email" ${search eq "email" ? "selected": ""}>이메일</option>
+                                <option value="all" ${search eq "all" ? "selected": ""}>all</option>
+                            </select>
+                        </div>
+                        <div class="col w-auto">
+                            <input type="text" name="searchWord" class="form-control" value="${searchWord}">
+                        </div>
+                    </div>
                 </div>
-            </th>
-            <th scope="col">입사일자</th>
-            <th scope="col">사원번호</th>
-            <th scope="col">성명</th>
-            <th scope="col">부서번호(명)</th>
-            <th scope="col">직위/직급명</th>
-            <th scope="col">Email</th>
-            <th scope="col">계좌번호</th>
-            <th scope="col">새로운 항목 추가???</th>
-            <th scope="col">회원정보변경</th>
-        </tr>
-        </thead>
-        <tbody>
+                <div class="col-sm-3">
+                    <button class="btn btn-primary">SEARCH</button>
+                </div>
+            </form>
+        </div>
+        <%--    hrm 검색 영역  끝   --%>
+<%--      hrm list table 영역      --%>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <%-- 9개 --%>
+                <th scope="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="check-all">
+                        <label class="form-check-label" for="check-all"></label>
+                    </div>
+                </th>
+                <th scope="col">입사일자</th>
+                <th scope="col">사원번호</th>
+                <th scope="col">성명</th>
+                <th scope="col">부서번호(명)</th>
+                <th scope="col">직위/직급명</th>
+                <th scope="col">Email</th>
+                <th scope="col">계좌번호</th>
+                <th scope="col">새로운 항목 추가???</th>
+                <th scope="col">회원정보변경</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        <form action="../hrm/delete" method="post" id="delete">
             <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
                 <c:choose>
                     <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
@@ -34,171 +65,210 @@
                 </c:choose>
                 <tr>
                     <td>
-                        <input type="hidden" name="test" value="test">
-                        <div class="form-check form-check-inline">
-                            <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">
-                            <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>
-                        </div>
+                            <%--                    <div class="form-check form-check-inline">--%>
+                            <%--                        <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">--%>
+                            <%--                        <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>--%>
+                            <%--                    </div>--%>
+                        <input type="checkbox" class="chk btn-check" id="btn-check-${loop.index}" autocomplete="off" value="${hrmDto.empNo}" name="check"
+                               style="width: 20px; height: 20px">
+                        <label class="btn" for="btn-check-${loop.index}">${((page -1) * listPerPage) + loop.count}</label>
                     </td>
                     <td>${hrmDto.hireDate}</td>
-                    <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                           data-bs-target="#staticBackdropView"
-                           data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
-                    <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                           data-bs-target="#staticBackdropView"
-                           data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
+                    <td>${hrmDto.empNo}</td>
+                    <td>${hrmDto.ename}</td>
                     <td>${hrmDto.deptName}</td>
                     <td>${hrmDto.position}</td>
                     <td>${hrmDto.email}</td>
                     <td>${hrmDto.account}</td>
                     <td><input type="text" value="일단빈칸"></td>
-                    <td><a href="#" data-bs-toggle="modal" class="openModal"
-                           data-bs-target="#staticBackdropView"
-                           data-empno="${hrmDto.empNo}" data-show="update">정보변경</a></td>
+                    <td>
+                        <button type="button" class="btn btn-primary view-button" data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#viewModal">상세
+                        </button>
+                        <button type="button" class="btn btn-primary modify-button" data-bs-target="#modifyModal"
+                                data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#modifyModal">수정
+                        </button>
+                        <button type="button" class="btn btn-primary delete-button" data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제
+                        </button>
+                    </td>
                 </tr>
             </c:forEach>
-        </form>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+            <%--      hrm list table 영역 끝      --%>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <c:choose>
-            <c:when test="${empty search}">
-                <c:set var="firstPage" value="../hrm/board?page=1"></c:set>
-                <c:set var="prePage" value="../hrm/board?page=${previousPage}"></c:set>
-                <c:set var="selectPage" value="../hrm/board?page="></c:set>
-                <c:set var="nextPage" value="../hrm/board?page=${nextPage}"></c:set>
-                <c:set var="lastPage" value="../hrm/board?page=${totalPage}"></c:set>
-            </c:when>
-            <c:otherwise>
-                <c:set var="firstPage" value="../hrm/board?search=${search}&searchWord=${searchWord}&page=1"></c:set>
-                <c:set var="prePage"
-                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${previousPage}"></c:set>
-                <c:set var="selectPage" value="../hrm/board?search=${search}&searchWord=${searchWord}&page="></c:set>
-                <c:set var="nextPage"
-                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${nextPage}"></c:set>
-                <c:set var="lastPage"
-                       value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${totalPage}"></c:set>
-            </c:otherwise>
-        </c:choose>
-        <nav aria-label="Page navigation example" class="mt-5 mb-5">
-            <ul class="pagination d-flex justify-content-center">
-                <c:if test="${startPage ne 1}">
-                    <li class="page-item">
-                        <a class="page-link" href="${firstPage}" aria-label="Previous">
-                            First
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prePage}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                </c:if>
-                <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
-                    <c:choose>
-                        <c:when test="${page eq i}">
-                            <li class="page-item active"><span class="page-link">${i}</span></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="${selectPage}${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <c:if test="${endPage ne totalPage}">
-                    <li class="page-item">
-                        <a class="page-link" href="${nextPage}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${lastPage}" aria-label="Next">
-                            Last
-                        </a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-        <form action="../hrm/board" class="row g-3 d-flex align-items-center">
-            <div class="col-sm-7">
-                <div class="row g-3">
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example" name="search">
-                            <option value="empno" ${search eq "empno" ? "selected": ""}>사원번호</option>
-                            <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
-                            <option value="deptname" ${search eq "deptname" ? "selected": ""}>부서명</option>
-                            <option value="email" ${search eq "email" ? "selected": ""}>이메일</option>
-                            <option value="all" ${search eq "all" ? "selected": ""}>all</option>
-                        </select>
-                    </div>
-                    <div class="col w-auto">
-                        <input type="text" name="searchWord" class="form-control" value="${searchWord}">
-                    </div>
-                </div>
+                        <%--      hrm page 영역      --%>
+        <div class="d-flex justify-content-between align-items-center ">
+            <c:choose>
+                <c:when test="${empty search}">
+                    <c:set var="firstPage" value="../hrm/board?page=1"></c:set>
+                    <c:set var="prePage" value="../hrm/board?page=${previousPage}"></c:set>
+                    <c:set var="selectPage" value="../hrm/board?page="></c:set>
+                    <c:set var="nextPage" value="../hrm/board?page=${nextPage}"></c:set>
+                    <c:set var="lastPage" value="../hrm/board?page=${totalPage}"></c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="firstPage"
+                           value="../hrm/board?search=${search}&searchWord=${searchWord}&page=1"></c:set>
+                    <c:set var="prePage"
+                           value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${previousPage}"></c:set>
+                    <c:set var="selectPage"
+                           value="../hrm/board?search=${search}&searchWord=${searchWord}&page="></c:set>
+                    <c:set var="nextPage"
+                           value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${nextPage}"></c:set>
+                    <c:set var="lastPage"
+                           value="../hrm/board?search=${search}&searchWord=${searchWord}&page=${totalPage}"></c:set>
+                </c:otherwise>
+            </c:choose>
+            <nav aria-label="Page navigation example" class="">
+                <ul class="pagination d-flex justify-content-center " style="margin-bottom: 0">
+                    <c:if test="${startPage ne 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="${firstPage}" aria-label="Previous">
+                                First
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${prePage}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+                        <c:choose>
+                            <c:when test="${page eq i}">
+                                <li class="page-item active"><span class="page-link">${i}</span></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link" href="${selectPage}${i}">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${endPage ne totalPage}">
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPage}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${lastPage}" aria-label="Next">
+                                Last
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+            <div class="text-end">
+                <a href="#" data-bs-toggle="modal" class="openModal btn btn-danger"
+                   data-bs-target="#staticBackdropView" onclick="return chk_form()"
+                   data-show="delete">삭제</a>
+                <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
+                        data-bs-target="#insertModal">신규
+                </button>
             </div>
-            <div class="col-sm-3">
-                <button class="btn btn-primary w-100">SEARCH</button>
-            </div>
-        </form>
-
-
-        <%-- 삭제 모달 --%>
-        <!-- Scrollable modal -->
-        <!-- Button trigger modal -->
-        <a href="#" data-bs-toggle="modal" class="openModal btn btn-danger"
-           data-bs-target="#staticBackdropView" onclick="return chk_form()"
-           data-show="delete">삭제</a>
-        </button>
-        <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop">신규
-        </button>
-
+        </div>
+            <%--      hrm page 영역 끝      --%>
     </div>
-
-    <%-- Modal !!! --%>
+<%--    hrm 내용영역 끝    --%>
+    <%-- Modal 영역 !!! --%>
+    <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
     <jsp:include page="include/insert-modal.jsp" flush="true"/>
-    <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <%--        <c:choose>--%>
-        <%--        <c:when test="조건문 들어가서 view update delete 중에 하나만 include 해야함">--%>
-        <jsp:include page="include/view-modal.jsp" flush="true"/>
-        <jsp:include page="include/update-modal.jsp" flush="true"/>
-        <jsp:include page="include/delete-modal.jsp" flush="true"/>
-
-    </div>
-
+    <jsp:include page="include/view-modal.jsp" flush="true"/>
+    <jsp:include page="include/update-modal.jsp" flush="true"/>
+    <jsp:include page="include/delete-modal.jsp" flush="true"/>
 </div>
 <script>
-    function chk_form() {
-        document.getElementById('delete').submit();
-    }
+    // 상세 보기 버튼 클릭 이벤트 핸들러
+    $('.view-button').click(function () {
+        var empNo = $(this).attr('data-empno');
 
-    // 모달을 열기 위한 스크립트
-    $(document).ready(function () {
-        $('.openModal').on('click', function (event) {
-            event.preventDefault();
-            var empNo = $(this).data('empno');
-            var show = $(this).data('show');
-            // var url = '../hrm/view?empNo=' + empNo;
-            if (empNo == null) {
-                var url = '../hrm/' + show;
-            } else {
-                var url = '../hrm/' + show + '?empNo=' + empNo;
+        $.ajax({
+            url: '../hrm/view',  // 데이터를 가져올 서블릿 URL
+            type: 'POST',
+            data: {empNo: empNo},
+            success: function (response) {
+                // 서버에서 받은 데이터로 폼을 채움
+                $('input#hireDate_view').val(response.empNo);
+                $('input#empNo_view').val(response.empNo);
+                $('input#ename_view').val(response.ename);
+                $('input#deptName_view').val(response.deptName);
+                $('input#email_view').val(response.email);
+                $('input#postCode_view').val(response.postCode);
+                $('input#address_view').val(response.address);
+                $('input#addressDetail_view').val(response.addressDetail);
+                $('input#mobile_view').val(response.mobile);
+                $('input#position_view').val(response.position);
+                $('input#passport_view').val(response.passport);
+                $('input#role_view').val(response.role);
+                $('input#remarks_view').val(response.remarks);
+
+                // 나머지 필드들도 동일한 방식으로 처리
+                // 예: $('input#hireDate_view').val(response.hireDate);
+
+                // 수정 모달을 보여줌
+                $('#viewModal').modal('show');
+            },
+            error: function () {
+                alert('사원 정보를 가져오는 데 실패했습니다.');
             }
-            console.log(url)
-
-
-            // Ajax로 페이지 내용을 가져와 모달(modal-body 부분???)에 로드
-            $.get(url, function (data) {
-                $('#staticBackdropView .modal-body').html(data);
-                var myModal = new bootstrap.Modal(document.getElementById('staticBackdropView'));
-                myModal.show();
-            });
-        });
-        $('#staticBackdropView').on('hidden.bs.modal', function () {
-            location.reload();
         });
     });
+
+    $('.modify-button').click(function () {
+        var empNo = $(this).attr('data-empno');
+
+        $.ajax({
+            url: '../hrm/update',  // 데이터를 가져올 서블릿 URL
+            type: 'GET',
+            data: {empNo: empNo},
+            success: function (response) {
+                // 서버에서 받은 데이터로 폼을 채움
+                $('input#empNo_update').val(response.empNo);
+                $('input#ename_update').val(response.ename);
+                $('input#foreignName_update').val(response.foreignName);
+                $('input#deptName_update').val(response.deptName);
+                $('input#mobile_update').val(response.mobile);
+                $('input#passport_update').val(response.passport);
+                $('input#email_update').val(response.email);
+                $('input#postCode_update').val(response.postCode);
+                $('input#hireDate_update').val(response.hireDate);
+                $('input#hireType_update').val(response.hireType);
+                $('input#address_update').val(response.address);
+                $('input#addressDetail_update').val(response.addressDetail);
+                $('input#account_update').val(response.account);
+                $('input#accountHolder_update').val(response.accountHolder);
+                $('input#remarks_update').val(response.remarks);
+
+                // 나머지 필드들도 동일한 방식으로 처리
+                // 예: $('input#hireDate_view').val(response.hireDate);
+
+                // 수정 모달을 보여줌
+                $('#modifyModal').modal('show');
+            },
+            error: function () {
+                alert('사원 정보를 가져오는 데 실패했습니다.');
+            }
+        });
+    });
+
+    let empNo;
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function () {
+            empNo = this.getAttribute('data-empno');
+        });
+    });
+
+    function confirmDelete() {
+        const password = document.getElementById('deletePasswordInput').value;
+        if (password === '1234') {
+            window.location.href = '../hrm/delete?empNo=' + empNo;
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+            return false;
+        }
+    }
 
 
     $("#check-all").on("change", function () {
@@ -237,7 +307,7 @@
     })
 
     /* postcode 버튼 눌러서 주소 팝업창 불러옴 */
-    $("#btn-postcode").on("click", makePostCode);
+    $(".btn-post").on("click", makePostCode);
 
     function makePostCode() {
         new daum.Postcode({
@@ -272,20 +342,19 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
 // 조합된 참고항목을 해당 필드에 넣는다.
-                    $("#extra-address").val(extraAddr);
+                    $(".extra-address").val(extraAddr);
 
                 } else {
-                    $("#extra-address").val("");
+                    $(".extra-address").val("");
                 }
 
 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $("#postCode").val(data.zonecode);
-                $("#address").val(addr);
+                $(".postCode").val(data.zonecode);
+                $(".address").val(addr);
 
 // 커서를 상세주소 필드로 이동한다.
-                $("#detail-address").focus();
+                $(".detail-address").focus();
             }
         }).open()({});
     }
 </script>
-<%@include file="../include/right_side_info.jsp" %>
