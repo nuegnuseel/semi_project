@@ -57,40 +57,44 @@
             </thead>
             <tbody>
 
-            <form action="../hrm/delete" method="post" id="delete">
-                <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
-                    <c:choose>
-                        <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
-                        <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
-                        <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
-                    </c:choose>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="test" value="test">
-                            <div class="form-check form-check-inline">
-                                <input class="chk form-check-input" type="checkbox" name="check"
-                                       value="${hrmDto.empNo}">
-                                <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>
-                            </div>
-                        </td>
-                        <td>${hrmDto.hireDate}</td>
-                        <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                               data-bs-target="#staticBackdropView"
-                               data-empno="${hrmDto.empNo}">${hrmDto.empNo}</a></td>
-                        <td><a href="#" data-bs-toggle="modal" class="openModal" data-show="view"
-                               data-bs-target="#staticBackdropView"
-                               data-empno="${hrmDto.empNo}">${hrmDto.ename}</a></td>
-                        <td>${hrmDto.deptName}</td>
-                        <td>${hrmDto.position}</td>
-                        <td>${hrmDto.email}</td>
-                        <td>${hrmDto.account}</td>
-                        <td><input type="text" value="일단빈칸"></td>
-                        <td><a href="#" data-bs-toggle="modal" class="openModal"
-                               data-bs-target="#staticBackdropView"
-                               data-empno="${hrmDto.empNo}" data-show="update">정보변경</a></td>
-                    </tr>
-                </c:forEach>
-            </form>
+            <c:forEach items="${hrmList}" var="hrmDto" varStatus="loop">
+                <c:choose>
+                    <%-- 현재 주소창에 '?page=' param이 없을시 page=1로 설정 --%>
+                    <c:when test="${param.page == null}"><c:set var="page" value="1"></c:set></c:when>
+                    <c:otherwise><c:set var="page" value="${param.page}"></c:set></c:otherwise>
+                </c:choose>
+                <tr>
+                    <td>
+                            <%--                    <div class="form-check form-check-inline">--%>
+                            <%--                        <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">--%>
+                            <%--                        <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>--%>
+                            <%--                    </div>--%>
+                        <input type="checkbox" class="chk btn-check" id="btn-check-${loop.index}" autocomplete="off" value="${hrmDto.empNo}" name="check"
+                               style="width: 20px; height: 20px">
+                        <label class="btn" for="btn-check-${loop.index}">${((page -1) * listPerPage) + loop.count}</label>
+                    </td>
+                    <td>${hrmDto.hireDate}</td>
+                    <td>${hrmDto.empNo}</td>
+                    <td>${hrmDto.ename}</td>
+                    <td>${hrmDto.deptName}</td>
+                    <td>${hrmDto.position}</td>
+                    <td>${hrmDto.email}</td>
+                    <td>${hrmDto.account}</td>
+                    <td><input type="text" value="일단빈칸"></td>
+                    <td>
+                        <button type="button" class="btn btn-primary view-button" data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#viewModal">상세
+                        </button>
+                        <button type="button" class="btn btn-primary modify-button" data-bs-target="#modifyModal"
+                                data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#modifyModal">수정
+                        </button>
+                        <button type="button" class="btn btn-primary delete-button" data-empno="${hrmDto.empNo}"
+                                data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
             <%--      hrm list table 영역 끝      --%>
@@ -161,7 +165,7 @@
                    data-bs-target="#staticBackdropView" onclick="return chk_form()"
                    data-show="delete">삭제</a>
                 <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">신규
+                        data-bs-target="#insertModal">신규
                 </button>
             </div>
         </div>
@@ -169,48 +173,102 @@
     </div>
 <%--    hrm 내용영역 끝    --%>
     <%-- Modal 영역 !!! --%>
+    <jsp:include page="../hrm/login-logout.jsp" flush="true"/>
     <jsp:include page="include/insert-modal.jsp" flush="true"/>
-    <div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <%--        <c:choose>--%>
-        <%--        <c:when test="조건문 들어가서 view update delete 중에 하나만 include 해야함">--%>
-        <jsp:include page="include/view-modal.jsp" flush="true"/>
-        <jsp:include page="include/update-modal.jsp" flush="true"/>
-        <jsp:include page="include/delete-modal.jsp" flush="true"/>
-    </div>
-
+    <jsp:include page="include/view-modal.jsp" flush="true"/>
+    <jsp:include page="include/update-modal.jsp" flush="true"/>
+    <jsp:include page="include/delete-modal.jsp" flush="true"/>
 </div>
 <script>
-    function chk_form() {
-        document.getElementById('delete').submit();
-    }
+    // 상세 보기 버튼 클릭 이벤트 핸들러
+    $('.view-button').click(function () {
+        var empNo = $(this).attr('data-empno');
 
-    // 모달을 열기 위한 스크립트
-    $(document).ready(function () {
-        $('.openModal').on('click', function (event) {
-            event.preventDefault();
-            var empNo = $(this).data('empno');
-            var show = $(this).data('show');
-            // var url = '../hrm/view?empNo=' + empNo;
-            if (empNo == null) {
-                var url = '../hrm/' + show;
-            } else {
-                var url = '../hrm/' + show + '?empNo=' + empNo;
+        $.ajax({
+            url: '../hrm/view',  // 데이터를 가져올 서블릿 URL
+            type: 'POST',
+            data: {empNo: empNo},
+            success: function (response) {
+                // 서버에서 받은 데이터로 폼을 채움
+                $('input#hireDate_view').val(response.empNo);
+                $('input#empNo_view').val(response.empNo);
+                $('input#ename_view').val(response.ename);
+                $('input#deptName_view').val(response.deptName);
+                $('input#email_view').val(response.email);
+                $('input#postCode_view').val(response.postCode);
+                $('input#address_view').val(response.address);
+                $('input#addressDetail_view').val(response.addressDetail);
+                $('input#mobile_view').val(response.mobile);
+                $('input#position_view').val(response.position);
+                $('input#passport_view').val(response.passport);
+                $('input#role_view').val(response.role);
+                $('input#remarks_view').val(response.remarks);
+
+                // 나머지 필드들도 동일한 방식으로 처리
+                // 예: $('input#hireDate_view').val(response.hireDate);
+
+                // 수정 모달을 보여줌
+                $('#viewModal').modal('show');
+            },
+            error: function () {
+                alert('사원 정보를 가져오는 데 실패했습니다.');
             }
-            console.log(url)
-
-
-            // Ajax로 페이지 내용을 가져와 모달(modal-body 부분???)에 로드
-            $.get(url, function (data) {
-                $('#staticBackdropView .modal-body').html(data);
-                var myModal = new bootstrap.Modal(document.getElementById('staticBackdropView'));
-                myModal.show();
-            });
-        });
-        $('#staticBackdropView').on('hidden.bs.modal', function () {
-            location.reload();
         });
     });
+
+    $('.modify-button').click(function () {
+        var empNo = $(this).attr('data-empno');
+
+        $.ajax({
+            url: '../hrm/update',  // 데이터를 가져올 서블릿 URL
+            type: 'GET',
+            data: {empNo: empNo},
+            success: function (response) {
+                // 서버에서 받은 데이터로 폼을 채움
+                $('input#empNo_update').val(response.empNo);
+                $('input#ename_update').val(response.ename);
+                $('input#foreignName_update').val(response.foreignName);
+                $('input#deptName_update').val(response.deptName);
+                $('input#mobile_update').val(response.mobile);
+                $('input#passport_update').val(response.passport);
+                $('input#email_update').val(response.email);
+                $('input#postCode_update').val(response.postCode);
+                $('input#hireDate_update').val(response.hireDate);
+                $('input#hireType_update').val(response.hireType);
+                $('input#address_update').val(response.address);
+                $('input#addressDetail_update').val(response.addressDetail);
+                $('input#account_update').val(response.account);
+                $('input#accountHolder_update').val(response.accountHolder);
+                $('input#remarks_update').val(response.remarks);
+
+                // 나머지 필드들도 동일한 방식으로 처리
+                // 예: $('input#hireDate_view').val(response.hireDate);
+
+                // 수정 모달을 보여줌
+                $('#modifyModal').modal('show');
+            },
+            error: function () {
+                alert('사원 정보를 가져오는 데 실패했습니다.');
+            }
+        });
+    });
+
+    let empNo;
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function () {
+            empNo = this.getAttribute('data-empno');
+        });
+    });
+
+    function confirmDelete() {
+        const password = document.getElementById('deletePasswordInput').value;
+        if (password === '1234') {
+            window.location.href = '../hrm/delete?empNo=' + empNo;
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+            return false;
+        }
+    }
 
 
     $("#check-all").on("change", function () {
@@ -249,7 +307,7 @@
     })
 
     /* postcode 버튼 눌러서 주소 팝업창 불러옴 */
-    $("#btn-postcode").on("click", makePostCode);
+    $(".btn-post").on("click", makePostCode);
 
     function makePostCode() {
         new daum.Postcode({
@@ -284,18 +342,18 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
 // 조합된 참고항목을 해당 필드에 넣는다.
-                    $("#extra-address").val(extraAddr);
+                    $(".extra-address").val(extraAddr);
 
                 } else {
-                    $("#extra-address").val("");
+                    $(".extra-address").val("");
                 }
 
 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $("#postCode").val(data.zonecode);
-                $("#address").val(addr);
+                $(".postCode").val(data.zonecode);
+                $(".address").val(addr);
 
 // 커서를 상세주소 필드로 이동한다.
-                $("#detail-address").focus();
+                $(".detail-address").focus();
             }
         }).open()({});
     }
