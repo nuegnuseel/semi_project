@@ -33,7 +33,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <%-- 10개 --%>
                 <th scope="col">사원번호</th>
                 <th scope="col">근태번호</th>
                 <th scope="col">사원명</th>
@@ -290,11 +289,6 @@
             var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
-            var atdCode = $('#atdCode').val();
-            var atdNum = $('#atdNum').val();
-            var atdDate = $('#atdDate').val();
-            var offDay = $('#offDay').val();
-            var offDayRs = $('#offDayRs').val();
 
             //사원번호를 입력하지 않은경우
             if (!empNo) {
@@ -304,7 +298,6 @@
                 $('#insertEmpNo').focus();
                 return;
             }
-
             //근태번호를 입력하지 않은경우
             if (!atdNo) {
                 event.preventDefault();
@@ -313,7 +306,6 @@
                 $('#atdNo').focus();
                 return;
             }
-
             //사원명을 입력하지 않은경우
             if (!ename) {
                 event.preventDefault();
@@ -321,8 +313,7 @@
                 $('#ename').val('');
                 return;
             }
-
-            //존재하지 않는 사원번호를 입력한 경우
+            // empNo와 atdNo 입력후 조건검사
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
@@ -330,7 +321,6 @@
                     method:"POST",
                     data:{empNo:empNo},
                     success: function (response){
-                        console.log($("#insertModalForm").serialize());
                         if (response === 1){
                             $.ajax({
                                 url:"/attend/insertAtdNoCheck",
