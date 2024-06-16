@@ -11,5 +11,26 @@
         <p><strong>조회수:</strong> ${notice.views}</p>
         <hr>
         <p>${notice.content}</p>
+        <hr>
+
+        <div class="d-grid gap-2 d-md-block">
+            <button id="updateBtn" class="btn btn-secondary" type="button">수정</button>
+            <a href="/notice/board"><button class="btn btn-primary" type="button">목록</button></a>
+        </div>
     </div>
 </div>
+
+<script>
+    // JSP 변수를 JavaScript 변수에 할당
+    var noticeNo = '${notice.notice_no}';
+
+    // 수정 버튼 클릭 시 이벤트 처리
+    document.addEventListener('DOMContentLoaded', function() {
+        var updateBtn = document.getElementById('updateBtn');
+        if (updateBtn) {
+            updateBtn.addEventListener('click', function() {
+                window.location.href = '/notice/update?notice_no=' + noticeNo;
+            });
+        }
+    });
+</script>

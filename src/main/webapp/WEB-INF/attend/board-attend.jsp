@@ -34,7 +34,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <%-- 10개 --%>
                 <th scope="col">사원번호</th>
                 <th scope="col">근태번호</th>
                 <th scope="col">사원명</th>
