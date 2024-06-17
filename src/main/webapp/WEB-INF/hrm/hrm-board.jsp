@@ -90,7 +90,7 @@
                                 <button type="button" class="btn btn-primary view-button" data-empno="${hrmDto.empNo}"
                                         data-bs-toggle="modal" data-bs-target="#viewModal">상세
                                 </button>
-                                <c:if test="${sessionDto.grade eq 'ADMIN'}">
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                                     <button type="button" class="btn btn-primary modify-button"
                                             data-bs-target="#modifyModal"
                                             data-empno="${hrmDto.empNo}"
@@ -174,7 +174,7 @@
                             <%--                <a href="#" data-bs-toggle="modal" class="openModal btn btn-danger"--%>
                             <%--                   data-bs-target="#staticBackdropView" onclick="return chk_form()"--%>
                             <%--                   data-show="delete">삭제</a>--%>
-                        <c:if test="${sessionDto.grade eq 'ADMIN'}">
+                        <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                             <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
                                     data-bs-target="#insertModal">신규
                             </button>
@@ -186,7 +186,7 @@
                 <%--    hrm 내용영역 끝    --%>
                 <%-- Modal 영역 !!! --%>
             <jsp:include page="include/view-modal.jsp" flush="true"/>
-            <c:if test="${sessionDto.grade eq 'ADMIN'}">
+            <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                 <jsp:include page="include/insert-modal.jsp" flush="true"/>
                 <jsp:include page="include/update-modal.jsp" flush="true"/>
                 <jsp:include page="include/delete-modal.jsp" flush="true"/>

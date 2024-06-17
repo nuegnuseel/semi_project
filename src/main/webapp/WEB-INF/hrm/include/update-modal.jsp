@@ -303,15 +303,6 @@
     });
 
 
-
-    $("#ename_update").on("keyup", function () {
-        if ($(this).val().trim() === '') {
-            $(this).addClass('is-invalid');
-        } else {
-            $(this).removeClass('is-invalid');
-        }
-    });
-
     $(document).ready(function () {
         // 오늘 날짜를 yyyy-mm-dd 형식으로 가져오기
         var today = new Date().toISOString().split('T')[0];
