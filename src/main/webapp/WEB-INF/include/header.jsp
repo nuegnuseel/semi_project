@@ -117,7 +117,7 @@
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
-                    <a class="nav-link" href="#">커뮤니티</a>
+                    <a class="nav-link" href="/community/board">커뮤니티</a>
                 </li>
             </ul>
         </div>

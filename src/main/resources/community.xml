@@ -2,21 +2,21 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hrproject.hrproject.dao.NoticeDao">
+<mapper namespace="com.hrproject.hrproject.dao.CommunityDao">
 
     <!-- 조회수 증가 쿼리 -->
     <update id="incrementViews" parameterType="int">
-        UPDATE NOTICE
+        UPDATE COMMUNITY
         SET VIEWS = VIEWS + 1
-        WHERE NOTICENO = #{noticeNo}
+        WHERE COMMUNITYNO = #{communityNo}
     </update>
 
 
-<!--검색-->
+    <!--검색-->
     <sql id="searchCondition" >
         <choose>
-            <when test="search == 'noticeNo'">
-                noticeNo LIKE CONCAT('%', #{searchWord}, '%')
+            <when test="search == 'communityNo'">
+                communityNo LIKE CONCAT('%', #{searchWord}, '%')
             </when>
             <when test="search == 'title'">
                 title LIKE CONCAT('%', #{searchWord}, '%')
@@ -33,40 +33,40 @@
         </choose>
     </sql>
 
-    <select id="searchNotice" resultType="com.hrproject.hrproject.dto.NoticeDto" >
-        SELECT * FROM NOTICE
+    <select id="searchNotice" resultType="com.hrproject.hrproject.dto.CommunityDto" >
+        SELECT * FROM COMMUNITY
         <where>
             <include refid="searchCondition"/>
         </where>
     </select>
 
     <!--삭제-->
-    <delete id="deleteNotice" parameterType="int" >
-        DELETE FROM NOTICE
-        WHERE NOTICENO = #{noticeNo}
+    <delete id="deleteCommunity" parameterType="int" >
+        DELETE FROM COMMUNITY
+        WHERE COMMUNITYNO = #{communityNo}
     </delete>
 
     <!--수정-->
-    <update id="updateNotice" parameterType="com.hrproject.hrproject.dto.NoticeDto">
-        UPDATE NOTICE
+    <update id="updateCommunity" parameterType="com.hrproject.hrproject.dto.CommunityDto">
+        UPDATE COMMUNITY
         SET title = #{title},
         author = #{author},
         content = #{content}
-        WHERE noticeNo = #{noticeNo}
+        WHERE communityNo = #{communityNo}
     </update>
 
-    <select id="getNoticeList">
-         SELECT * FROM NOTICE
+    <select id="getCommunityList">
+        SELECT * FROM COMMUNITY
     </select>
 
-    <select id="getNoticeByNoticeNo" parameterType="int" resultType="com.hrproject.hrproject.dto.NoticeDto">
-        SELECT * FROM NOTICE
-        WHERE NOTICENO = #{noticeNo}
+    <select id="getCommunityByCommunityNo" parameterType="int" resultType="com.hrproject.hrproject.dto.CommunityDto">
+        SELECT * FROM COMMUNITY
+        WHERE communityNo = #{communityNo}
     </select>
 
 
-    <insert id="insertNotice" parameterType="com.hrproject.hrproject.dto.NoticeDto">
-        INSERT INTO NOTICE (TITLE, AUTHOR, CONTENT)
+    <insert id="insertCommunity" parameterType="com.hrproject.hrproject.dto.CommunityDto">
+        INSERT INTO COMMUNITY (TITLE, AUTHOR, CONTENT)
         VALUES (
         #{title}, <!--제목 -->
         #{author}, <!--작성자-->
