@@ -10,6 +10,25 @@
 .salary-search-button{
     width:120px;
 }
+.salary-check-search-area{
+    display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
+    align-items: center;
+    margin-top:40px;
+}
+.left-section {
+
+}
+
+.center-section {
+    align-items: center;
+    text-align: center; /* 내부 요소들을 가운데 정렬 */
+    justify-content: center;
+}
+.salary-check-calendar-date{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 .salary-check-area{
     .salary-check-profile{
         border: 1px solid #ccc;
@@ -27,7 +46,7 @@
     border: 1px solid #ccc;
     width:100%;
     height:100%;
-    margin-top:50px;
+    margin-top:10px;
     .salary-check-calendar{
         thead{
             justify-content: center;
@@ -46,6 +65,13 @@
                 width:200px;
                 height:150px;
                 border:1px solid #ccc;
+                position: relative;
+                .calendar-day{
+                    position: absolute;
+                    color: #727272;
+                    top:0;
+                    left:0;
+                }
             }
 
         }
@@ -67,6 +93,8 @@
         }
     }
     tbody{
+        justify-content: center;
+        text-align: center;
         tr{
             td{
                 width:250px;
