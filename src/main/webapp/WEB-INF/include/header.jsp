@@ -91,7 +91,7 @@
                     <div class="collapse" id="selectDropDown" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="#" class="nav-link text-decoration-none rounded">근태 조회</a></li>
-                            <li><a href="#" class="nav-link text-decoration-none rounded">급여 조회</a></li>
+                            <li><a href="/salary/check" class="nav-link text-decoration-none rounded">급여 조회</a></li>
                         </ul>
                     </div>
                 </li>
