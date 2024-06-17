@@ -5,7 +5,14 @@
     <h1 class="text-center">사원 카드</h1>
     <div class="profile-container">
         <li class="nav-item">
-            <img src="../../images/profile01.jpg">
+            <c:choose>
+                <c:when test="${not empty hrmDto.renameProfile}">
+                    <img src="${request.contextPath}/upload/${hrmDto.renameProfile}" class="myPageProfile">
+                </c:when>
+                <c:otherwise>
+                    <img src="../images/profile01.jpg">
+                </c:otherwise>
+            </c:choose>
         </li>
         <div class="profile-details">
             <div class="row mb-sm-1 reduce-gap">
