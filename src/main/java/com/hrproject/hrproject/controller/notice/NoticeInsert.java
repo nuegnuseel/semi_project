@@ -34,7 +34,7 @@ public class NoticeInsert extends HttpServlet {
         int result = noticeDao.insertNoticeDao(noticeDto);
         if (result>0){
             System.out.println("notice data input successfully");
-            resp.sendRedirect("/notice/board");
+            resp.sendRedirect("/notice/board?insertSuccess=true");
         }else {
             System.out.println("notice data input failed");
         }
