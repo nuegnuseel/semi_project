@@ -46,7 +46,7 @@
                         <div class="col">휴대폰번호</div>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" class="form-control is-invalid" id="mobile" placeholder="휴대폰번호 중복체크넣을예정"
+                                <input type="text" class="form-control is-invalid" id="mobile" placeholder="휴대폰번호"
                                        aria-label="empno" name="mobile" aria-describedby="btn-mobile-duplicate">
                                 <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-mobile-duplicate">확인</button>
                             </div>
@@ -64,7 +64,7 @@
                         <div class="col">Email</div>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="email" class="form-control is-invalid" id="email" placeholder="Email 중복체크넣을예정"
+                                <input type="email" class="form-control is-invalid" id="email" placeholder="Email"
                                        aria-label="email" name="email" aria-describedby="btn-email-duplicate">
                                 <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-email-duplicate">확인</button>
                             </div>
@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-md-4 preview" style="width: 170px; height: 170px; object-fit: contain">
                             <%--                        <div id="preview"></div>--%>
-                            <img id="preview" src="../../../images/profile01.jpg">
+                            <img class="preview " id="preview" src="../../../images/profile01.jpg">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -229,83 +229,83 @@
         // }
     });
 
-    // $(".btn-duplicate").on("click", function() {
-    //     var inputId = $(this).prev().attr("id");
-    //     var checkField;
-    //     var checkValue = $("#" + inputId).val();
-    //     var url = "../hrm/duplicate-check";
-    //     var data = {};
-    //
-    //     switch (inputId) {
-    //         case "email":
-    //             if (emailChecked) {
-    //                 return; // 이미 중복 확인을 완료한 경우, 추가 확인 방지
-    //             }
-    //             checkField = "email";
-    //             data = { check: checkField, checkValue: checkValue };
-    //             break;
-    //         case "passport":
-    //             if (passportChecked) {
-    //                 return;
-    //             }
-    //             checkField = "passport";
-    //             data = { check: checkField, checkValue: checkValue };
-    //             break;
-    //         case "mobile":
-    //             if (mobileChecked) {
-    //                 return;
-    //             }
-    //             checkField = "mobile";
-    //             data = { check: checkField, checkValue: checkValue };
-    //             break;
-    //         default:
-    //             console.error("Invalid input ID.");
-    //             return;
-    //     }
-    //     console.log(data);
-    //     $.ajax({
-    //         url: url,
-    //         data: data,
-    //         method: "post",
-    //         success: function(data) {
-    //
-    //             console.log(data)
-    //             if (data.count === -1){
-    //                 alert("중복 확인 해주세요");
-    //                 $("#" + inputId).val("");
-    //                 $("#" + inputId).focus();
-    //                 return;
-    //             }
-    //             if (data.count > 0) {
-    //                 alert("중복");
-    //                 $("#" + inputId).val("");
-    //                 $("#" + inputId).focus();
-    //             } else {
-    //                 const used = confirm("사용가능");
-    //                 if (used) {
-    //                     $("#" + inputId).attr("readonly", true);
-    //                     switch (inputId) {
-    //                         case "email":
-    //                             emailChecked = true;
-    //                             break;
-    //                         case "passport":
-    //                             passportChecked = true;
-    //                             break;
-    //                         case "mobile":
-    //                             mobileChecked = true;
-    //                             break;
-    //                     }
-    //                 } else {
-    //                     $("#" + inputId).focus();
-    //                 }
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error("Error:", error);
-    //             // 오류 처리
-    //         }
-    //     });
-    // });
+    $(".btn-duplicate").on("click", function() {
+        var inputId = $(this).prev().attr("id");
+        var checkField;
+        var checkValue = $("#" + inputId).val();
+        var url = "../hrm/duplicate-check";
+        var data = {};
+        switch (inputId) {
+            case "email":
+                if (emailChecked) {
+                    return; // 이미 중복 확인을 완료한 경우, 추가 확인 방지
+                }
+                checkField = "email";
+                data = { check: checkField, checkValue: checkValue };
+                break;
+            case "passport":
+                if (passportChecked) {
+                    return;
+                }
+                checkField = "passport";
+                data = { check: checkField, checkValue: checkValue };
+                break;
+            case "mobile":
+                if (mobileChecked) {
+                    return;
+                }
+                checkField = "mobile";
+                data = { check: checkField, checkValue: checkValue };
+                break;
+            default:
+                console.error("Invalid input ID.");
+                return;
+        }
+        console.log(data);
+        $.ajax({
+            url: url,
+            data: data,
+            method: "post",
+            success: function(data) {
+
+                if (data.count === -1){
+                    alert("중복 확인 해주세요");
+                    $("#" + inputId).val("");
+                    $("#" + inputId).focus();
+                    return;
+                } else if (data.count > 0) {
+                    alert("중복");
+                    $("#" + inputId).val("");
+                    $("#" + inputId).focus();
+                } else {
+                    const used = confirm("사용가능");
+                    if (used) {
+                        $("#" + inputId).attr("readonly", true);
+                        switch (inputId) {
+                            case "email":
+                                $("#" + inputId).addClass('is-valid');
+                                emailChecked = true;
+                                break;
+                            case "passport":
+                                $("#" + inputId).addClass('is-valid');
+                                passportChecked = true;
+                                break;
+                            case "mobile":
+                                $("#" + inputId).addClass('is-valid');
+                                mobileChecked = true;
+                                break;
+                        }
+                    } else {
+                        $("#" + inputId).focus();
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                // 오류 처리
+            }
+        });
+    });
 
 
 
@@ -316,13 +316,25 @@
             $(this).addClass('is-invalid');
         }
     });
-    $("#birthDate").on("keyup", function () {
-        if ($(this).val() !== '') {
-            $(this).removeClass('is-invalid');
-        } else {
-            $(this).addClass('is-invalid');
-        }
+
+    $(document).ready(function () {
+        // 오늘 날짜를 yyyy-mm-dd 형식으로 가져오기
+        var today = new Date().toISOString().split('T')[0];
+
+        // max 속성을 오늘 날짜로 설정
+        $("#birthDate").attr('max', today);
+
+        $("#birthDate").on("change", function () {
+            if ($(this).val() !== '') {
+                $(this).removeClass('is-invalid');
+                $(".invalid-feedback").hide();
+            } else {
+                $(this).addClass('is-invalid');
+                $(".invalid-feedback").show();
+            }
+        });
     });
+
     $("#mobile").on("keyup", function () {
         if ($(this).val() !== '') {
             $(this).removeClass('is-invalid');
@@ -344,44 +356,15 @@
             $(this).addClass('is-invalid');
         }
     });
-    $("#postCode").on("input", function () {
-        if ($(this).val() !== '') {
-            $(this).removeClass('is-invalid');
-        } else {
-            $(this).addClass('is-invalid');
-        }
-    });
-    $("#address").on("input", function () {
-        if ($(this).val() !== '') {
-            $(this).removeClass('is-invalid');
-        } else {
-            $(this).addClass('is-invalid');
-        }
-    });
-    $("#passport").on("keyup", function () {
-        if ($(this).val() !== '') {
-            passportChecked = false;
-        } else {
-            passportChecked = true;
-        }
-    });
-    $(document).ready(function () {
-        // 오늘 날짜를 yyyy-mm-dd 형식으로 가져오기
-        var today = new Date().toISOString().split('T')[0];
 
-        // max 속성을 오늘 날짜로 설정
-        $("#hireDate").attr('max', today);
+    // $("#passport").on("keyup", function () {
+    //     if ($(this).val() !== '') {
+    //         passportChecked = false;
+    //     } else {
+    //         passportChecked = true;
+    //     }
+    // });
 
-        $("#hireDate").on("change", function () {
-            if ($(this).val() !== '') {
-                $(this).removeClass('is-invalid');
-                $(".invalid-feedback").hide();
-            } else {
-                $(this).addClass('is-invalid');
-                $(".invalid-feedback").show();
-            }
-        });
-    });
 
     // var empNoInput = document.getElementById('empNo');
     // var submitBtn = document.getElementById('submitBtn');

@@ -105,34 +105,37 @@ public class HrmUpdate extends HttpServlet {
             int positionNo = Integer.parseInt(req.getParameter("positionNo"));
 
 
+            String passport = req.getParameter("passport");
+            if (passport.equals("")) passport = null;
+
             HrmDto hrmDto = HrmDto.builder()
-                    .empNo(Integer.parseInt(req.getParameter("empNo")))
                     .ename(req.getParameter("ename"))
                     .foreignName(req.getParameter("foreignName"))
+                    .birthDate(req.getParameter("birthDate"))
+                    .password("password")
 
                     .deptNo(deptNo)
                     .deptName(deptMap.get(deptNo))
-
                     .posNo(positionNo)
                     .posName(positionMap.get(positionNo))
+                    .roleName(req.getParameter("roleName"))
 
                     .mobile(req.getParameter("mobile"))
-                    .passport(req.getParameter("passport"))
+                    .passport(passport)
                     .email(req.getParameter("email"))
 
                     .hireDate(req.getParameter("hireDate"))
                     .hireType(req.getParameter("hireType"))
-
                     .bankName(req.getParameter("bankName"))
                     .account(req.getParameter("account"))
                     .accountHolder(req.getParameter("accountHolder"))
-
                     .postCode(req.getParameter("postCode"))
                     .address(req.getParameter("address"))
                     .addressDetail(req.getParameter("addressDetail"))
 
                     .originalProfile(fileName)
                     .renameProfile(renameProfile)
+                    .remarks(req.getParameter("remarks"))
                     .build();
 
             HrmDao updateHrmDao = new HrmDao();

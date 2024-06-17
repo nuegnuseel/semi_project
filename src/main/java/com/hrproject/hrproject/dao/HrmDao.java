@@ -140,4 +140,14 @@ public class HrmDao {
         sqlSession.close();
         return result;
     }
+    public int changePW(HrmDto hrmDto) {
+        int result = 0;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        result = sqlSession.update("changeHrmPw", hrmDto);
+
+        sqlSession.close();
+        return result;
+
+    }
 }

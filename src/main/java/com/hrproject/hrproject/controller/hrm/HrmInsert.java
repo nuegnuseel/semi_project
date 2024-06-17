@@ -88,6 +88,8 @@ public class HrmInsert extends HttpServlet {
                 .deptNo(10)
                 .deptName(deptMap.get(10))
                 .build();*/
+            String passport = req.getParameter("passport");
+            if (passport.equals("")) passport = null;
 
             HrmDto hrmDto = HrmDto.builder()
                     .empNo(Integer.parseInt(req.getParameter("empNo")))
@@ -103,7 +105,7 @@ public class HrmInsert extends HttpServlet {
                     .roleName(req.getParameter("roleName"))
 
                     .mobile(req.getParameter("mobile"))
-                    .passport(req.getParameter("passport"))
+                    .passport(passport)
                     .email(req.getParameter("email"))
 
                     .hireDate(req.getParameter("hireDate"))
@@ -118,7 +120,7 @@ public class HrmInsert extends HttpServlet {
                     .originalProfile(fileName)
                     .renameProfile(renameProfile)
                     .remarks(req.getParameter("remarks"))
-                    .grade("MEMBER")
+                    .grade(Grade.MEMBER)
                     .build();
 
             HrmDao hrmDao = new HrmDao();

@@ -26,6 +26,22 @@
             </otherwise>
         </choose>
     </sql>
+    <sql id="duplicate">
+        <choose>
+            <when test="check == 'email'">
+                email = #{checkValue}
+            </when>
+            <when test="check == 'mobile'">
+                mobile = #{checkValue}
+            </when>
+            <when test="check == 'passport'">
+                passport = #{checkValue}
+            </when>
+            <when test="check == 'account'">
+                account = #{checkValue}
+            </when>
+        </choose>
+    </sql>
 
     <select id="getHrmTotal" resultType="int">
         SELECT COUNT(*) AS TOTAL FROM HRM WHERE showAble = 1
@@ -40,7 +56,10 @@
     </select>
 
     <select id="duplicateCheck" resultType="int" parameterType="HashMap">
-        select count(*) as total from HRM WHERE #{check} = #{checkValue}
+        select count(*) as total from HRM WHERE
+        <if test="check != null and checkValue != null">
+            <include refid="duplicate"></include>
+        </if>
     </select>
 
     <select id="getHrm" resultType="HrmDto">
@@ -73,29 +92,6 @@
         </if>
         LIMIT #{start}, #{end}
     </select>
-
-    <!--    <insert id="insertHrm" parameterType="HrmDto">-->
-    <!--        INSERT INTO HRM (-->
-    <!--        EMPNO, ENAME, FOREIGN_NAME, DEPTNO, DEPTNAME, POSITION, MOBILE, PASSPORT, EMAIL, HIREDATE, HIRETYPE, RESIGNDATE,-->
-    <!--        OUTREASONS, BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, ORIGINAL_PROFILE,-->
-    <!--        RENAME_PROFILE,-->
-    <!--        ETC_FILE, REMARKS, POSITION_NO, ROLE, SHOWABLE-->
-    <!--        ) VALUES (-->
-    <!--        #{empNo}, #{ename}, #{foreignName}, #{deptNo}, #{deptName}, #{position}, #{mobile}, #{passport}, #{email},-->
-    <!--        #{hireDate}, #{hireType}, #{resignDate}, #{outReasons}, #{bankName}, #{account}, #{accountHolder}, #{postCode},-->
-    <!--        #{address}, #{addressDetail}, #{originalProfile}, #{renameProfile}, #{etcFile}, #{remarks}, #{positionNo},-->
-    <!--        #{role}, 1-->
-    <!--        )-->
-    <!--    </insert>-->
-    <!--    <update id="updateHrm" parameterType="HrmDto">-->
-    <!--        UPDATE HRM-->
-    <!--        SET ENAME = #{ename}, FOREIGN_NAME = #{foreignName}, DEPTNO = #{deptNo}, DEPTNAME = #{deptName}, POSITION = #{position},-->
-    <!--        MOBILE = #{mobile}, PASSPORT = #{passport}, EMAIL = #{email}, HIREDATE = #{hireDate},-->
-    <!--        HIRETYPE = #{hireType}, RESIGNDATE = #{resignDate}, OUTREASONS = #{outReasons},-->
-    <!--        BANK_NAME = #{bankName}, ACCOUNT = #{account}, ACCOUNT_HOLDER = #{accountHolder}, POSTCODE = #{postCode},-->
-    <!--        ADDRESS = #{address}, ADDRESS_DETAIL = #{addressDetail}, ORIGINAL_Profile = #{originalProfile}, RENAME_Profile = #{renameProfile}, -->
-    <!--        ETC_FILE = #{etcFile}, REMARKS = #{remarks}, POSITION_NO = #{positionNo}, ROLE = #{role} WHERE EMPNO = #{empNo}-->
-    <!--    </update>-->
 
     <insert id="insertHrm" parameterType="HrmDto">
         INSERT INTO HRM (
@@ -152,7 +148,10 @@
     <!--        </foreach>-->
     <!--    </update>-->
 
-
+    <update id="changeHrmPw" parameterType="HrmDto">
+        UPDATE HRM SET PASSWORD = #{password}
+        WHERE EMPNO = #{empNo}
+    </update>
 
     <update id="setShowAbleHrm" parameterType="HrmDto">
         UPDATE HRM SET SHOWABLE = 0, RESIGNDATE = #{resignDate}, OUTREASONS = #{outReasons} WHERE EMPNO = #{empNo}

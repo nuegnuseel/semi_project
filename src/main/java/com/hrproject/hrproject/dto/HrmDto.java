@@ -1,5 +1,6 @@
 package com.hrproject.hrproject.dto;
 
+import com.hrproject.hrproject.controller.hrm.Grade;
 import lombok.*;
 
 @Getter
@@ -36,7 +37,7 @@ public class HrmDto {
     private String renameProfile;
     private String remarks;
     private int salary;
-    private String grade;
+    private Grade grade;
     private boolean showable;
 
 //    private int num;
