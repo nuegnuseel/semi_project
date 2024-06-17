@@ -129,4 +129,25 @@ public class HrmDao {
         sqlSession.close();
         return empNoList;
     }
+
+    public int duplicateCheck(String check, String checkValue) {
+        int result = 0;
+        Map<String, String> duplicateCheckMap = new HashMap<>();
+        duplicateCheckMap.put("check", check);
+        duplicateCheckMap.put("checkValue", checkValue);
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        result = sqlSession.selectOne("duplicateCheck", duplicateCheckMap);
+        sqlSession.close();
+        return result;
+    }
+    public int changePW(HrmDto hrmDto) {
+        int result = 0;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        result = sqlSession.update("changeHrmPw", hrmDto);
+
+        sqlSession.close();
+        return result;
+
+    }
 }

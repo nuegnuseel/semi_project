@@ -22,9 +22,9 @@
 
  </typeAliases>
 <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
-<!--    <typeHandlers>-->
-<!--        <typeHandler handler="com.heo96.mybatis.mybatis.GradeTypeHandler"></typeHandler>-->
-<!--    </typeHandlers>-->
+    <typeHandlers>
+        <typeHandler handler="com.hrproject.hrproject.mybatis.GradeTypeHandler"></typeHandler>
+    </typeHandlers>
     <!--  db.properties 연결?..  -->
     <environments default="development">
         <environment id="development">

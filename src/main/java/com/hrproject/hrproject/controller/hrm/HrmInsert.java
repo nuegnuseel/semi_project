@@ -88,37 +88,39 @@ public class HrmInsert extends HttpServlet {
                 .deptNo(10)
                 .deptName(deptMap.get(10))
                 .build();*/
+            String passport = req.getParameter("passport");
+            if (passport.equals("")) passport = null;
 
             HrmDto hrmDto = HrmDto.builder()
                     .empNo(Integer.parseInt(req.getParameter("empNo")))
                     .ename(req.getParameter("ename"))
-
                     .foreignName(req.getParameter("foreignName"))
+                    .birthDate(req.getParameter("birthDate"))
+                    .password("password")
 
                     .deptNo(deptNo)
                     .deptName(deptMap.get(deptNo))
-
-                    .positionNo(positionNo)
-                    .position(positionMap.get(positionNo))
+                    .posNo(positionNo)
+                    .posName(positionMap.get(positionNo))
+                    .roleName(req.getParameter("roleName"))
 
                     .mobile(req.getParameter("mobile"))
-                    .passport(req.getParameter("passport"))
-//                    .email(req.getParameter("email")+"@jhta.com")
+                    .passport(passport)
                     .email(req.getParameter("email"))
 
                     .hireDate(req.getParameter("hireDate"))
                     .hireType(req.getParameter("hireType"))
-
                     .bankName(req.getParameter("bankName"))
                     .account(req.getParameter("account"))
                     .accountHolder(req.getParameter("accountHolder"))
-
                     .postCode(req.getParameter("postCode"))
                     .address(req.getParameter("address"))
                     .addressDetail(req.getParameter("addressDetail"))
 
                     .originalProfile(fileName)
                     .renameProfile(renameProfile)
+                    .remarks(req.getParameter("remarks"))
+                    .grade(Grade.MEMBER)
                     .build();
 
             HrmDao hrmDao = new HrmDao();
