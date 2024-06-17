@@ -58,11 +58,18 @@ public class AttendCheck extends HttpServlet {
 
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
+
+        //모든 근태 출력
         AttendDao attendDao = new AttendDao();
         List<AttendDto> attendList = attendDao.getAttendList();
         req.setAttribute("attendList", attendList);
         String url = req.getRequestURL().toString().substring(22);
         req.setAttribute("url", url);
+
+        //승인 상태의 근태 출력
+        List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList();
+        req.setAttribute("approvedAttendList", approvedAttendList);
+
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
         dispatcher.forward(req, resp);

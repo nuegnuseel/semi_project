@@ -10,6 +10,38 @@ import java.util.Map;
 
 public class AttendDao {
 
+    //승인 상태의 근태만 출력
+    public List<AttendDto> getApprovedAttendList() {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> attendList = sqlSession.selectList("getApprovedAttendList");
+            System.out.println("select query is successfully");
+            System.out.println(attendList); // 가져온 데이터 로깅
+
+            return attendList;
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace(); // 혹은 로깅
+            return null; // 또는 예외를 상위로 다시 throw
+        }
+    }
+
+
+    //대기 중인 근태만 출력
+    public List<AttendDto> getWaitingAttendList() {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> attendList = sqlSession.selectList("getWaitingAttendList");
+            System.out.println("select query is successfully");
+            System.out.println(attendList); // 가져온 데이터 로깅
+
+            return attendList;
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace(); // 혹은 로깅
+            return null; // 또는 예외를 상위로 다시 throw
+        }
+    }
+
+
     // 근태 승인 여부 업데이트
     public void updateApproval(AttendDto attendDto) {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {

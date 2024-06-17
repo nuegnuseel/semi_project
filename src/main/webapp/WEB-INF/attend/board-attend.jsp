@@ -237,6 +237,7 @@
 </div>
 <script>
 
+
     $(document).ready(function() {
         // 승인 버튼 클릭 이벤트 처리
         $(document).on("click", ".approve-button", function() {
@@ -258,9 +259,14 @@
                 data: { atdNo: atdNo, approval: approval }, // 근태번호와 업데이트할 승인 상태 전송
                 success: function(response) {
                     if (response.success) {
-                        alert("업데이트 성공");
-                        // 성공적으로 업데이트되었으면 화면에서 해당 행을 업데이트하거나 다시 로드하는 등의 작업 수행
-                        // 예: 페이지 리로드 또는 특정 요소 갱신
+                        if (approval === '승인') {
+                            alert("승인되었습니다.");
+                        }
+                        else {
+                            alert('반려되었습니다.')
+                        }
+                        window.location.reload();
+
                     } else {
                         alert("업데이트 실패");
                     }
@@ -325,6 +331,7 @@
             });
         }
     });
+
     //외래키 사원번호 예외처리
     $(document).ready(function() {
         $("#insertModalForm").on('submit', function(event) {

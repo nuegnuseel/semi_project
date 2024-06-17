@@ -19,10 +19,6 @@ public class AttendDto {
     private String offDay; //휴가명
     private String offDayRs; //휴가사유
     private String print; //인쇄
-    private String approval; //인쇄
+    private String approval; //승인여부
 
-    public AttendDto(String atdNo, String approval) {
-        this.atdNo = atdNo;
-        this.approval = approval;
-    }
 }

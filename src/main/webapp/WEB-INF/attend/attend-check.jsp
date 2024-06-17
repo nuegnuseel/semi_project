@@ -105,7 +105,7 @@
                         var weekRow = '<tr>';
                         week.forEach(function(day) {
                             if (day != 0) {
-                                weekRow += '<td><h5 class="calendar-day">' + day + '</h5>근무시간</td>';
+                                weekRow += '<td><h5 class="calendar-day">' + day + '</h5>이름띄우기</td>';
                             } else {
                                 weekRow += '<td></td>';
                             }

@@ -4,6 +4,18 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
 
+<!--    대기 상태의 근태만 띄울거임-->
+    <select id="getWaitingAttendList" resultType="AttendDto">
+        select * from attend
+        where APPROVAL = '대기'
+    </select>
+
+    <!--    승인 상태의 근태만 띄울거임-->
+    <select id="getApprovedAttendList" resultType="AttendDto">
+        select * from attend
+        where APPROVAL = '승인'
+    </select>
+
     <!-- 근태 승인 여부 업데이트 -->
     <update id="updateApproval" parameterType="AttendDto">
         UPDATE ATTEND
@@ -48,7 +60,7 @@
     </select>
 
     <insert id="insertAttend" parameterType="AttendDto">
-        INSERT INTO ATTEND (EMPNO, ATDNO, ENAME, ATDCODE, ATDNUM, ATDDATE, OFFDAY, OFFDAYRS, PRINT)
+        INSERT INTO ATTEND (EMPNO, ATDNO, ENAME, ATDCODE, ATDNUM, ATDDATE, StartAtdDate, EndAtdDate, OFFDAY, OFFDAYRS, PRINT)
         VALUES (
         #{empNo}, <!--사원번호 -->
         #{atdNo}, <!--근태번호-->
@@ -56,6 +68,8 @@
         #{atdCode}, <!--근태코드-->
         #{atdNum}, <!--근태수-->
         CONCAT(#{startAtdDate}, ' ~ ', #{endAtdDate}), <!--근태기간 시작~ 끝 -->
+        #{startAtdDate}, <!--시작 근태기간 -->
+        #{endAtdDate}, <!--끝 근태기간 -->
         #{offDay}, <!--휴가명-->
         #{offDayRs}, <!--휴가사유-->
         #{print} <!--인쇄-->
@@ -72,9 +86,11 @@
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
     </select>
+
     <select id="getUpdateInfo" resultType="AttendDto" parameterType="String">
         SELECT * FROM ATTEND WHERE ATDNO = #{selectName}
     </select>
+
     <update id="updateAttend" parameterType="AttendDto">
         UPDATE ATTEND
         SET
