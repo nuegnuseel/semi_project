@@ -29,12 +29,10 @@
                 </div>
             </div>
         </form>
-
         <%--attend list table--%>
         <table class="table table-striped">
             <thead>
             <tr>
-                <%-- 10개 --%>
                 <th scope="col">사원번호</th>
                 <th scope="col">근태번호</th>
                 <th scope="col">사원명</th>
@@ -69,24 +67,30 @@
             </c:forEach>
             </tbody>
         </table>
-        <%--삽입 모달--%>
-        <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-             data-bs-backdrop="static"
-             tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">근태 입력</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="../attend/insert" id="modalForm" method="post">
-                            <div class="row mb-3">
-                                <label for="empNo" class="col-sm-2 col-form-label">사원번호</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="empNo" name="empNo">
-                                </div>
+        <%--신규 버튼--%>
+        <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">
+            신규
+        </button>
+    </div>
+    <%--attend insert 모달--%>
+    <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         data-bs-backdrop="static"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">근태 입력</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="../attend/insert" id="insertModalForm" method="post">
+
+                        <div class="row mb-3">
+                            <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
+                        </div>
 
                             <div class="row mb-3">
                                 <label for="atdNo" class="col-sm-2 col-form-label">근태번호</label>
@@ -160,14 +164,14 @@
                                     N
                                 </label>
                             </div>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" form="modalForm" class="btn btn-primary">Submit</button>
-                        <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
-                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="insertModalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="reset" form="insertModalForm" class="btn btn-danger">Reset</button>
                 </div>
             </div>
         </div>
@@ -179,7 +183,7 @@
 
 
 </div>
-<%--수정모달--%>
+
 <!-- 수정 모달 -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -190,7 +194,10 @@
             </div>
             <div class="modal-body">
                 <form id="editForm" action="/attend/update" method="post">
-                    <input type="hidden" id="editEmpNo" name="empNo" value="">
+                    <!-- 사원번호 -->
+                    <input type="hidden" id="editEmpNo" name="editEmpNo" value="">
+
+                    <!-- 근태번호 -->
                     <div class="mb-3">
                         <label for="editAtdno" class="form-label">근태번호</label>
                         <input type="text" class="form-control" id="editAtdno" name="atdNo" value="" readonly>
@@ -223,10 +230,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-sm-2 col-form-label">근태기간</label>
-                        <div class="col-sm-10 col-auto">
-                            <input type="date" class="form-control" id="editStartAtdDate" name="editStartAtdDate"> ~
-                            <input type="date" class="form-control" id="editEndAtdDate" name="editEndAtdDate">
-                        </div>
+
+                        <input type="date" class="form-control" id="editStartAtdDate" name="editStartAtdDate"> ~
+                        <input type="date" class="form-control" id="editEndAtdDate" name="editEndAtdDate">
+
                     </div>
 
                     <div class="mb-3">
@@ -234,9 +241,19 @@
                         <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="editPrint" class="form-label">인쇄</label>
-                        <input type="text" class="form-control" id="editPrint" name="print" readonly value="">
+                        <label class="form-label">인쇄</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="editPrintY" value="Y" checked>
+                                <label class="form-check-label" for="editPrintY"> Y </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="editPrintN" value="N">
+                                <label class="form-check-label" for="editPrintN"> N </label>
+                            </div>
+                        </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary" id="saveButton">저장</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </form>
@@ -367,34 +384,21 @@
             $('#displaySelectedText').text(selectedText);
         });
     });
-    // 폼 전송 후 모달 데이터 초기화
-    $('#editModal').on('hidden.bs.modal', function () {
-        $(this).find('form')[0].reset();
-    });
-
-    $('#insertModalToggle').on('hidden.bs.modal', function () {
-        $(this).find('form')[0].reset();
-    });
+    //외래키 사원번호 예외처리
     $(document).ready(function () {
-        $("#modalForm").on('submit', function (event) {
-            var empNo = $('#empNo').val();
+        $("#insertModalForm").on('submit', function (event) {
+            var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
-            var atdCode = $('#atdCode').val();
-            var atdNum = $('#atdNum').val();
-            var atdDate = $('#atdDate').val();
-            var offDay = $('#offDay').val();
-            var offDayRs = $('#offDayRs').val();
 
             //사원번호를 입력하지 않은경우
             if (!empNo) {
                 event.preventDefault();
                 alert('사원번호를 입력해주세요.');
-                $('#empNo').val('');
-                $('#empNo').focus();
+                $('#insertEmpNo').val('');
+                $('#insertEmpNo').focus();
                 return;
             }
-
             //근태번호를 입력하지 않은경우
             if (!atdNo) {
                 event.preventDefault();
@@ -403,7 +407,6 @@
                 $('#atdNo').focus();
                 return;
             }
-
             //사원명을 입력하지 않은경우
             if (!ename) {
                 event.preventDefault();
@@ -411,32 +414,55 @@
                 $('#ename').val('');
                 return;
             }
-
-            //존재하지 않는 사원번호를 입력한 경우
+            // empNo와 atdNo 입력후 조건검사
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
-                    url: '/attend/checkInsert',
-                    type: 'POST',
-                    data: {
-                        empNo: empNo,
-                        atdNo: atdNo
-                    },
-                    dataType: 'json',
-                    async: false, // 동기식으로 처리
+                    url: "/attend/insertEmpNoCheck",
+                    method: "POST",
+                    data: {empNo: empNo},
                     success: function (response) {
-                        if (response !== 1) {
-                            alert("존재하지 않는 사원번호이거나 중복된 근태번호입니다.")
+                        if (response === 1) {
+                            $.ajax({
+                                url: "/attend/insertAtdNoCheck",
+                                method: "POST",
+                                data: {atdNo: atdNo},
+                                success: function (response) {
+                                    if (response === 1) {
+                                        alert("중복된 근태번호입니다.")
+                                        $("#atdNo").focus();
+                                        return false;
+                                    } else {
+                                        $("#insertModalForm").unbind('submit').submit();
+                                    }
+                                },
+                                error: function () {
+                                    alert("알수없는 오류 발생");
+                                }
+                            })
                         } else {
-                            $("#modalForm").unbind('submit').submit();
+                            alert("존재하지않는 사원번호입니다.")
+                            $("#insertEmpNo").focus();
+                            return false;
                         }
                     },
                     error: function () {
-                        alert('서버와의 통신에 문제가 발생했습니다.');
+                        alert("알수없는 오류 발생");
                     }
-
                 });
             }
         });
     });
+
+    window.onload = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('updateSuccess') === 'true') {
+            alert('근태 정보가 성공적으로 [수정]되었습니다.');
+        }
+
+        if (urlParams.get('insertSuccess') === 'true') {
+            alert('근태 정보가 성공적으로 [등록]되었습니다.');
+        }
+    };
 </script>

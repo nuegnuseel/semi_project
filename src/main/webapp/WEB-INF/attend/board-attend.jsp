@@ -68,10 +68,13 @@
             </tbody>
         </table>
         <%--신규 버튼--%>
-        <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
+        <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">
+            신규
+        </button>
     </div>
     <%--attend insert 모달--%>
-    <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
+    <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         data-bs-backdrop="static"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -81,11 +84,13 @@
                 </div>
                 <div class="modal-body">
                     <form action="../attend/insert" id="insertModalForm" method="post">
+
                         <div class="row mb-3">
                             <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
+                        </div>
 
                             <div class="row mb-3">
                                 <label for="atdNo" class="col-sm-2 col-form-label">근태번호</label>
@@ -146,24 +151,26 @@
                                 </div>
                             </div>
 
-                        <legend class="col-form-label col-sm-2 pt-0">인쇄</legend>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="print" id="printY" value="Y" checked>
-                            <label class="form-check-label" for="printY">
-                                Y
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="print" id="printN" value="N">
-                            <label class="form-check-label" for="printN">
-                                N
-                            </label>
-                        </div>
+                            <legend class="col-form-label col-sm-2 pt-0">인쇄</legend>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="printY" value="Y" checked>
+                                <label class="form-check-label" for="printY">
+                                    Y
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="printN" value="N">
+                                <label class="form-check-label" for="printN">
+                                    N
+                                </label>
+                            </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="insertModalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">Submit</button>
+                    <button type="submit" form="insertModalForm" id="AttendInsertSubmitBtn" class="btn btn-primary">
+                        Submit
+                    </button>
                     <button type="reset" form="insertModalForm" class="btn btn-danger">Reset</button>
                 </div>
             </div>
@@ -176,7 +183,7 @@
 
 
 </div>
-<%--수정모달--%>
+
 <!-- 수정 모달 -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -223,10 +230,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-sm-2 col-form-label">근태기간</label>
-                        <div class="col-sm-10 col-auto">
-                            <input type="date" class="form-control" id="editStartAtdDate" name="editStartAtdDate"> ~
-                            <input type="date" class="form-control" id="editEndAtdDate" name="editEndAtdDate">
-                        </div>
+
+                        <input type="date" class="form-control" id="editStartAtdDate" name="editStartAtdDate"> ~
+                        <input type="date" class="form-control" id="editEndAtdDate" name="editEndAtdDate">
+
                     </div>
 
                     <div class="mb-3">
@@ -234,9 +241,19 @@
                         <input type="text" class="form-control" id="editOffDayRs" name="offDayRs" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="editPrint" class="form-label">인쇄</label>
-                        <input type="text" class="form-control" id="editPrint" name="print" readonly value="">
+                        <label class="form-label">인쇄</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="editPrintY" value="Y" checked>
+                                <label class="form-check-label" for="editPrintY"> Y </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="print" id="editPrintN" value="N">
+                                <label class="form-check-label" for="editPrintN"> N </label>
+                            </div>
+                        </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary" id="saveButton">저장</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </form>
@@ -368,8 +385,8 @@
         });
     });
     //외래키 사원번호 예외처리
-    $(document).ready(function() {
-        $("#insertModalForm").on('submit', function(event) {
+    $(document).ready(function () {
+        $("#insertModalForm").on('submit', function (event) {
             var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
@@ -401,39 +418,51 @@
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
-                    url:"/attend/insertEmpNoCheck",
-                    method:"POST",
-                    data:{empNo:empNo},
-                    success: function (response){
-                        if (response === 1){
+                    url: "/attend/insertEmpNoCheck",
+                    method: "POST",
+                    data: {empNo: empNo},
+                    success: function (response) {
+                        if (response === 1) {
                             $.ajax({
-                                url:"/attend/insertAtdNoCheck",
-                                method:"POST",
-                                data:{atdNo:atdNo},
-                                success:function (response){
-                                    if(response === 1){
+                                url: "/attend/insertAtdNoCheck",
+                                method: "POST",
+                                data: {atdNo: atdNo},
+                                success: function (response) {
+                                    if (response === 1) {
                                         alert("중복된 근태번호입니다.")
                                         $("#atdNo").focus();
                                         return false;
-                                    }else {
+                                    } else {
                                         $("#insertModalForm").unbind('submit').submit();
                                     }
                                 },
-                                error:function (){
+                                error: function () {
                                     alert("알수없는 오류 발생");
                                 }
                             })
-                        }else {
+                        } else {
                             alert("존재하지않는 사원번호입니다.")
                             $("#insertEmpNo").focus();
                             return false;
                         }
                     },
-                    error: function (){
+                    error: function () {
                         alert("알수없는 오류 발생");
                     }
                 });
             }
         });
     });
+
+    window.onload = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('updateSuccess') === 'true') {
+            alert('근태 정보가 성공적으로 [수정]되었습니다.');
+        }
+
+        if (urlParams.get('insertSuccess') === 'true') {
+            alert('근태 정보가 성공적으로 [등록]되었습니다.');
+        }
+    };
 </script>
