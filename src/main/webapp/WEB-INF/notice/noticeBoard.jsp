@@ -49,10 +49,10 @@
             <tbody>
             <c:forEach items="${noticeList}" var="noticeDto" varStatus="loop">
                 <tr>
-                    <td>${noticeDto.notice_no}</td>  <%-- 글번호 --%>
-                    <td><a href="/notice/incrementViews?notice_no=${noticeDto.notice_no}">${noticeDto.title}</a></td> <%-- 제목 --%>
+                    <td>${noticeDto.noticeNo}</td>  <%-- 글번호 --%>
+                    <td><a href="/notice/incrementViews?notice_no=${noticeDto.noticeNo}">${noticeDto.title}</a></td> <%-- 제목 --%>
                     <td>${noticeDto.author}</td> <%-- 작성자 --%>
-                    <td>${noticeDto.created_date}</td> <%-- 작성일 --%>
+                    <td>${noticeDto.createdDate}</td> <%-- 작성일 --%>
                     <td>${noticeDto.views}</td> <%-- 조회수 --%>
                     <td>
                         <button type="button" class="notice-delete-button btn btn-danger" data-id="${noticeDto.notice_no}">삭제</button>
