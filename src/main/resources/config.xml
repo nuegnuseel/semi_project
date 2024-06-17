@@ -3,26 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!--  순서 properties > typeAliases > typeHandlers  -->
+    <!--  순서 properties > typeAliases > typeHandlers  -->
     <properties resource="db.properties"></properties>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
- <typeAliases>
-     <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
-     <typeAlias alias="SalaryPlusEmpNameDto" type="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto"/>
-     <typeAlias alias="SalarySearchDto" type="com.hrproject.hrproject.dto.SalarySearchDto"/>
-     <typeAlias alias="SalaryLogDto" type="com.hrproject.hrproject.dto.SalaryLogDto"/>
-     <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
-     <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
-     <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
-     <typeAlias alias="WorkScheduleDto" type="com.hrproject.hrproject.dto.WorkScheduleDto"/>
-
- </typeAliases>
-<!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
-<!--    <typeHandlers>-->
-<!--        <typeHandler handler="com.heo96.mybatis.mybatis.GradeTypeHandler"></typeHandler>-->
-<!--    </typeHandlers>-->
+    <typeAliases>
+        <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
+        <typeAlias alias="SalaryPlusEmpNameDto" type="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto"/>
+        <typeAlias alias="SalarySearchDto" type="com.hrproject.hrproject.dto.SalarySearchDto"/>
+        <typeAlias alias="SalaryLogDto" type="com.hrproject.hrproject.dto.SalaryLogDto"/>
+        <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
+        <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
+        <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
+        <typeAlias alias="WorkScheduleDto" type="com.hrproject.hrproject.dto.WorkScheduleDto"/>
+        <typeAlias alias="WorkScheduleAdminDto" type="com.hrproject.hrproject.dto.WorkScheduleAdminDto"/>
+    </typeAliases>
+    <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
+    <!--    <typeHandlers>-->
+    <!--        <typeHandler handler="com.heo96.mybatis.mybatis.GradeTypeHandler"></typeHandler>-->
+    <!--    </typeHandlers>-->
     <!--  db.properties 연결?..  -->
     <environments default="development">
         <environment id="development">
@@ -35,7 +35,7 @@
             </dataSource>
         </environment>
     </environments>
-<!--  mapper resources의 xml resource  -->
+    <!--  mapper resources의 xml resource  -->
     <mappers>
         <mapper resource="salary.xml"/>
         <mapper resource="hrm.xml"/>

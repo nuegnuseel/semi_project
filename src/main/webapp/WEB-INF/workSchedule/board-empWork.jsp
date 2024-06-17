@@ -21,7 +21,8 @@
                 <th scope="col">출근 시간</th>
                 <th scope="col">퇴근 시간</th>
                 <th scope="col">상태</th>
-                <th scope="col">수정/삭제</th>
+                <th scope="col">휴가</th>
+
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@
                     <td>${empWorkDto.startTime}</td>
                     <td>${empWorkDto.endTime}</td>
                     <td>${empWorkDto.status}</td>
+                    <td>${empWorkDto.vacationCode}</td>
                     <td>${empWorkDto.etc}</td>
                 </tr>
             </c:forEach>
