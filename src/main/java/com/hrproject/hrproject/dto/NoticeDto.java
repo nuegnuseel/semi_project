@@ -15,6 +15,4 @@ public class NoticeDto {
     private String createdDate;
     private String content;
     private int views;
-
-
 }

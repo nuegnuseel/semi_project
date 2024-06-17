@@ -30,12 +30,13 @@ public class NoticeUpdate extends HttpServlet {
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         String content = request.getParameter("content");
-
+        String createdDate = request.getParameter("createdDate");
         NoticeDto notice = NoticeDto.builder()
                 .noticeNo(noticeNo)
                 .title(title)
                 .author(author)
                 .content(content)
+                .createdDate(createdDate)
                 .build();
 
         NoticeDao noticeDao = new NoticeDao();
