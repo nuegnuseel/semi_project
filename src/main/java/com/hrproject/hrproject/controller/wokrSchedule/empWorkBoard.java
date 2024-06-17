@@ -88,6 +88,7 @@ public class empWorkBoard extends HttpServlet {
         // 대상 사원의 휴가기록 조사
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
         AttendDao attendDao = new AttendDao();
+
         List<AttendDto> attendDtoList = null;
         List<String> allDates = null;
         String vacationCode = null;
@@ -190,10 +191,10 @@ public class empWorkBoard extends HttpServlet {
         if (workScheduleDto.getStatus()==null && workScheduleDto.getStartTime()!=null) {
             // 퇴근인 경우
         }
-        if (workScheduleDto.getStatus() == 휴가 코드~~){
-            // 휴가 코드에 따른 머시기 ~~~
-        }
-        if ()
+//        if (workScheduleDto.getStatus() == 휴가 코드~~){
+//            // 휴가 코드에 따른 머시기 ~~~
+//        }
+
 
 
             System.out.println("오늘 날짜: " + currentDate);
