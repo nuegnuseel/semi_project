@@ -4,6 +4,13 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
 
+    <!-- 근태 승인 여부 업데이트 -->
+    <update id="updateApproval" parameterType="AttendDto">
+        UPDATE ATTEND
+        SET APPROVAL = #{approval}
+        WHERE ATDNO = #{atdNo}
+    </update>
+
     <!-- 삭제 쿼리 추가 -->
     <delete id="deleteAttend" parameterType="String">
         DELETE FROM ATTEND WHERE ATDNO = #{atdNo}
@@ -59,8 +66,6 @@
     <select id="getAttendListByEmpNo" resultType="AttendDto">
         select * from attend where empNo = #{empNo}
     </select>
-
-
 
 
 

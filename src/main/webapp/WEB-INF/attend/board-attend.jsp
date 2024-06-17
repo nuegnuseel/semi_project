@@ -43,6 +43,7 @@
                 <th scope="col">휴가사유</th>
                 <th scope="col">인쇄</th>
                 <th scope="col">삭제</th>
+                <th scope="col">승인/반려</th>
             </tr>
             </thead>
             <tbody>
@@ -59,6 +60,10 @@
                     <td>${attendDto.print}</td>
                     <td>
                         <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
+                    </td>
+                    <td>
+                        <button type="button" class="approve-button btn btn-primary" data-id="${attendDto.atdNo}">승인</button>
+                        <button type="button" class="reject-button btn btn-danger" data-id="${attendDto.atdNo}">반려</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -231,6 +236,43 @@
     </div>
 </div>
 <script>
+
+    $(document).ready(function() {
+        // 승인 버튼 클릭 이벤트 처리
+        $(document).on("click", ".approve-button", function() {
+            const atdNo = $(this).data("id");
+            updateApproval(atdNo, "승인");
+        });
+
+        // 반려 버튼 클릭 이벤트 처리
+        $(document).on("click", ".reject-button", function() {
+            const atdNo = $(this).data("id");
+            updateApproval(atdNo, "반려");
+        });
+
+        // Ajax를 이용하여 approval 업데이트 요청 보내기
+        function updateApproval(atdNo, approval) {
+            $.ajax({
+                url: "/attend/updateApproval", // 업데이트를 처리할 서버의 URL
+                method: "POST",
+                data: { atdNo: atdNo, approval: approval }, // 근태번호와 업데이트할 승인 상태 전송
+                success: function(response) {
+                    if (response.success) {
+                        alert("업데이트 성공");
+                        // 성공적으로 업데이트되었으면 화면에서 해당 행을 업데이트하거나 다시 로드하는 등의 작업 수행
+                        // 예: 페이지 리로드 또는 특정 요소 갱신
+                    } else {
+                        alert("업데이트 실패");
+                    }
+                },
+                error: function() {
+                    alert("서버 오류 발생");
+                }
+            });
+        }
+    });
+
+
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){

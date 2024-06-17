@@ -1,8 +1,6 @@
 package com.hrproject.hrproject.dao;
 
-import com.hrproject.hrproject.dto.AttendDto;
-import com.hrproject.hrproject.dto.NoticeDto;
-import com.hrproject.hrproject.dto.SalaryDto;
+import com.hrproject.hrproject.dto.CommunityDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
@@ -10,56 +8,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NoticeDao {
-    public List<NoticeDto> getNoticeList(){
-        List<NoticeDto>noticeList=null;
+public class CommunityDao {
+    public List<CommunityDto> getCommunityList(){
+
+        List<CommunityDto>communityList=null;
+
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        noticeList = sqlSession.selectList("getNoticeList");
+        communityList = sqlSession.selectList("getCommunityList");
         sqlSession.close();
-        System.out.println(noticeList.toString());
-        return noticeList;
+        return communityList;
     }
 
-    public int insertNoticeDao(NoticeDto noticeDto) {
+    public int insertCommunityDao(CommunityDto communityDto) {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.insert("insertNotice",noticeDto);
+        result = sqlSession.insert("insertCommunity",communityDto);
         //sqlSession.commit();
         if (result>0){
-            System.out.println("notice insert Qry is successfully");
+            System.out.println("community insert Qry is successfully");
         }
         sqlSession.close();
         return result;
 
     }
 
-    //제목을 누르면 공지사항의 내용을 볼수 있음
-    public NoticeDto getNoticeByNoticeNo(int noticeNo) {
-        NoticeDto notice = null;
+    //제목을 누르면 커뮤니티 내용을 볼수 있음
+    public CommunityDto getCommunityByCommunityNo(int communityNo) {
+        CommunityDto community = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         try {
-            notice = sqlSession.selectOne("getNoticeByNoticeNo", noticeNo);
+            community = sqlSession.selectOne("getCommunityByCommunityNo", communityNo);
         } finally {
             sqlSession.close();
         }
-        return notice;
+        return community;
     }
 
 
-    public static NoticeDto getNoticeById(int noticeNo) {
-        NoticeDto notice = null;
+    public static CommunityDto getCommunityById(int communityNo) {
+        CommunityDto community = null;
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true)) {
-            notice = sqlSession.selectOne("getNoticeByNoticeNo", noticeNo);
+            community = sqlSession.selectOne("getCommunityByCommunityNo", communityNo);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return notice;
+        return community;
     }
 
-    public int deleteNotice(int noticeNo) {
+    public int deleteCommunity(int communityNo) {
         int result = 0;
         try (SqlSession session = MybatisConnectionFactory.getSqlSession(true)) {
-            result = session.delete("deleteNotice", noticeNo);
+            result = session.delete("deleteCommunity", communityNo);
             session.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,17 +66,17 @@ public class NoticeDao {
         return result;
     }
 
-    public List<NoticeDto> searchNotice(String search, String searchWord) {
+    public List<CommunityDto> searchCommunity(String search, String searchWord) {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             Map<String, Object> parameterMap = new HashMap<>();
             parameterMap.put("search", search);
             parameterMap.put("searchWord", "%" + searchWord + "%");
 
-            List<NoticeDto> noticeList = sqlSession.selectList("searchNotice", parameterMap);
+            List<CommunityDto> communityList = sqlSession.selectList("searchCommunity", parameterMap);
             System.out.println("search query is successful");
-            System.out.println(noticeList.toString()); // 가져온 데이터 로깅
+            System.out.println(communityList); // 가져온 데이터 로깅
 
-            return noticeList;
+            return communityList;
         } catch (Exception e) {
             // 예외 발생 시 처리
             e.printStackTrace(); // 혹은 로깅
@@ -85,16 +84,16 @@ public class NoticeDao {
         }
     }
 
-    public void incrementViews(int noticeNo) {
+    public void incrementViews(int communityNo) {
         try (SqlSession session = MybatisConnectionFactory.getSqlSession(true)) {
-            session.update("com.hrproject.hrproject.dao.NoticeDao.incrementViews", noticeNo);
+            session.update("com.hrproject.hrproject.dao.CommunityDao.incrementViews", communityNo);
             session.commit();
         }
     }
 
-    public void updateNotice(NoticeDto notice) {
+    public void updateCommunity(CommunityDto community) {
         try (SqlSession session = MybatisConnectionFactory.getSqlSession(true)) {
-            session.update("updateNotice", notice);
+            session.update("updateCommunity", community);
             session.commit();
         }
     }

@@ -1,7 +1,8 @@
 package com.hrproject.hrproject.controller.attend;
 
+import com.hrproject.hrproject.dao.AttendDao;
+import com.hrproject.hrproject.dto.AttendDto;
 import com.google.gson.Gson;
-import com.hrproject.hrproject.controller.salary.SalaryCheck;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,7 +58,13 @@ public class AttendCheck extends HttpServlet {
 
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/attend-check.jsp");
+        AttendDao attendDao = new AttendDao();
+        List<AttendDto> attendList = attendDao.getAttendList();
+        req.setAttribute("attendList", attendList);
+        String url = req.getRequestURL().toString().substring(22);
+        req.setAttribute("url", url);
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
         dispatcher.forward(req, resp);
     }
     @Override
