@@ -26,14 +26,14 @@
             </when>
 
             <otherwise>
-                noticeNo LIKE CONCAT('%', #{searchWord}, '%') OR
+                communityNo LIKE CONCAT('%', #{searchWord}, '%') OR
                 title LIKE CONCAT('%', #{searchWord}, '%') OR
                 author LIKE CONCAT('%', #{searchWord}, '%')
             </otherwise>
         </choose>
     </sql>
 
-    <select id="searchNotice" resultType="com.hrproject.hrproject.dto.CommunityDto" >
+    <select id="searchCommunity" resultType="com.hrproject.hrproject.dto.CommunityDto" >
         SELECT * FROM COMMUNITY
         <where>
             <include refid="searchCondition"/>

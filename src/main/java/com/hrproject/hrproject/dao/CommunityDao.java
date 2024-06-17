@@ -1,9 +1,6 @@
 package com.hrproject.hrproject.dao;
 
-import com.hrproject.hrproject.dto.AttendDto;
 import com.hrproject.hrproject.dto.CommunityDto;
-import com.hrproject.hrproject.dto.NoticeDto;
-import com.hrproject.hrproject.dto.SalaryDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
