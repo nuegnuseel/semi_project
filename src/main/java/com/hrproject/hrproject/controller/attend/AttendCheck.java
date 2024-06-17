@@ -1,4 +1,4 @@
-package com.hrproject.hrproject.controller.salary;
+package com.hrproject.hrproject.controller.attend;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@WebServlet("/salary/check")
-public class SalaryCheck extends HttpServlet {
+@WebServlet("/attend/check")
+public class AttendCheck extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocalDate now = LocalDate.now(); //현재 날짜
@@ -54,7 +54,7 @@ public class SalaryCheck extends HttpServlet {
 
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/salary/salary-check.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/attend-check.jsp");
         dispatcher.forward(req, resp);
     }
 }

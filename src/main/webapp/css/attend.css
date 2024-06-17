@@ -10,3 +10,50 @@
     padding-top:0;
     padding-bottom: 16px;
 }
+.attend-check-area{
+    .attend-check-profile{
+        border: 1px solid #ccc;
+        width:250px;
+        height:300px;
+    }
+    .attend-check-info{
+        border: 1px solid #ccc;
+        height:300px;
+        width:100%;
+        margin-left:30px;
+    }
+}
+.attend-check-calendar-area{
+    border: 1px solid #ccc;
+    width:100%;
+    height:100%;
+    margin-top:50px;
+    .attend-check-calendar{
+        thead{
+            justify-content: center;
+            text-align: center;
+            tr{
+                th{
+                    width:100px;
+                    height:50px;
+                    border:1px solid #ccc;
+                }
+            }
+        }
+        tr{
+            width:200px;
+            td{
+                width:200px;
+                height:150px;
+                border:1px solid #ccc;
+            }
+
+        }
+    }
+}
+.attend-check-request-list-area{
+    width:100%;
+    height:100%;
+    margin-top:70px;
+    border:1px solid #ccc;
+}
