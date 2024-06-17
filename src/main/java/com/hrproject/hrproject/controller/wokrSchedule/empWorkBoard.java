@@ -166,4 +166,6 @@ public class empWorkBoard extends HttpServlet {
         System.out.println("오늘 날짜: " + currentDate);
         System.out.println("현재 시각: " + currentTime);
     }
+
+
 }
