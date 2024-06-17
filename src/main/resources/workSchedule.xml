@@ -41,13 +41,13 @@
 
     <update id="updateWorkStartTime" parameterType="workScheduleDto">
         UPDATE work_schedule
-        SET STARTTIME = #{startTime}
+        SET STARTTIME = #{startTime}, status = #{status}
         WHERE empNo = #{empNo} AND workDate = #{workDate}
     </update>
 
     <update id="updateWorkEndTime" parameterType="workScheduleDto">
         UPDATE work_schedule
-        SET ENDTIME = #{endTime}
+        SET ENDTIME = #{endTime},status = #{status}
         WHERE empNo = #{empNo} AND workDate = #{workDate}
     </update>
 

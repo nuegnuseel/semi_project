@@ -11,16 +11,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/workSchedule/empWorkBoard")
 public class empWorkBoard extends HttpServlet {
@@ -29,7 +28,10 @@ public class empWorkBoard extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // 로그인을 통해서 현재 접속자 empNo를 받아와야 합니다.
-        int empNo = 1;
+        HttpSession session = req.getSession();
+        HrmDto loginDto = (HrmDto) session.getAttribute("sessionDto");
+        int empNo = loginDto.getEmpNo();
+
 
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
         List<WorkScheduleDto> empWrokList = workScheduleDao.getEmpWorkList(empNo);
@@ -52,7 +54,9 @@ public class empWorkBoard extends HttpServlet {
         LocalTime currentTime = LocalTime.now();
 
         // 세션으로 로그인된 사람의 empNo를 받아와야 함
-        int empNo = 1;
+        HttpSession session = req.getSession();
+        HrmDto loginDto = (HrmDto) session.getAttribute("sessionDto");
+        int empNo = loginDto.getEmpNo();
 
         String Date = currentDate.toString(); // LocalDate는 ISO 형식으로 문자열로 변환됨
         String Time = currentTime.toString(); // LocalTime은 ISO 형식으로 문자열로 변환됨
@@ -142,25 +146,57 @@ public class empWorkBoard extends HttpServlet {
         // empNo(로그인한 사람의 사원 번호)를 통해서 그 사람의 workScheduleDto를 가져오기
         WorkScheduleDto workScheduleDto = workScheduleDao.getWorkScheduleOne(empNoDateMap);
 
-//        WorkScheduleDto workScheduleDto = workScheduleDao.getWorkSchedulelist(empNoDateMap);
 
-        System.out.println("WSCDTO >>> " + workScheduleDto);
         if (workScheduleDto.getStartTime() == null) {
             workScheduleDto.setStartTime(Time);
 
+            try {
+                String strStatus = workScheduleDto.getStatus();
+                if (strStatus != null) {
+                    List<String> statusList = new ArrayList<>(Arrays.asList(strStatus.split("/")));
+                    statusList.add("출근");
+                    String combinedString = String.join("/", statusList);
+                    workScheduleDto.setStatus(combinedString);
+                } else {
+                    workScheduleDto.setStatus("출근");
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+
             workScheduleDao.updateWorkStartTime(workScheduleDto);
-            System.out.println("WSCDTO02 >>> " + workScheduleDto);
             resp.sendRedirect("/workSchedule/empWorkBoard");
 
-        } else if (workScheduleDto.getStartTime() != null) {
+        } else if (workScheduleDto.getStartTime() != null && workScheduleDto.getEndTime() == null) {
             workScheduleDto.setEndTime(Time);
+
+            String strStatus = workScheduleDto.getStatus();
+            List<String> statusList = new ArrayList<>(Arrays.asList(strStatus.split("/")));
+            for (int i = 0; i < statusList.size(); i++) {
+                String status = statusList.get(i);
+                if (status.equals("출근")) {
+                    status = "퇴근";
+                    statusList.set(i, status);
+                }
+            }
+            String combinedString = String.join("/", statusList);
+            workScheduleDto.setStatus(combinedString);
             workScheduleDao.updateWorkEndTime(workScheduleDto);
+
             resp.sendRedirect("/workSchedule/empWorkBoard");
         } else if (workScheduleDto.getStartTime() != null && workScheduleDto.getEndTime() != null) {
-            req.setAttribute("showAlert", true);
-            req.getRequestDispatcher("/WEB-INF/workSchedule/board-empWork.jsp").forward(req, resp);
-        }
+            // JavaScript를 사용하여 경고창을 표시하고 확인 클릭 시 특정 페이지로 이동
+            String alertScript = "<script>"
+                    + "alert('이미 기록이 있습니다. 수정은 관리자에게 문의해주세요.');"
+                    + "window.location.href = '/workSchedule/empWorkBoard';"  // 확인을 누르면 이동할 페이지
+                    + "</script>";
 
+            // 응답 설정 및 경고창 출력
+            resp.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = resp.getWriter();
+            out.println(alertScript);
+            out.flush();
+        }
 //        이제 여기서부터 경우의 수 따져서 처리 + 예외처리
 
         System.out.println("오늘 날짜: " + currentDate);
