@@ -5,7 +5,7 @@
 <mapper namespace="com.hrproject.hrproject.mybatis">
 
     <!-- 근태 승인 여부 업데이트 -->
-    <update id="updateApproval">
+    <update id="updateApproval" parameterType="AttendDto">
         UPDATE ATTEND
         SET APPROVAL = #{approval}
         WHERE ATDNO = #{atdNo}

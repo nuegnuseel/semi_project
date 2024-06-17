@@ -11,9 +11,9 @@ import java.util.Map;
 public class AttendDao {
 
     // 근태 승인 여부 업데이트
-    public void updateApproval(String atdNo, String approval) {
+    public void updateApproval(AttendDto attendDto) {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
-            sqlSession.update("com.hrproject.hrproject.dao.AttendDao.updateApproval", new AttendDto(atdNo, approval));
+            sqlSession.update("updateApproval", attendDto);
             sqlSession.commit();
         }
     }
