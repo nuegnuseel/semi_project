@@ -56,7 +56,7 @@
                 </div>
                 <label for="position" class="col-sm col-form-label">직급</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="position" value="${hrmDto.position}"
+                    <input type="text" class="form-control" id="position" value="${hrmDto.posName}"
                            readonly>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 </div>
                 <label for="role" class="col-sm col-form-label">직책</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="role" value="${hrmDto.role}" readonly>
+                    <input type="text" class="form-control" id="role" value="${hrmDto.roleName}" readonly>
                 </div>
             </div>
             <div class="form-row">
@@ -79,7 +79,11 @@
                 </div>
             </div>
             <div class="text-end mt-3">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">내정보변경</button>
+                <jsp:include page="mypage-passwordChange-modal.jsp" />
+                <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#passwordChange">비밀번호변경
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">내정보변경요청</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">인쇄</button>
             </div>
         </div>
