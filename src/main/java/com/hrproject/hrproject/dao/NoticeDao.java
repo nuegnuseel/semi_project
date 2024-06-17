@@ -87,7 +87,7 @@ public class NoticeDao {
 
     public void incrementViews(int noticeNo) {
         try (SqlSession session = MybatisConnectionFactory.getSqlSession(true)) {
-            session.update("incrementViews", noticeNo);
+            session.update("com.hrproject.hrproject.dao.NoticeDao.incrementViews", noticeNo);
             session.commit();
         }
     }

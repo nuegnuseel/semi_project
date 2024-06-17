@@ -1,5 +1,7 @@
 package com.hrproject.hrproject.controller.attend;
 
+import com.hrproject.hrproject.dao.AttendDao;
+import com.hrproject.hrproject.dto.AttendDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +17,15 @@ import java.util.List;
 
 @WebServlet("/attend/check")
 public class AttendCheck extends HttpServlet {
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // POST 요청 처리 로직 추가
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocalDate now = LocalDate.now(); //현재 날짜
@@ -54,7 +65,13 @@ public class AttendCheck extends HttpServlet {
 
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/attend-check.jsp");
+        AttendDao attendDao = new AttendDao();
+        List<AttendDto> attendList = attendDao.getAttendList();
+        req.setAttribute("attendList", attendList);
+        String url = req.getRequestURL().toString().substring(22);
+        req.setAttribute("url", url);
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
         dispatcher.forward(req, resp);
     }
 }

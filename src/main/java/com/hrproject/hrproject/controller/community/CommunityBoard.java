@@ -38,7 +38,7 @@ public class CommunityBoard extends HttpServlet {
         }
 
         // JSP 페이지로 포워딩합니다.
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/communityList/communityListBoard.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/community/communityBoard.jsp");
         dispatcher.forward(req, resp);
     }
 }

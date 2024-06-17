@@ -5,7 +5,7 @@
 <mapper namespace="com.hrproject.hrproject.dao.NoticeDao">
 
     <!-- 조회수 증가 쿼리 -->
-    <update id="incrementViews" parameterType="int">
+    <update id="incrementViews" parameterType="int" >
         UPDATE NOTICE
         SET VIEWS = VIEWS + 1
         WHERE NOTICENO = #{noticeNo}

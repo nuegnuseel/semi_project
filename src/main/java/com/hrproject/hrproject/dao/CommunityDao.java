@@ -86,7 +86,7 @@ public class CommunityDao {
 
     public void incrementViews(int communityNo) {
         try (SqlSession session = MybatisConnectionFactory.getSqlSession(true)) {
-            session.update("incrementViews", communityNo);
+            session.update("com.hrproject.hrproject.dao.CommunityDao.incrementViews", communityNo);
             session.commit();
         }
     }

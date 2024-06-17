@@ -22,6 +22,7 @@
                             <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
                             <option value="communityNo" ${search eq "communityNo" ? "selected": ""}>글번호</option>
                             <option value="title" ${search eq "title" ? "selected": ""}>제목</option>
+                            <option value="category" ${search eq "category" ? "selected": ""}>카테고리</option>
                             <option value="author" ${search eq "author" ? "selected": ""}>작성자</option>
                         </select>
                     </div>

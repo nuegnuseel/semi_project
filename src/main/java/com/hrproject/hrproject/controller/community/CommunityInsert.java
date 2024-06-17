@@ -26,7 +26,6 @@ public class CommunityInsert extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CommunityDto communityDto = CommunityDto.builder()
-                .communityNo(Integer.parseInt(req.getParameter("communityNo")))
                 .category(req.getParameter("category"))
                 .title(req.getParameter("title"))
                 .author(req.getParameter("author"))

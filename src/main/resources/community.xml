@@ -24,11 +24,15 @@
             <when test="search == 'author'">
                 author LIKE CONCAT('%', #{searchWord}, '%')
             </when>
+            <when test="search == 'category'">
+                category LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
 
             <otherwise>
                 communityNo LIKE CONCAT('%', #{searchWord}, '%') OR
                 title LIKE CONCAT('%', #{searchWord}, '%') OR
-                author LIKE CONCAT('%', #{searchWord}, '%')
+                author LIKE CONCAT('%', #{searchWord}, '%') OR
+                category LIKE CONCAT('%', #{searchWord}, '%')
             </otherwise>
         </choose>
     </sql>
@@ -51,7 +55,8 @@
         UPDATE COMMUNITY
         SET title = #{title},
         author = #{author},
-        content = #{content}
+        content = #{content},
+        category = #{category}
         WHERE communityNo = #{communityNo}
     </update>
 
@@ -66,11 +71,12 @@
 
 
     <insert id="insertCommunity" parameterType="com.hrproject.hrproject.dto.CommunityDto">
-        INSERT INTO COMMUNITY (TITLE, AUTHOR, CONTENT)
+        INSERT INTO COMMUNITY (TITLE, AUTHOR, CONTENT, CATEGORY)
         VALUES (
         #{title}, <!--제목 -->
         #{author}, <!--작성자-->
-        #{content}<!--내용-->
+        #{content},<!--내용-->
+        #{category}<!--내용-->
         )
     </insert>
 
