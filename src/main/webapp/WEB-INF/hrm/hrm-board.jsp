@@ -223,7 +223,8 @@
                 $('input#position_view').val(response.position);
                 $('input#passport_view').val(response.passport);
                 $('input#role_view').val(response.role);
-                $('input#remarks_view').val(response.remarks);
+                $('textarea#remarks_view').val(response.remarks);
+
 
                 // 나머지 필드들도 동일한 방식으로 처리
                 // 예: $('input#hireDate_view').val(response.hireDate);
@@ -265,7 +266,7 @@
                 $('input#account_update').val(response.account);
                 $('input#accountHolder_update').val(response.accountHolder);
                 $('input#profile_update').val(response.profile);
-                $('input#remarks_update').val(response.remarks);
+                $('textarea#remarks_update').val(response.remarks);
 
                 // 나머지 필드들도 동일한 방식으로 처리
                 // 예: $('input#hireDate_view').val(response.hireDate);
@@ -328,6 +329,32 @@
                 /* jsp의 자바스크립트에서 달러{} 을 쓰려면 $앞에 \를 넣어줘야함 = \$ {} */
                 // $("#preview").html(`<img src="\${img}">`)
                 $("#preview").attr("src", img); // 선택한 이미지로 미리보기 업데이트
+            }
+            profileReader.readAsDataURL(file);
+        }
+    })
+
+    $("#profile_update").on("change", function (e) {
+        const file = e.currentTarget.files[0];
+        if (!file) { // 파일이 선택되지 않은 경우 (지운 경우)
+            // $("#preview").html(""); // 미리보기 영역 비우기
+            $("#update_preview").attr("src", "../../images/profile01.jpg");
+            return false;
+        }
+        const extension = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase(); // +1 안하면 .png, +1 하면 png 나옴
+        if (!(extension === "png" || extension === "jpg" || extension === "gif")) {
+            alert("이미지 파일(jpg, png. gif)만 업로드 가능합니다.");
+            $(this).val("");
+            $("#update_preview").attr("src", "../../images/profile01.jpg");
+            return false;
+        } else {
+            const profileReader = new FileReader();
+            profileReader.onload = function (e) {
+                // currentTarget or target에의 result 가 image임
+                const img = e.target.result;
+                /* jsp의 자바스크립트에서 달러{} 을 쓰려면 $앞에 \를 넣어줘야함 = \$ {} */
+                // $("#preview").html(`<img src="\${img}">`)
+                $("#update_preview").attr("src", img); // 선택한 이미지로 미리보기 업데이트
             }
             profileReader.readAsDataURL(file);
         }

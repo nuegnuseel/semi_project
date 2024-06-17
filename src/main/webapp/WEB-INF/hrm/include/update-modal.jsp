@@ -165,7 +165,7 @@
                         </div>
                         <div class="col-md-4 preview" style="width: 170px; height: 170px; object-fit: contain">
                             <%--                        <div id="preview"></div>--%>
-                            <img id="preview" src="../../../images/profile01.jpg">
+                            <img id="update_preview" src="../../../images/profile01.jpg">
                         </div>
                     </div>
                     <div class="row mt-3">
