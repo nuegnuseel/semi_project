@@ -113,8 +113,8 @@ public class HrmUpdate extends HttpServlet {
                     .deptNo(deptNo)
                     .deptName(deptMap.get(deptNo))
 
-                    .positionNo(positionNo)
-                    .position(positionMap.get(positionNo))
+                    .posNo(positionNo)
+                    .posName(positionMap.get(positionNo))
 
                     .mobile(req.getParameter("mobile"))
                     .passport(req.getParameter("passport"))

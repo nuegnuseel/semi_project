@@ -8,7 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/hrm/login-logout" id="loginModalLabel" method="post">
+                <form action="/hrm/login-logout" id="loginModal" method="post">
                     <div class="row mt-8">
                         <div class="col">사원번호</div>
                         <div class="col col-md-8">
@@ -26,8 +26,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="loginModalLabel" class="btn btn-primary" id="btn-insert">Submit</button>
-                <button type="reset" form="loginModalLabel" class="btn btn-danger">Reset</button>
+                <button type="submit" form="loginModal" class="btn btn-primary">Submit</button>
+                <button type="reset" form="loginModal" class="btn btn-danger">Reset</button>
             </div>
         </div>
     </div>

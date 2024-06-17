@@ -77,7 +77,7 @@
                     <td>${hrmDto.empNo}</td>
                     <td>${hrmDto.ename}</td>
                     <td>${hrmDto.deptName}</td>
-                    <td>${hrmDto.position}</td>
+                    <td>${hrmDto.posName}</td>
                     <td>${hrmDto.email}</td>
                     <td>${hrmDto.account}</td>
                     <td><input type="text" value="일단빈칸"></td>
@@ -284,23 +284,24 @@
     $("#profile").on("change", function (e) {
         const file = e.currentTarget.files[0];
         if (!file) { // 파일이 선택되지 않은 경우 (지운 경우)
-            $("#preview").html(""); // 미리보기 영역 비우기
+            // $("#preview").html(""); // 미리보기 영역 비우기
+            $("#preview").attr("src", "../../images/profile01.jpg");
             return false;
         }
         const extension = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase(); // +1 안하면 .png, +1 하면 png 나옴
-        console.log(file);
         if (!(extension === "png" || extension === "jpg" || extension === "gif")) {
-            alert("이미지 파일만 업로드 가능합니다.");
+            alert("이미지 파일(jpg, png. gif)만 업로드 가능합니다.");
             $(this).val("");
+            $("#preview").attr("src", "../../images/profile01.jpg");
             return false;
         } else {
             const profileReader = new FileReader();
             profileReader.onload = function (e) {
-                console.log(e)
-// currentTarget or target에의 result 가 image임
-                const img = e.currentTarget.result;
+                // currentTarget or target에의 result 가 image임
+                const img = e.target.result;
                 /* jsp의 자바스크립트에서 달러{} 을 쓰려면 $앞에 \를 넣어줘야함 = \$ {} */
-                $("#preview").html(`<img src="\${img}">`)
+                // $("#preview").html(`<img src="\${img}">`)
+                $("#preview").attr("src", img); // 선택한 이미지로 미리보기 업데이트
             }
             profileReader.readAsDataURL(file);
         }
@@ -310,6 +311,17 @@
     $(".btn-post").on("click", makePostCode);
 
     function makePostCode() {
+        $("#postCode").each(function() {
+            if ($(this).val() !== '') {
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        $("#address").each(function() {
+            if ($(this).val() !== '') {
+                $(this).removeClass('is-invalid');
+            }
+        });
         new daum.Postcode({
             oncomplete: function (data) {
 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
