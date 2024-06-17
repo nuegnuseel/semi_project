@@ -17,6 +17,11 @@ import java.util.List;
 public class AttendUpdate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String startAtdDate = req.getParameter("editStartAtdDate");
+        String endAtdDate = req.getParameter("editEndAtdDate");
+        String atdDate = startAtdDate + " ~ " + endAtdDate;
+
         AttendDto attendDto = AttendDto.builder()
                 .empNo(Integer.parseInt(req.getParameter("empNo"))) //사원번호
                 .atdNo(req.getParameter("atdNo")) //근태번호
@@ -24,6 +29,8 @@ public class AttendUpdate extends HttpServlet {
                 .atdCode(req.getParameter("atdCode")) //근태코드
                 .atdNum(Double.parseDouble(req.getParameter("atdNum"))) //근태수
                 .atdDate(req.getParameter("atdDate")) //근태기간
+                .startAtdDate(startAtdDate) // 시작 근태기간
+                .endAtdDate(endAtdDate) // 끝 근태기간
                 .offDay(req.getParameter("offDay")) //휴가명
                 .offDayRs(req.getParameter("offDayRs")) //휴가사유
                 .print(req.getParameter("print")) //인쇄
@@ -32,6 +39,8 @@ public class AttendUpdate extends HttpServlet {
         System.out.println("empNo===="+req.getParameter("empNo"));
         System.out.println("atdNo===="+req.getParameter("atdNo"));
         System.out.println("atdNo===="+req.getParameter("print"));
+
+
 
         AttendDao attendDao = new AttendDao();
 

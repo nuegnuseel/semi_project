@@ -67,14 +67,16 @@
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
     </select>
+
     <select id="getUpdateInfo" resultType="AttendDto" parameterType="String">
         SELECT * FROM ATTEND WHERE ATDNO = #{selectName}
     </select>
+
     <update id="updateAttend" parameterType="AttendDto">
         UPDATE ATTEND
         SET
         ATDNUM = #{atdNum},
-        ATDDATE = #{atdDate},
+        ATDDATE = CONCAT(#{startAtdDate}, ' ~ ', #{endAtdDate}),  -- 근태기간 시작~끝
         OFFDAY = #{offDay},
         OFFDAYRS = #{offDayRs},
         ATDCODE = #{atdCode},
