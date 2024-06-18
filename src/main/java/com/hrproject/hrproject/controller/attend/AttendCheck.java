@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/attend/check")
 public class AttendCheck extends HttpServlet {
@@ -74,26 +72,32 @@ public class AttendCheck extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
         dispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String empNo = req.getParameter("empNo");
         String accountingPeriod = req.getParameter("accountingPeriod");
 
-        System.out.println("empNo==="+empNo);
-        System.out.println("accountingPeriod==="+accountingPeriod);
+        System.out.println("empNo===" + empNo);
+        System.out.println("accountingPeriod===" + accountingPeriod);
 
-        int searchYear=Integer.parseInt(accountingPeriod.substring(0,4));
-        int searchMonth=Integer.parseInt(accountingPeriod.substring(4,6));
+        int searchYear = Integer.parseInt(accountingPeriod.substring(0, 4));
+        int searchMonth = Integer.parseInt(accountingPeriod.substring(4, 6));
 
-        System.out.println("searchYear==="+searchYear);
-        System.out.println("searchMonth==="+searchMonth);
+        System.out.println("searchYear===" + searchYear);
+        System.out.println("searchMonth===" + searchMonth);
 
         Calendar cal = Calendar.getInstance();
-        cal.set(searchYear,searchMonth-1,1);
-        int dayLast=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int firstDayOfWeek =cal.get(Calendar.DAY_OF_WEEK);
+        cal.set(searchYear, searchMonth - 1, 1);
+        int dayLast = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         List<List<Integer>> weekDates = new ArrayList<>();
-        int dayCounter=1;
+        int dayCounter = 1;
+
+        AttendDao attendDao = new AttendDao();
+        List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList();
+        System.out.println("approvedAttendList===" + approvedAttendList.toString());
+        req.setAttribute("approvedAttendList", approvedAttendList);
 
         for (int i = 0; i < 6; i++) { // 최대 6주까지 생성
             List<Integer> daysInWeek = new ArrayList<>();
@@ -115,15 +119,33 @@ public class AttendCheck extends HttpServlet {
         // 응답 객체 생성
         AttendCheck.ResponseData responseData = new AttendCheck.ResponseData(weekDates, numberOfWeeks);
 
-        Gson gson = new Gson();
-        String json = gson.toJson(responseData);
 
+        Gson gson = new Gson();
+
+//        String json = gson.toJson(responseData);
+//        String json02 = gson.toJson(approvedAttendList);
+
+        Map<String, Object> responseDataPlz = new HashMap<>();
+        responseDataPlz.put("response", responseData);
+        responseDataPlz.put("approvedAttendList", approvedAttendList);
+        String jsonResponse = gson.toJson(responseDataPlz);
+
+//        System.out.println("j >>>" +  json);
+//        System.out.println("j02>>>" +json02);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+
         PrintWriter out = resp.getWriter();
-        out.write(json);
+        out.write(jsonResponse);
         out.flush();
+
+
+//        PrintWriter out = resp.getWriter();
+//        out.write(json);
+//        out.write(json02);
+//        out.flush();
     }
+
     private static class ResponseData {
         List<List<Integer>> weekDates;
         int numberOfWeeks;

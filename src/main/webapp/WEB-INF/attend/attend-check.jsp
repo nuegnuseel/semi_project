@@ -114,7 +114,8 @@
                         calendarBody.append(weekRow);
                     })
                 },
-                error:function (){
+                error:function (err){
+                    console.log(err);
                     message="검색값은 6자리 정수여야합니다. \n 예)202405"
                     $("#attend-check-search-text").val("");
                     $("#attend-check-search-text").focus();

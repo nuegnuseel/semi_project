@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class AttendDto {
     private int empNo; //사원번호
     private String atdNo; //근태번호

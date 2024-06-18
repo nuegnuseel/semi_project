@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <style>
 
 </style>
@@ -38,7 +40,7 @@
             <h2>검색</h2>
             <div class="d-flex">
                 <input type="text" placeholder="ex)202406" id="attend-check-search-text" name="attendCheckSearchText">
-                <input type="hidden"  id="attend-check-search-empNo" name="attendCheckEmpNo" value="1">
+                <input type="hidden" id="attend-check-search-empNo" name="attendCheckEmpNo" value="1">
                 <button id="attend-check-search-btn">검색</button>
             </div>
         </div>
@@ -67,11 +69,15 @@
                             <h5 class="calendar-day">${day}
                                 <br> 이름띄우기
                                 <c:forEach items="${approvedAttendList}" var="attendDto" varStatus="loop">
-                                    <c:set var="currentDate" value="${year}-${month}-${day}" />
+                                    <%--                                    <c:set var="currentDate" value="${year}-${month}-${day}" />--%>
+                                    <%-- Extract the day part from startAtdDate and convert to integer --%>
+                                    <c:set var="startDay" value="${fn:substring(attendDto.startAtdDate, 8, 10)}"/>
+                                    <c:set var="endDay" value="${fn:substring(attendDto.endAtdDate, 8, 10)}"/>
+                                    <c:set var="startDayInt" value="${startDay + 0}"/>
+                                    <c:set var="endDayInt" value="${endDay + 0}"/>
                                     <%-- 조건문안에 넣어야댐--%>
-                                    <br>${attendDto.ename}
-                                    <c:if test="${attendDto.startAtdDate >= currentDate && attendDto.endAtdDate <= currentDate} ">
-
+                                    <c:if test="${startDayInt <= day && endDayInt >= day}">
+                                        <br>${attendDto.ename}
                                     </c:if>
                                 </c:forEach>
                             </h5></c:if></td>
@@ -93,6 +99,8 @@
             <th scope="col">근태코드</th>
             <th scope="col">근태수</th>
             <th scope="col">근태기간</th>
+            <th scope="col">시작 근태일</th>
+            <th scope="col">마지막 근태일</th>
             <th scope="col">휴가명</th>
             <th scope="col">휴가사유</th>
             <th scope="col">인쇄</th>
@@ -103,11 +111,17 @@
         <c:forEach items="${approvedAttendList}" var="attendDto" varStatus="loop">
             <tr>
                 <td>${attendDto.empNo}</td>
-                <td>${attendDto.atdNo}</td> <%--근태번호 수정키--%>
+                <td>${attendDto.atdNo}</td>
+                    <%--근태번호 수정키--%>
                 <td>${attendDto.ename}</td>
                 <td>${attendDto.atdCode}</td>
                 <td>${attendDto.atdNum}</td>
                 <td>${attendDto.atdDate}</td>
+                    <%--근태일--%>
+                <td>${attendDto.startAtdDate}</td>
+                    <%--시작 근태일--%>
+                <td>${attendDto.endAtdDate}</td>
+                    <%--마지막 근태일--%>
                 <td>${attendDto.offDay}</td>
                 <td>${attendDto.offDayRs}</td>
                 <td>${attendDto.print}</td>
@@ -118,15 +132,11 @@
     </table>
 
 
-
-
-
-
-
-
     <h3> 휴가 신청 내역 </h3>
     <%--신규 버튼--%>
-    <button class="attend-check-Insert-btn btn btn-primary w-20" data-bs-target="#insertAttendCheckModal" data-bs-toggle="modal">휴가 신청</button>
+    <button class="attend-check-Insert-btn btn btn-primary w-20" data-bs-target="#insertAttendCheckModal"
+            data-bs-toggle="modal">휴가 신청
+    </button>
     <div class="attend-check-request-list-area col-12">
 
         <table class="table table-striped">
@@ -148,7 +158,8 @@
             <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
                 <tr>
                     <td>${attendDto.empNo}</td>
-                    <td>${attendDto.atdNo}</td> <%--근태번호 수정키--%>
+                    <td>${attendDto.atdNo}</td>
+                        <%--근태번호 수정키--%>
                     <td>${attendDto.ename}</td>
                     <td>${attendDto.atdCode}</td>
                     <td>${attendDto.atdNum}</td>
@@ -163,8 +174,8 @@
         </table>
     </div>
 
-    <%--attend insert 모달--%>
-    <div class="modal fade" id="insertAttendCheckModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"
+    <div class="modal fade" id="insertAttendCheckModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         data-bs-backdrop="static"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -199,7 +210,16 @@
                         <div class="row mb-3">
                             <label for="atdCode" class="col-sm-2 col-form-label">근태코드</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="atdCode" name="atdCode">
+                                <select class="form-select" id="atdCode" name="atdCode">
+                                    <option value="">근태 코드를 입력하세요.</option>
+                                    <option value="A01">A01 : 연차</option>
+                                    <option value="A02">A02 : 반차</option>
+                                    <option value="A03">A03 : 병가</option>
+                                    <option value="B01">B01 : 경조사</option>
+                                    <option value="C01">C01 : 교육</option>
+                                    <option value="C02">C02 : 연수</option>
+                                    <option value="C03">C03 : 기타</option>
+                                </select>
                             </div>
                         </div>
 
@@ -213,7 +233,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">근태기간</label>
                             <div class="col-sm-10 col-auto">
-                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input type="date" class="form-control" id="endAtdDate" name="endAtdDate">
+                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input
+                                    type="date" class="form-control" id="endAtdDate" name="endAtdDate">
                             </div>
                         </div>
 
@@ -248,7 +269,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="submit" form="insertAttendCheck" id="AttendInsertSubmitBtn" class="btn btn-primary">신청</button>
+                    <button type="submit" form="insertAttendCheck" id="AttendInsertSubmitBtn" class="btn btn-primary">
+                        신청
+                    </button>
                     <button type="reset" form="insertAttendCheck" class="btn btn-danger">리셋</button>
                 </div>
             </div>
@@ -256,150 +279,346 @@
     </div>
 
 
-</div>
-<script>
-    //외래키 사원번호 예외처리
-    $(document).ready(function() {
-        $("#insertAttendCheck").on('submit', function(event) {
-            var empNo = $('#insertEmpNo').val();
-            var atdNo = $('#atdNo').val();
-            var ename = $('#ename').val();
-            var startAtdDate = $('#startAtdDate').val();
-            var endAtdDate = $('#endAtdDate').val();
+    <%--attend insert 모달--%>
+    <div class="modal fade" id="insertAttendCheckModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         data-bs-backdrop="static"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">휴가 신청</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-            //사원번호를 입력하지 않은경우
-            if (!empNo) {
-                event.preventDefault();
-                alert('사원번호를 입력해주세요.');
-                $('#insertEmpNo').val('');
-                $('#insertEmpNo').focus();
-                return;
-            }
-            //근태번호를 입력하지 않은경우
-            if (!atdNo) {
-                event.preventDefault();
-                alert('근태번호를 입력해주세요.');
-                $('#atdNo').val('');
-                $('#atdNo').focus();
-                return;
-            }
-            //사원명을 입력하지 않은경우
-            if (!ename) {
-                event.preventDefault();
-                alert('사원명을 입력해주세요.');
-                $('#ename').val('');
-                return;
-            }
+                    <form action="../attend/check/insert" id="insertAttendCheck" method="post">
+                        <div class="row mb-3">
+                            <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
+                            </div>
+                        </div>
 
-            //근태기간을 입력하지 않은경우
-            if (!startAtdDate || !endAtdDate) {
-                event.preventDefault();
-                alert('근태기간을 입력해주세요.');
-                return;
-            }
+                        <div class="row mb-3">
+                            <label for="atdNo" class="col-sm-2 col-form-label">근태번호</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="atdNo" name="atdNo">
+                            </div>
+                        </div>
 
-            //근태기간이 잘못된경우 시작과 끝이 안맞는 경우
-            if (startAtdDate > endAtdDate) {
-                event.preventDefault();
-                alert('잘못된 근태기간입니다.');
-                return;
-            }
+                        <div class="row mb-3">
+                            <label for="eName" class="col-sm-2 col-form-label">사원명</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="ename" name="ename">
+                            </div>
+                        </div>
 
-            // empNo와 atdNo 입력후 조건검사
-            if (empNo && atdNo) {
-                event.preventDefault();
-                $.ajax({
-                    url:"/attend/insertEmpNoCheck",
-                    method:"POST",
-                    data:{empNo:empNo},
-                    success: function (response){
-                        if (response === 1){
-                            $.ajax({
-                                url:"/attend/insertAtdNoCheck",
-                                method:"POST",
-                                data:{atdNo:atdNo},
-                                success:function (response){
-                                    if(response === 1){
-                                        alert("중복된 근태번호입니다.")
-                                        $("#atdNo").focus();
-                                        return false;
-                                    }else {
-                                        $("#insertAttendCheck").unbind('submit').submit();
-                                    }
-                                },
-                                error:function (){
-                                    alert("알수없는 오류 발생");
-                                }
-                            })
-                        }else {
-                            alert("존재하지않는 사원번호입니다.")
-                            $("#insertEmpNo").focus();
-                            return false;
-                        }
-                    },
-                    error: function (){
-                        alert("알수없는 오류 발생");
-                    }
-                });
+                        <div class="row mb-3">
+                            <label for="atdCode" class="col-sm-2 col-form-label">근태코드</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" id="atdCode" name="atdCode">
+                                    <option value="">근태 코드를 입력하세요.</option>
+                                    <option value="A01">A01 : 연차</option>
+                                    <option value="A02">A02 : 반차</option>
+                                    <option value="A03">A03 : 병가</option>
+                                    <option value="B01">B01 : 경조사</option>
+                                    <option value="C01">C01 : 교육</option>
+                                    <option value="C02">C02 : 연수</option>
+                                    <option value="C03">C03 : 기타</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">근태기간</label>
+                            <div class="col-sm-10 col-auto">
+                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input
+                                    type="date" class="form-control" id="endAtdDate" name="endAtdDate">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="offDay" class="col-sm-2 col-form-label">휴가명</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="offDay" name="offDay">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="offDayRs" class="col-sm-2 col-form-label">휴가사유</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="offDayRs" name="offDayRs">
+                            </div>
+                        </div>
+
+                        <legend class="col-form-label col-sm-2 pt-0">인쇄</legend>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="print" id="printY" value="Y" checked>
+                            <label class="form-check-label" for="printY">
+                                Y
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="print" id="printN" value="N">
+                            <label class="form-check-label" for="printN">
+                                N
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" form="insertAttendCheck" id="AttendInsertSubmitBtn" class="btn btn-primary">
+                        신청
+                    </button>
+                    <button type="reset" form="insertAttendCheck" class="btn btn-danger">리셋</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        // 근태코드 변경 시 휴가명 변경
+        $('#atdCode').on('change', function () {
+            var selectedAtdCode = $(this).val();
+            var offDayInput = $('#offDay');
+
+            switch (selectedAtdCode) {
+                case 'A01':
+                    offDayInput.val('연차');
+                    break;
+                case 'A02':
+                    offDayInput.val('반차');
+                    break;
+                case 'A03':
+                    offDayInput.val('병가');
+                    break;
+                case 'B01':
+                    offDayInput.val('경조사');
+                    break;
+                case 'C01':
+                    offDayInput.val('교육');
+                    break;
+                case 'C02':
+                    offDayInput.val('연수');
+                    break;
+                case 'C03':
+                    offDayInput.val('기타');
+                    break;
+                default:
+                    offDayInput.val('');
+                    break;
             }
         });
-    });
 
+        //외래키 사원번호 예외처리
+        $(document).ready(function () {
+            $("#insertAttendCheck").on('submit', function (event) {
+                var empNo = $('#insertEmpNo').val();
+                var atdNo = $('#atdNo').val();
+                var ename = $('#ename').val();
+                var startAtdDate = $('#startAtdDate').val();
+                var endAtdDate = $('#endAtdDate').val();
+                var atdCode = $('#atdCode').val();
 
-
-    window.onload = function() {
-        var urlParams = new URLSearchParams(window.location.search);
-
-        if (urlParams.get('AttendInsertSuccess') === 'true') {
-            alert('등록 되었습니다.');
-        }
-    };
-
-    $(document).ready(function (){
-        $("#attend-check-search-btn").on("click",function (){
-            var searchValue = $("#attend-check-search-text").val();
-            const attendCheckEmpNo = $("#attend-check-search-empNo").val();
-            const attendCheckSearchText = $("#attend-check-search-text").val();
-            var message = "";
-            $.ajax({
-                url:"/attend/check",
-                method:"POST",
-                data:{
-                    empNo:attendCheckEmpNo,
-                    accountingPeriod:attendCheckSearchText,
-                },
-                success:function (response){
-                    var year = searchValue.substring(0, 4);
-                    var month = searchValue.substring(4, 6);
-                    $("#attend-check-calendar-date").text(year + " " + month + "월 근무표");
-
-                    var calendarBody=$("#calendar-body");
-                    var totalBody = $("#total-body");
-
-                    calendarBody.empty();
-                    totalBody.empty();
-
-                    response.weekDates.forEach(function(week){
-                        var weekRow = '<tr>';
-                        week.forEach(function(day) {
-                            if (day != 0) {
-                                weekRow += '<td><h5 class="calendar-day">' + day + '</h5>근무시간</td>';
-                            } else {
-                                weekRow += '<td></td>';
-                            }
-                        });
-                        weekRow += '</tr>';
-                        calendarBody.append(weekRow);
-                    })
-                },
-                error:function (){
-                    message="검색값은 6자리 정수여야합니다. \n 예)202405"
-                    $("#attend-check-search-text").val("");
-                    $("#attend-check-search-text").focus();
-                    alert(message)
+                //사원번호를 입력하지 않은경우
+                if (!empNo) {
+                    event.preventDefault();
+                    alert('사원번호를 입력해주세요.');
+                    $('#insertEmpNo').val('');
+                    $('#insertEmpNo').focus();
+                    return;
                 }
-            })
+                //근태번호를 입력하지 않은경우
+                if (!atdNo) {
+                    event.preventDefault();
+                    alert('근태번호를 입력해주세요.');
+                    $('#atdNo').val('');
+                    $('#atdNo').focus();
+                    return;
+                }
+                //사원명을 입력하지 않은경우
+                if (!ename) {
+                    event.preventDefault();
+                    alert('사원명을 입력해주세요.');
+                    $('#ename').val('');
+                    return;
+                }
 
+                //근태코드를 입력하지 않은경우
+                if (!atdCode) {
+                    event.preventDefault();
+                    alert('근태코드를 입력해주세요.');
+                    return;
+                }
+
+                //근태기간을 입력하지 않은경우
+                if (!startAtdDate || !endAtdDate) {
+                    event.preventDefault();
+                    alert('근태기간을 입력해주세요.');
+                    return;
+                }
+
+                //근태기간이 잘못된경우 시작과 끝이 안맞는 경우
+                if (startAtdDate > endAtdDate) {
+                    event.preventDefault();
+                    alert('잘못된 근태기간입니다.');
+                    return;
+                }
+
+                // empNo와 atdNo 입력후 조건검사
+                if (empNo && atdNo) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "/attend/insertEmpNoCheck",
+                        method: "POST",
+                        data: {empNo: empNo},
+                        success: function (response) {
+                            if (response === 1) {
+                                $.ajax({
+                                    url: "/attend/insertAtdNoCheck",
+                                    method: "POST",
+                                    data: {atdNo: atdNo},
+                                    success: function (response) {
+                                        if (response === 1) {
+                                            alert("중복된 근태번호입니다.")
+                                            $("#atdNo").focus();
+                                            return false;
+                                        } else {
+                                            $("#insertAttendCheck").unbind('submit').submit();
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("알수없는 오류 발생");
+                                    }
+                                })
+                            } else {
+                                alert("존재하지않는 사원번호입니다.")
+                                $("#insertEmpNo").focus();
+                                return false;
+                            }
+                        },
+                        error: function () {
+                            alert("알수없는 오류 발생");
+                        }
+                    });
+                }
+            });
+        });
+
+        window.onload = function () {
+            var urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.get('AttendInsertSuccess') === 'true') {
+                alert('등록 되었습니다.');
+            }
+        };
+
+        //달력
+        $(document).ready(function () {
+            $("#attend-check-search-btn").on("click", function () {
+                var searchValue = $("#attend-check-search-text").val();
+                const attendCheckEmpNo = $("#attend-check-search-empNo").val();
+                const attendCheckSearchText = $("#attend-check-search-text").val();
+                var message = "";
+
+                $.ajax({
+                    url: "/attend/check",
+                    method: "POST",
+                    data: {
+                        empNo: attendCheckEmpNo,
+                        accountingPeriod: attendCheckSearchText,
+                    },
+                    success: function (resp) {
+                        var year = searchValue.substring(0, 4);
+                        var month = searchValue.substring(4, 6);
+                        $("#attend-check-calendar-date").text(year + " " + month + "월 근무표");
+
+                        var calendarBody = $("#calendar-body");
+                        var totalBody = $("#total-body");
+
+                        calendarBody.empty();
+                        totalBody.empty();
+
+                        console.log(resp);
+                        console.log(resp.response.weekDates);
+                        console.log(resp.response.numberOfWeeks)
+                        console.log(resp.approvedAttendList)
+
+                        resp.response.weekDates.forEach(function (week) {
+                            var weekRow = '<tr>';
+                            week.forEach(function (day) {
+
+                                resp.approvedAttendList.forEach(function (attendDto){
+                                    let startDay = attendDto.startAtdDate.substring(8, 10);
+                                    let endDay = attendDto.endAtdDate.substring(8, 10);
+                                    let intStartDay = parseInt(startDay, 10);
+                                    let intEndDay = parseInt(endDay, 10);
+                                    console.log(startDay);
+                                    console.log(endDay);
+                                    console.log(intStartDay);
+                                    console.log(intEndDay);
+
+
+                                });
+
+
+
+                                if (day != 0) {
+                                    weekRow += '<td><h5 class="calendar-day">' + day + '</h5>이름띄우기</td>';
+                                } else {
+                                    weekRow += '<td></td>';
+                                }
+                            });
+                            weekRow += '</tr>';
+                            calendarBody.append(weekRow);
+                        });
+
+                        resp.approvedAttendList.forEach(function (attendDto){
+                            let startDay = attendDto.startAtdDate.substring(8, 10);
+                            let endDay = attendDto.endAtdDate.substring(8, 10);
+                            let intStartDay = parseInt(startDay, 10);
+                            let intEndDay = parseInt(endDay, 10);
+                            console.log(startDay);
+                            console.log(endDay);
+                            console.log(intStartDay);
+                            console.log(intEndDay);
+
+
+                        });
+
+
+                        //
+                        // response.weekDates.forEach(function(week){
+                        //     var weekRow = '<tr>';
+                        //     week.forEach(function(day) {
+                        //         if (day != 0) {
+                        //             weekRow += '<td><h5 class="calendar-day">' + day + '</h5>근무시간</td>';
+                        //         } else {
+                        //             weekRow += '<td></td>';
+                        //         }
+                        //     });
+                        //     weekRow += '</tr>';
+                        //     calendarBody.append(weekRow);
+                        // })
+                    },
+                    error: function () {
+                        message = "검색값은 6자리 정수여야합니다. \n 예)202405"
+                        $("#attend-check-search-text").val("");
+                        $("#attend-check-search-text").focus();
+                        alert(message)
+                    }
+                })
+
+            })
         })
-    })
-</script>
+    </script>
