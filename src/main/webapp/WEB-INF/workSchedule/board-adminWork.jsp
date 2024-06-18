@@ -7,9 +7,9 @@
     <div class="board-title"><h2 class="title">출퇴근 list</h2></div>
 
     <div class="attend-content-area p-3 bg-body-tertiary">
-        <form id="myForm" action="../workSchedule/empWorkBoard" method="post">
-            <button id="workRecord" class="btn btn-primary">출/퇴근</button>
-        </form>
+<%--        <form id="myForm" action="../workSchedule/empWorkBoard" method="post">--%>
+<%--            <button id="workRecord" class="btn btn-primary">출/퇴근</button>--%>
+<%--        </form>--%>
 
 
         <%--보드--%>
@@ -18,22 +18,27 @@
             <tr>
 
                 <th scope="col">날짜</th>
+                <th scope="col">사원번호</th>
+                <th scope="col">부  서</th>
+                <th scope="col">사원 이름</th>
                 <th scope="col">출근 시간</th>
                 <th scope="col">퇴근 시간</th>
                 <th scope="col">상태</th>
-                <th scope="col">휴가</th>
-
+                <th scope="col">수정/삭제</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${empWorkList}" var="empWorkDto" varStatus="loop">
+            <c:forEach items="${adminWorkList}" var="adminWorkDto" varStatus="loop">
                 <tr>
-                    <td>${empWorkDto.workDate}</td>
-                    <td>${empWorkDto.startTime}</td>
-                    <td>${empWorkDto.endTime}</td>
-                    <td>${empWorkDto.status}</td>
-                    <td>${empWorkDto.vacationCode}</td>
-                    <td>${empWorkDto.etc}</td>
+                    <td>${adminWorkDto.workDate}</td>
+                    <td>${adminWorkDto.empNo}</td>
+                    <td>${adminWorkDto.deptName}</td>
+                    <td>${adminWorkDto.ename}</td>
+                    <td>${adminWorkDto.startTime}</td>
+                    <td>${adminWorkDto.endTime}</td>
+                    <td>${adminWorkDto.status}</td>
+                    <td><button type="button" class="btn btn-primary">수정</button>
+                        <button type="button" class="btn btn-danger">삭제</button></td>
                 </tr>
             </c:forEach>
             </tbody>
