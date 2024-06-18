@@ -42,23 +42,28 @@ public class HrmUpdate extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /* 예외처리 try catch 어케함?? */
+        /* empNo 수정버튼 누른거랑 다른값 들어오면 막아야함 */
+//        if (req.getParameter("empNo_password_update") != null) {
+//            HrmDao hrmDao = new HrmDao();
+//            HrmDto hrmDto = HrmDto.builder()
+//                    .empNo(Integer.parseInt(req.getParameter("empNo_password_update")))
+//                    .password(req.getParameter("empNo_password_update"))
+//                    .build();
+//            int result = hrmDao.changePW(hrmDto);
+//            if (result > 0) {
+//                ScriptWriter.alertAndNext(resp, "비밀번호 초기화 되었습니다.", "../hrm/board");
+//                return;
+//            } else {
+//                ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
+//                return;
+//            }
+//        }
 
-        boolean nullCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
-                || req.getParameter("ename") == null || req.getParameter("ename").equals("")
-                || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
-                || req.getParameter("email") == null || req.getParameter("email").equals("")
-                || req.getParameter("hireDate") == null || req.getParameter("hireDate").equals("");
-
-        HrmDao hrmGetMaxDao = new HrmDao();
-        int maxEmpNo = hrmGetMaxDao.getMaxEmpNo();
-
-        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo || !nullCheck) {
+        if (!isNullCheck(req)) {
             Part profile = req.getPart("profile");
             String renameProfile = "";
             //String originalProfile = "";
-
-            System.out.println(req.getParameter("empNo"));
-            System.out.println(req.getParameter("ename"));
 
             String fileName = profile.getSubmittedFileName();
             String serverUploadDir = this.getServletContext().getRealPath("upload");
@@ -89,10 +94,11 @@ public class HrmUpdate extends HttpServlet {
             // 서버에 이미지 올리는것도 다 돈이다.
 
             Map<Integer, String> deptMap = new HashMap<>();
-            deptMap.put(10, "개발팀");
-            deptMap.put(20, "영업팀");
-            deptMap.put(30, "인사팀");
-            deptMap.put(40, "회계팀");
+            deptMap.put(10, "근태관리팀");
+            deptMap.put(20, "급여관리팀");
+            deptMap.put(30, "인사관리팀");
+            deptMap.put(40, "개발팀");
+            deptMap.put(50, "기획팀");
             int deptNo = Integer.parseInt(req.getParameter("deptNo"));
 
             Map<Integer, String> positionMap = new HashMap<>();
@@ -107,8 +113,8 @@ public class HrmUpdate extends HttpServlet {
 
             String passport = req.getParameter("passport");
             if (passport.equals("")) passport = null;
-
             HrmDto hrmDto = HrmDto.builder()
+                    .empNo(Integer.parseInt(req.getParameter("empNo")))
                     .ename(req.getParameter("ename"))
                     .foreignName(req.getParameter("foreignName"))
                     .birthDate(req.getParameter("birthDate"))
@@ -119,15 +125,14 @@ public class HrmUpdate extends HttpServlet {
                     .posNo(positionNo)
                     .posName(positionMap.get(positionNo))
                     .roleName(req.getParameter("roleName"))
-
-                    .mobile(req.getParameter("mobile"))
-                    .passport(passport)
-                    .email(req.getParameter("email"))
-
                     .hireDate(req.getParameter("hireDate"))
                     .hireType(req.getParameter("hireType"))
-                    .bankName(req.getParameter("bankName"))
+                    .passport(passport)
+                    .mobile(req.getParameter("mobile"))
                     .account(req.getParameter("account"))
+                    .email(req.getParameter("email"))
+
+                    .bankName(req.getParameter("bankName"))
                     .accountHolder(req.getParameter("accountHolder"))
                     .postCode(req.getParameter("postCode"))
                     .address(req.getParameter("address"))
@@ -146,7 +151,20 @@ public class HrmUpdate extends HttpServlet {
                 ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
             }
         } else {
-            ScriptWriter.alertAndBack(resp, "오류가 발생했습니다a. 다시 시도해주세요.");
+            ScriptWriter.alertAndBack(resp, "오류가 발생했습니다.(필수입력사항) 다시 시도해주세요.");
         }
+    }
+
+    private static boolean isNullCheck(HttpServletRequest req) {
+        boolean nullCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
+                || req.getParameter("ename") == null || req.getParameter("ename").equals("")
+                || req.getParameter("birthDate") == null || req.getParameter("birthDate").equals("")
+                || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
+                || req.getParameter("email") == null || req.getParameter("email").equals("")
+                || req.getParameter("hireDate") == null || req.getParameter("hireDate").equals("")
+                || req.getParameter("account") == null || req.getParameter("account").equals("")
+                || req.getParameter("postCode") == null || req.getParameter("postCode").equals("")
+                || req.getParameter("address") == null || req.getParameter("address").equals("");
+        return nullCheck;
     }
 }

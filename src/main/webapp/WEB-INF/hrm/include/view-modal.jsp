@@ -7,46 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<style>
-    .employee-card {
-        border: 1px solid #ddd;
-        padding: 20px;
-    }
-
-    .profile-container {
-        display: flex;
-    }
-
-    .profile-upload {
-        flex: 0 0 200px;
-        text-align: center;
-    }
-
-    .profile-details {
-        flex: 1;
-        margin-left: 20px;
-    }
-
-    .profile-details .form-row {
-        display: flex;
-        margin-bottom: 10px;
-    }
-
-    .profile-details .form-row .col {
-        flex: 1;
-        padding: 5px;
-    }
-
-    .preview img {
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
-    }
-</style>
 
 <div class="modal fade" id="viewModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">사원 카드</h1>
@@ -57,18 +21,18 @@
                     <h1 class="text-center">사원 카드</h1>
                     <div class="profile-container">
                         <li class="nav-item">
-                            <img src="../../images/profile01.jpg">
+                                <img id="renameProfile_view" class="myPageProfile" src="" alt="Profile Image">
                         </li>
                         <div class="profile-details">
                             <div class="row mb-sm-1 reduce-gap">
-                                <label for="hireDate_view" class="col-sm col-form-label">입사일</label>
+                                <label for="empNo_view" class="col-sm col-form-label">사원번호</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="hireDate_view" value="${hrmViewDto.hireDate}"
+                                    <input type="text" class="form-control" id="empNo_view"
                                            readonly>
                                 </div>
-                                <label for="birth" class="col-sm col-form-label">생일</label>
+                                <label for="birthDate_view" class="col-sm col-form-label">생일</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="birth" value="생일없음" readonly>
+                                    <input type="text" class="form-control" id="birthDate_view" value="생일없음" readonly>
                                 </div>
                             </div>
                             <div class="row mb-sm-1 reduce-gap">
@@ -79,7 +43,7 @@
                                     <input type="text" class="form-control" placeholder="사원 이름" aria-label="ename"
                                            readonly id="ename_view" name="ename_view" value="">
                                 </div>
-                                <label for="deptName_view" class="col-sm col-form-label">부서명</label>
+                                <label for="deptName_view" class="col-sm col-form-label">부서</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" id="deptName_view"
                                            readonly>
@@ -91,41 +55,41 @@
                                     <input type="text" class="form-control" id="email_view"
                                            readonly>
                                 </div>
-                                <label for="postCode_view" class="col-sm col-form-label">우편</label>
+                                <label for="hireDate_view" class="col-sm col-form-label">입사일</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="postCode_view"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="row mb-3-sm-1">
-                                <label for="address_view" class="col-sm-2 col-form-label">주소</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address_view"
-                                           value="${hrmViewDto.address}" readonly>
+                                    <input type="text" class="form-control" id="hireDate_view" value="생일없음" readonly>
                                 </div>
                             </div>
                             <div class="row mb-sm-1 reduce-gap">
                                 <label for="mobile_view" class="col-sm col-form-label">전화</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="mobile_view" value="${hrmViewDto.mobile}"
-                                           readonly>
+                                    <input type="text" class="form-control" id="mobile_view" readonly>
                                 </div>
                                 <label for="position_view" class="col-sm col-form-label">직급</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="position_view" value="${hrmViewDto.position}"
-                                           readonly>
+                                    <input type="text" class="form-control" id="position_view" readonly>
                                 </div>
                             </div>
                             <div class="row mb-sm-1 reduce-gap">
                                 <label for="passport_view" class="col-sm col-form-label">여권</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="passport_view" value="${hrmViewDto.passport}"
-                                           readonly>
+                                    <input type="text" class="form-control" id="passport_view" readonly>
                                 </div>
-                                <label for="role_view" class="col-sm col-form-label">직책</label>
+                                <label for="roleName_view" class="col-sm col-form-label">직책</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="role_view" value="${hrmViewDto.role}"
-                                           readonly>
+                                    <input type="text" class="form-control" id="roleName_view" readonly>
+                                </div>
+                            </div>
+                            <div class="row mb-3-sm-1">
+                                <label for="address_view" class="col-sm-2 col-form-label">주소</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="address_view" readonly>
+                                </div>
+                            </div>
+                            <div class="row mb-3-sm-1">
+                                <label for="bankAccount_view" class="col-sm-2 col-form-label">급여통장</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="bankAccount_view" readonly>
                                 </div>
                             </div>
                             <div class="form-row">

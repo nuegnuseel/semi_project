@@ -17,24 +17,78 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @WebServlet("/hrm/insert")
 @MultipartConfig
 public class HrmInsert extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("addEmployee").equals("addEmployee")) {
+            /* 사원 추가 */
+            List<HrmDto> hrmDtoList = new ArrayList<>();
+            HrmDao getMaxEmpNo = new HrmDao();
+            int maxEmpNo = getMaxEmpNo.getMaxEmpNo() + 1;
+            for (int i = 0; i < 200; i++) {
+                Random random = new Random();
+                int deptNo = 10 + random.nextInt(3) * 10;  // 10, 20, 30 중 하나 선택
+                int positionNo = 10 + random.nextInt(3) * 10;  // 10, 20, 30 중 하나 선택
+                int year = ThreadLocalRandom.current().nextInt(1980, 2000); // 1980 이상, 2000 미만 (1999까지)
+                int month = ThreadLocalRandom.current().nextInt(1, 12); // 1 이상, 13 미만 (1부터 12까지)
+                int day = ThreadLocalRandom.current().nextInt(2, 25); // 1 이상, 31 미만 (1부터 30까지)
+                // 날짜를 "yyyy-MM-dd" 형식으로 포맷팅
+                String dateStr = String.format("%04d-%02d-%02d", year, month, day);
+                int month2 = ThreadLocalRandom.current().nextInt(1, 12); // 1 이상, 13 미만 (1부터 12까지)
+                int day2 = ThreadLocalRandom.current().nextInt(2, 25); // 1 이상, 31 미만 (1부터 30까지)
+                String dateStrHire = String.format("%04d-%02d-%02d", year+20, month2, day2);
+
+                HrmDto hrmDto = HrmDto.builder()
+                        .empNo(maxEmpNo + i)
+                        .ename("Employee" + (i + maxEmpNo))
+                        .foreignName("ForeignName" + (i + maxEmpNo))
+                        .birthDate(dateStr)
+                        .password(Integer.toString(maxEmpNo + i))
+                        .deptNo(deptNo)
+                        .deptName(getDeptMap().get(deptNo))
+                        .posNo(positionNo)
+                        .posName(getPositionMap().get(positionNo))
+                        .roleName("팀원")
+                        .mobile("010-" + (i + maxEmpNo))
+                        .passport("Pas" + (i + maxEmpNo))
+                        .email("ee" + (i + maxEmpNo) + "@ee.co")
+                        .hireDate(dateStrHire)
+                        .hireType("신입")
+                        .bankName("Bank" + (i % 5))
+                        .account("Acc" + (i + maxEmpNo))
+                        .accountHolder("AccHolder" + (i + 1))
+                        .postCode(Integer.toString(12345 + i))
+                        .address("Address" + (i + 1))
+                        .addressDetail("AddressDetail" + (i + 1))
+                        .originalProfile("OriginalProfile" + (i + 1))
+                        .renameProfile("RenameProfile" + (i + 1))
+                        .remarks("Remarks" + (i + 1))
+                        .grade(Grade.MEMBER)
+                        .build();
+                hrmDtoList.add(hrmDto);
+            }
+            HrmDao hrmDao = new HrmDao();
+            int result = hrmDao.insertHrmList(hrmDtoList);
+            if (result > 0) {
+                ScriptWriter.alertAndNext(resp, result + "명의 사원 정보가 입력되었습니다.", "../hrm/board");
+            } else {
+                ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /* 예외처리 */
-        boolean nullCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
-                || req.getParameter("ename") == null || req.getParameter("ename").equals("")
-                || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
-                || req.getParameter("email") == null || req.getParameter("email").equals("")
-                || req.getParameter("hireDate") == null || req.getParameter("hireDate").equals("");
+        /* 예외처리 try catch 어케함?? */
 
         HrmDao hrmGetMaxDao = new HrmDao();
         int maxEmpNo = hrmGetMaxDao.getMaxEmpNo();
-        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo + 1 || !nullCheck) {
+        if (Integer.parseInt(req.getParameter("empNo")) == maxEmpNo + 1 || !isNullCheck(req)) {
             Part profile = req.getPart("profile");
             String renameProfile = "";
             //String originalProfile = "";
@@ -68,26 +122,12 @@ public class HrmInsert extends HttpServlet {
                 // 서버에 이미지 올리는것도 다 돈이다.
             }
 
-            Map<Integer, String> deptMap = new HashMap<>();
-            deptMap.put(10, "개발팀");
-            deptMap.put(20, "영업팀");
-            deptMap.put(30, "인사팀");
-            deptMap.put(40, "회계팀");
+            Map<Integer, String> deptMap = getDeptMap();
             int deptNo = Integer.parseInt(req.getParameter("deptNo"));
 
-            Map<Integer, String> positionMap = new HashMap<>();
-            // 사원 대리 과장 차장 대표이사
-            positionMap.put(10, "사원");
-            positionMap.put(20, "대리");
-            positionMap.put(30, "과장");
-            positionMap.put(40, "차장");
-            positionMap.put(50, "대표이사");
+            Map<Integer, String> positionMap = getPositionMap();
             int positionNo = Integer.parseInt(req.getParameter("positionNo"));
 
-        /*HrmDto hrmDto = HrmDto.builder()
-                .deptNo(10)
-                .deptName(deptMap.get(10))
-                .build();*/
             String passport = req.getParameter("passport");
             if (passport.equals("")) passport = null;
 
@@ -96,7 +136,7 @@ public class HrmInsert extends HttpServlet {
                     .ename(req.getParameter("ename"))
                     .foreignName(req.getParameter("foreignName"))
                     .birthDate(req.getParameter("birthDate"))
-                    .password("password")
+                    .password(req.getParameter("empNo"))
 
                     .deptNo(deptNo)
                     .deptName(deptMap.get(deptNo))
@@ -133,5 +173,39 @@ public class HrmInsert extends HttpServlet {
         } else {
             ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
         }
+    }
+
+    private static Map<Integer, String> getPositionMap() {
+        Map<Integer, String> positionMap = new HashMap<>();
+        // 사원 대리 과장 차장 대표이사
+        positionMap.put(10, "사원");
+        positionMap.put(20, "대리");
+        positionMap.put(30, "과장");
+        positionMap.put(40, "차장");
+        positionMap.put(50, "대표이사");
+        return positionMap;
+    }
+
+    private static Map<Integer, String> getDeptMap() {
+        Map<Integer, String> deptMap = new HashMap<>();
+        deptMap.put(10, "근태관리팀");
+        deptMap.put(20, "급여관리팀");
+        deptMap.put(30, "인사관리팀");
+        deptMap.put(40, "개발팀");
+        deptMap.put(50, "기획팀");
+        return deptMap;
+    }
+
+    private static boolean isNullCheck(HttpServletRequest req) {
+        boolean nullCheck = req.getParameter("empNo") == null || req.getParameter("empNo").equals("")
+                || req.getParameter("ename") == null || req.getParameter("ename").equals("")
+                || req.getParameter("birthDate") == null || req.getParameter("birthDate").equals("")
+                || req.getParameter("mobile") == null || req.getParameter("mobile").equals("")
+                || req.getParameter("email") == null || req.getParameter("email").equals("")
+                || req.getParameter("hireDate") == null || req.getParameter("hireDate").equals("")
+                || req.getParameter("account") == null || req.getParameter("account").equals("")
+                || req.getParameter("postCode") == null || req.getParameter("postCode").equals("")
+                || req.getParameter("address") == null || req.getParameter("address").equals("");
+        return nullCheck;
     }
 }

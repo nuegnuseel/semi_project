@@ -34,7 +34,14 @@
             </div>
             <!-- Login Button -->
             <div class="header-user-info d-flex col-auto ms-auto text-end">
-                <img src="../../images/profile01.jpg" class="profile">
+                <c:choose>
+                    <c:when test="${not empty sessionDto.renameProfile}">
+                        <img src="${request.contextPath}/upload/${sessionDto.renameProfile}" class="profile">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="../images/profile01.jpg" class="profile">
+                    </c:otherwise>
+                </c:choose>
                 <c:choose>
                     <c:when test="${sessionDto eq null}">
                         <c:set var="redirectUrl" value="${pageContext.request.contextPath}/index/index"/>
@@ -98,8 +105,8 @@
                         </ul>
                     </div>
                 </li>
-                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'SALARY_MANAGER' or
-                sessionDto.grade eq 'ATTEND_MANAGER' or sessionDto.grade eq 'HRM_MANAGER'}">
+                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 10
+                or sessionDto.deptNo eq 20 or sessionDto.deptNo eq 30}">
                     <li class="left-side-link nav-item align-items-center">
                         <div class="d-flex align-items-center">
                             <i class="bi bi-person-workspace"></i>
@@ -109,13 +116,13 @@
                         </div>
                         <div class="collapse" id="workDropDown" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'ATTEND_MANAGER'}">
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 10}">
                                     <li><a href="/attend/board" class="nav-link text-decoration-none rounded">근태 업무</a></li>
                                 </c:if>
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'SALARY_MANAGER'}">
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 20}">
                                 <li><a href="/salary/board" class="nav-link text-decoration-none rounded">급여 업무</a></li>
                                 </c:if>
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
+                               <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}" >
                                 <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
                                 </c:if>
                             </ul>

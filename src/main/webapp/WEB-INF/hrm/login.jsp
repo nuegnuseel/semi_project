@@ -12,15 +12,15 @@
             <div class="row mt-3">
                 <div class="col">사원번호</div>
                 <div class="col col-4">
-                    <input type="text" class="form-control" id="loginEmpNo" placeholder="사원번호 입력, admin, sal, attend, hrm" aria-label="empno"
-                           name="loginEmpNo">
+                    <input type="text" class="form-control" id="loginEmpNo" placeholder="사원번호 입력, admin" aria-label="empno"
+                           name="loginEmpNo" value="admin">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col">비밀번호</div>
                 <div class="col col-4">
-                    <input type="password" class="form-control" id="loginPassword" placeholder="비밀번호 입력, admin&manager pw = 1234"
-                           aria-label="password" name="loginPassword">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="비밀번호 입력, admin pw = 1234"
+                           aria-label="password" name="loginPassword" value="1234">
                 </div>
             </div>
             <div class="row mt-3">

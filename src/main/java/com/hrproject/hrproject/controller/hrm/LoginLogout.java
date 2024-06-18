@@ -29,13 +29,7 @@ public class LoginLogout extends HttpServlet {
         } else {
             /* 관리자 로그인 임시 */
             if (req.getParameter("loginEmpNo").equals("admin") && req.getParameter("loginPassword").equals("1234")) {
-                adminLogin(req,resp,"Admin",Grade.ADMIN,"관리자");
-            } else if (req.getParameter("loginEmpNo").equals("sal") && req.getParameter("loginPassword").equals("1234")) {
-                adminLogin(req,resp,"SalManager",Grade.SALARY_MANAGER,"급여 업무 관리자");
-            } else if (req.getParameter("loginEmpNo").equals("attend") && req.getParameter("loginPassword").equals("1234")) {
-                adminLogin(req,resp,"AttendManager",Grade.ATTEND_MANAGER,"근태 업무 관리자");
-            } else if (req.getParameter("loginEmpNo").equals("hrm") && req.getParameter("loginPassword").equals("1234")) {
-                adminLogin(req,resp,"HrmManager",Grade.HRM_MANAGER,"인사 업무 관리자");
+                adminLogin(req, resp, "Admin", Grade.ADMIN, "관리자");
             } else {
                 /* 로그인 */
                 String empNoStr = req.getParameter("loginEmpNo");
@@ -46,15 +40,7 @@ public class LoginLogout extends HttpServlet {
                     return;
                 }
 
-                String passwordStr = req.getParameter("loginPassword");
-                int password = 0;
-                if (isInteger(resp, passwordStr)) password = Integer.parseInt(passwordStr);
-                else {
-                    ScriptWriter.alertAndBack(resp, "로그인 실패");
-                    return;
-                }
-//        String password = req.getParameter("password"); // /* DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기 */
-
+                String password = req.getParameter("loginPassword");
                 HrmDao loginHrmDao = new HrmDao();
                 HrmDto loginHrmDto = loginHrmDao.login(empNo, password);
 
@@ -62,8 +48,10 @@ public class LoginLogout extends HttpServlet {
                     HrmDto sessionDto = HrmDto.builder()
                             .empNo(loginHrmDto.getEmpNo())
                             .ename(loginHrmDto.getEname())
+                            .deptNo(loginHrmDto.getDeptNo())
                             .deptName(loginHrmDto.getDeptName())
                             .renameProfile(loginHrmDto.getRenameProfile())
+                            .grade(loginHrmDto.getGrade())
                             .build();
                     HttpSession session = req.getSession();
                     session.setAttribute("sessionDto", sessionDto);
