@@ -8,21 +8,26 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <typeAliases>
-        <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
-        <typeAlias alias="SalaryPlusEmpNameDto" type="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto"/>
-        <typeAlias alias="SalarySearchDto" type="com.hrproject.hrproject.dto.SalarySearchDto"/>
-        <typeAlias alias="SalaryLogDto" type="com.hrproject.hrproject.dto.SalaryLogDto"/>
-        <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
-        <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
-        <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
-        <typeAlias alias="WorkScheduleDto" type="com.hrproject.hrproject.dto.WorkScheduleDto"/>
-        <typeAlias alias="WorkScheduleAdminDto" type="com.hrproject.hrproject.dto.WorkScheduleAdminDto"/>
-    </typeAliases>
-    <!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
-    <!--    <typeHandlers>-->
-    <!--        <typeHandler handler="com.heo96.mybatis.mybatis.GradeTypeHandler"></typeHandler>-->
-    <!--    </typeHandlers>-->
+
+ <typeAliases>
+     <typeAlias alias="SalaryDto" type="com.hrproject.hrproject.dto.SalaryDto"/>
+     <typeAlias alias="SalaryPlusEmpNameDto" type="com.hrproject.hrproject.dto.SalaryPlusEmpNameDto"/>
+     <typeAlias alias="SalarySearchDto" type="com.hrproject.hrproject.dto.SalarySearchDto"/>
+     <typeAlias alias="SalaryLogDto" type="com.hrproject.hrproject.dto.SalaryLogDto"/>
+     <typeAlias alias="HrmDto" type="com.hrproject.hrproject.dto.HrmDto"/>
+     <typeAlias alias="HrmPageDto" type="com.hrproject.hrproject.dto.HrmPageDto"/>
+     <typeAlias alias="AttendDto" type="com.hrproject.hrproject.dto.AttendDto"/>
+     <typeAlias alias="WorkScheduleDto" type="com.hrproject.hrproject.dto.WorkScheduleDto"/>
+     <typeAlias alias="WorkScheduleAdminDto" type="com.hrproject.hrproject.dto.WorkScheduleAdminDto"/>
+     <typeAlias alias="CommunityDto" type="com.hrproject.hrproject.dto.CommunityDto"/>
+     <typeAlias alias="NoticeDto" type="com.hrproject.hrproject.dto.NoticeDto"/>
+
+ </typeAliases>
+<!--  자바 타입이랑 db타입 맞춰줘야 할때 typeHandler씀  -->
+    <typeHandlers>
+        <typeHandler handler="com.hrproject.hrproject.mybatis.GradeTypeHandler"></typeHandler>
+    </typeHandlers>
+
     <!--  db.properties 연결?..  -->
     <environments default="development">
         <environment id="development">
@@ -42,5 +47,6 @@
         <mapper resource="attend.xml"/>
         <mapper resource="notice.xml"/>
         <mapper resource="workSchedule.xml"/>
+        <mapper resource="community.xml"/>
     </mappers>
 </configuration>

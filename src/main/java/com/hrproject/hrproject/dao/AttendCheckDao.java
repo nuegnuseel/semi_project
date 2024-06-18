@@ -8,16 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttendDao {
-
-    // 근태 승인 여부 업데이트
-    public void updateApproval(AttendDto attendDto) {
-        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
-            sqlSession.update("updateApproval", attendDto);
-            sqlSession.commit();
-        }
-    }
-
+public class AttendCheckDao {
 
     // 삭제 메서드 추가
     public int deleteAttend(String atdNo) {
@@ -99,7 +90,7 @@ public class AttendDao {
 
 
 
-//    출퇴근 기록에서 필요해서 만들었습니다!!
+    //    출퇴근 기록에서 필요해서 만들었습니다!!
     public List<AttendDto> getAttendListByEmpNo(int empNo) {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getAttendListByEmpNo", empNo);

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <title>Title</title>
@@ -36,20 +37,22 @@
                 <img src="../../images/profile01.jpg" class="profile">
                 <c:choose>
                     <c:when test="${sessionDto eq null}">
-                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                                data-bs-target="#loginModalToggle">로그인
-                        </button>
+                        <c:set var="redirectUrl" value="${pageContext.request.contextPath}/index/index"/>
+                        <c:if test="${not fn:contains(pageContext.request.requestURI, '/index/index')}">
+                            <meta http-equiv="refresh" content="0; url=${redirectUrl}">
+                        </c:if>
                     </c:when>
                     <c:otherwise>
                         <div class="dropdown">
-                            <button class="user-name btn btn-outline-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="user-name btn btn-outline-light" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     ${sessionDto.ename}
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-dark mt-2" >
+                            <ul class="dropdown-menu dropdown-menu-dark mt-2">
                                 <li>
                                     <form action="../hrm/mypage" method="post" id="mypage" class="m-0">
-                                    <input type="hidden" value="${sessionDto.empNo}" name="sessionEmpNo">
-                                    <button class="btn dropdown-btn-outline-light" form="mypage">마이페이지</button>
+                                        <input type="hidden" value="${sessionDto.empNo}" name="sessionEmpNo">
+                                        <button class="btn dropdown-btn-outline-light" form="mypage">마이페이지</button>
                                     </form>
                                 </li>
                                 <li>
@@ -90,33 +93,42 @@
                     </div>
                     <div class="collapse" id="selectDropDown" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="nav-link text-decoration-none rounded">근태 조회</a></li>
-                            <li><a href="#" class="nav-link text-decoration-none rounded">급여 조회</a></li>
+                            <li><a href="/attend/check" class="nav-link text-decoration-none rounded">근태 조회</a></li>
+                            <li><a href="/salary/check" class="nav-link text-decoration-none rounded">급여 조회</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="left-side-link nav-item align-items-center">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-person-workspace"></i>
-                        <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse"
-                                data-bs-target="#workDropDown" aria-expanded="false">
-                            업무
-                        </button>
-                    </div>
-                    <div class="collapse" id="workDropDown" style="">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="/attend/board" class="nav-link text-decoration-none rounded">근태 업무</a></li>
-                            <li><a href="/salary/board" class="nav-link text-decoration-none rounded">급여 업무</a></li>
-                            <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'SALARY_MANAGER' or
+                sessionDto.grade eq 'ATTEND_MANAGER' or sessionDto.grade eq 'HRM_MANAGER'}">
+                    <li class="left-side-link nav-item align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-workspace"></i>
+                            <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse"
+                                    data-bs-target="#workDropDown" aria-expanded="false">업무
+                            </button>
+                        </div>
+                        <div class="collapse" id="workDropDown" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'ATTEND_MANAGER'}">
+                                    <li><a href="/attend/board" class="nav-link text-decoration-none rounded">근태 업무</a></li>
+                                </c:if>
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'SALARY_MANAGER'}">
+                                <li><a href="/salary/board" class="nav-link text-decoration-none rounded">급여 업무</a></li>
+                                </c:if>
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
+                                <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </li>
+                </c:if>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-exclamation-square"></i>
                     <a class="nav-link" href="/notice/board">공지사항</a>
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
+
                     <a class="nav-link" href="../workSchedule/empWorkBoard">커뮤니티</a>
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
@@ -126,12 +138,13 @@
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
                     <a class="nav-link" href="../workSchedule/adminWorkBoard">관리자용 출퇴근</a>
+                    <a class="nav-link" href="/community/board">커뮤니티</a>
+
                 </li>
             </ul>
         </div>
         <hr>
     </div>
 </nav>
-<jsp:include page="../hrm/login-logout.jsp" flush="true"/>
 <%--헤더 끝--%>
 
