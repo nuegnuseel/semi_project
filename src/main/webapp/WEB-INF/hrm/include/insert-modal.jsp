@@ -5,6 +5,7 @@
   Time: 오후 5:31
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="insertModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -78,12 +79,9 @@
                         <div class="col">부서</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="select" name="deptNo">
-                                <option value="10">부서코드:10 | 부서명:근태관리팀</option>
-                                <option value="20">부서코드:20 | 부서명:급여관리팀</option>
-                                <option value="30">부서코드:30 | 부서명:인사관리팀</option>
-                                <option value="40">부서코드:40 | 부서명:개발팀</option>
-                                <option value="40">부서코드:50 | 부서명:기획팀</option>
-                                <%-- 부서 추가 기능 넣기 --%>
+                                <c:forEach var="dept" items="${deptMap}">
+                                    <option value="${dept.key}">부서코드:${dept.key} | 부서명:${dept.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -91,11 +89,9 @@
                         <div class="col">직위/직급</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="select" name="positionNo">
-                                <option value="10">직급코드:10 | 직급명:사원</option>
-                                <option value="20">직급코드:20 | 직급명:대리</option>
-                                <option value="30">직급코드:30 | 직급명:과장</option>
-                                <option value="40">직급코드:40 | 직급명:차장</option>
-                                <option value="50">직급코드:50 | 직급명:대표이사</option>
+                                <c:forEach var="pos" items="${positionMap}">
+                                    <option value="${pos.key}">직급코드:${pos.key} | 직급명:${pos.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">직책</div>
@@ -115,8 +111,8 @@
                         <div class="col">입사구분</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="hireType" name="hireType">
-                                <option value="10">신입</option>
-                                <option value="20">경력</option>
+                                <option value="신입">신입</option>
+                                <option value="경력">경력</option>
                             </select>
                         </div>
                     </div>
@@ -127,16 +123,9 @@
                             <div class="input-group">
                                 <span class="input-group-text" id="bankName">은행명</span>
                                 <select class="form-select col-2" aria-label="은행명 선택" name="bankName">
-                                    <option value="한국은행">한국은행</option>
-                                    <option value="산업은행">산업은행</option>
-                                    <option value="기업은행">기업은행</option>
-                                    <option value="국민은행">국민은행</option>
-                                    <option value="외환은행">외환은행</option>
-                                    <option value="수협중앙회">수협중앙회</option>
-                                    <option value="수출입은행">수출입은행</option>
-                                    <option value="농협은행">농협은행</option>
-                                    <option value="지역농.축협">지역농.축협</option>
-                                    <option value="우리은행">우리은행</option>
+                                    <c:forEach var="bank" items="${bankMap}">
+                                        <option value="${bank.key}">${bank.value}</option>
+                                    </c:forEach>
                                 </select>
                                 <span class="input-group-text">통장번호</span>
                                 <input type="text" class="form-control col-6 is-invalid" aria-label="account"
@@ -148,7 +137,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label for="postCode" class="col-md-2 col-form-label is-invalid">우편번호</label>
+                        <label for="postCode" class="col-md-2 col-form-label">우편번호</label>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <input type="text" class="form-control postCode is-invalid" id="postCode"
@@ -200,6 +189,7 @@
 </div>
 
 <script>
+
     let emailChecked = false;
     let mobileChecked = false;
     let passportChecked = true;

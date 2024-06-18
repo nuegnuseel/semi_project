@@ -30,7 +30,7 @@ public class HrmInsert extends HttpServlet {
             List<HrmDto> hrmDtoList = new ArrayList<>();
             HrmDao getMaxEmpNo = new HrmDao();
             int maxEmpNo = getMaxEmpNo.getMaxEmpNo() + 1;
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 30; i++) {
                 Random random = new Random();
                 int deptNo = 10 + random.nextInt(3) * 10;  // 10, 20, 30 중 하나 선택
                 int positionNo = 10 + random.nextInt(3) * 10;  // 10, 20, 30 중 하나 선택
@@ -43,6 +43,8 @@ public class HrmInsert extends HttpServlet {
                 int day2 = ThreadLocalRandom.current().nextInt(2, 25); // 1 이상, 31 미만 (1부터 30까지)
                 String dateStrHire = String.format("%04d-%02d-%02d", year+20, month2, day2);
 
+                HrmMap hrmMap = new HrmMap();
+
                 HrmDto hrmDto = HrmDto.builder()
                         .empNo(maxEmpNo + i)
                         .ename("Employee" + (i + maxEmpNo))
@@ -50,16 +52,16 @@ public class HrmInsert extends HttpServlet {
                         .birthDate(dateStr)
                         .password(Integer.toString(maxEmpNo + i))
                         .deptNo(deptNo)
-                        .deptName(getDeptMap().get(deptNo))
+                        .deptName(hrmMap.getDeptMap().get(deptNo))
                         .posNo(positionNo)
-                        .posName(getPositionMap().get(positionNo))
+                        .posName(hrmMap.getPositionMap().get(positionNo))
                         .roleName("팀원")
                         .mobile("010-" + (i + maxEmpNo))
                         .passport("Pas" + (i + maxEmpNo))
                         .email("ee" + (i + maxEmpNo) + "@ee.co")
                         .hireDate(dateStrHire)
                         .hireType("신입")
-                        .bankName("Bank" + (i % 5))
+                        .bankName(hrmMap.getBankMap().get(2))
                         .account("Acc" + (i + maxEmpNo))
                         .accountHolder("AccHolder" + (i + 1))
                         .postCode(Integer.toString(12345 + i))
@@ -121,11 +123,12 @@ public class HrmInsert extends HttpServlet {
 
                 // 서버에 이미지 올리는것도 다 돈이다.
             }
+            HrmMap hrmMap = new HrmMap();
 
-            Map<Integer, String> deptMap = getDeptMap();
+            Map<Integer, String> deptMap = hrmMap.getDeptMap();
             int deptNo = Integer.parseInt(req.getParameter("deptNo"));
 
-            Map<Integer, String> positionMap = getPositionMap();
+            Map<Integer, String> positionMap = hrmMap.getPositionMap();
             int positionNo = Integer.parseInt(req.getParameter("positionNo"));
 
             String passport = req.getParameter("passport");
@@ -150,7 +153,8 @@ public class HrmInsert extends HttpServlet {
 
                     .hireDate(req.getParameter("hireDate"))
                     .hireType(req.getParameter("hireType"))
-                    .bankName(req.getParameter("bankName"))
+
+                    .bankName(hrmMap.getBankMap().get(Integer.parseInt(req.getParameter("bankName"))))
                     .account(req.getParameter("account"))
                     .accountHolder(req.getParameter("accountHolder"))
                     .postCode(req.getParameter("postCode"))
@@ -173,27 +177,6 @@ public class HrmInsert extends HttpServlet {
         } else {
             ScriptWriter.alertAndBack(resp, "오류가 발생했습니다. 다시 시도해주세요.");
         }
-    }
-
-    private static Map<Integer, String> getPositionMap() {
-        Map<Integer, String> positionMap = new HashMap<>();
-        // 사원 대리 과장 차장 대표이사
-        positionMap.put(10, "사원");
-        positionMap.put(20, "대리");
-        positionMap.put(30, "과장");
-        positionMap.put(40, "차장");
-        positionMap.put(50, "대표이사");
-        return positionMap;
-    }
-
-    private static Map<Integer, String> getDeptMap() {
-        Map<Integer, String> deptMap = new HashMap<>();
-        deptMap.put(10, "근태관리팀");
-        deptMap.put(20, "급여관리팀");
-        deptMap.put(30, "인사관리팀");
-        deptMap.put(40, "개발팀");
-        deptMap.put(50, "기획팀");
-        return deptMap;
     }
 
     private static boolean isNullCheck(HttpServletRequest req) {

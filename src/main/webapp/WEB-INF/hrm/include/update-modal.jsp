@@ -5,6 +5,7 @@
   Time: 오후 5:31
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="modifyModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="modifyHrmToggleLabel" aria-hidden="true">
@@ -72,15 +73,12 @@
                         </div>
                         <div class="col">부서</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" id="deptNo_update" aria-label="select"
-                                    name="deptNo">
-                                <option value="10">부서코드:10 | 부서명:근태관리팀</option>
-                                <option value="20">부서코드:20 | 부서명:급여관리팀</option>
-                                <option value="30">부서코드:30 | 부서명:인사관리팀</option>
-                                <option value="40">부서코드:40 | 부서명:개발팀</option>
-                                <option value="40">부서코드:50 | 부서명:기획팀</option>
-                                <%-- 부서 추가 기능 넣기 --%>
-                            </select>
+                                <select class="form-select form-select" id="deptNo_update" aria-label="select"
+                                        name="deptNo">
+                                    <c:forEach var="dept" items="${deptMap}">
+                                    <option value="${dept.key}">부서코드:${dept.key} | 부서명:${dept.value}</option>
+                                    </c:forEach>
+                                </select>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -88,11 +86,9 @@
                         <div class="col col-md-4">
                             <select class="form-select form-select" id="posNo_update" aria-label="select"
                                     name="positionNo">
-                                <option value="10">직급코드:10 | 직급명:사원</option>
-                                <option value="20">직급코드:20 | 직급명:대리</option>
-                                <option value="30">직급코드:30 | 직급명:과장</option>
-                                <option value="40">직급코드:40 | 직급명:차장</option>
-                                <option value="50">직급코드:50 | 직급명:대표이사</option>
+                                <c:forEach var="pos" items="${positionMap}">
+                                    <option value="${pos.key}">직급코드:${pos.key} | 직급명:${pos.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">직책</div>
@@ -114,8 +110,8 @@
                         <div class="col col-md-4">
                             <select class="form-select form-select" id="hireType_update" aria-label="hireType"
                                     name="hireType">
-                                <option value="10">신입</option>
-                                <option value="20">경력</option>
+                                <option value="신입">신입</option>
+                                <option value="경력">경력</option>
                             </select>
                         </div>
                     </div>
@@ -127,19 +123,12 @@
                                 <span class="input-group-text">은행명</span>
                                 <select class="form-select col-2" id="bankName_update" aria-label="은행명 선택"
                                         name="bankName">
-                                    <option value="한국은행">한국은행</option>
-                                    <option value="산업은행">산업은행</option>
-                                    <option value="기업은행">기업은행</option>
-                                    <option value="국민은행">국민은행</option>
-                                    <option value="외환은행">외환은행</option>
-                                    <option value="수협중앙회">수협중앙회</option>
-                                    <option value="수출입은행">수출입은행</option>
-                                    <option value="농협은행">농협은행</option>
-                                    <option value="지역농.축협">지역농.축협</option>
-                                    <option value="우리은행">우리은행</option>
+                                    <c:forEach var="bank" items="${bankMap}">
+                                        <option value="${bank.key}">${bank.value}</option>
+                                    </c:forEach>
                                 </select>
                                 <span class="input-group-text">통장번호</span>
-                                <input type="text" class="form-control col-6 is-invalid" aria-label="account"
+                                <input type="text" class="form-control col-6" aria-label="account"
                                        name="account" id="account_update">
                                 <span class="input-group-text">예금주</span>
                                 <input type="text" class="form-control col-2" aria-label="accountHolder"
@@ -148,10 +137,10 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label for="postCode_update" class="col-md-2 col-form-label is-invalid">우편번호</label>
+                        <label for="postCode_update" class="col-md-2 col-form-label">우편번호</label>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control postCode is-invalid" id="postCode_update"
+                                <input type="text" class="form-control postCode" id="postCode_update"
                                        placeholder="우편번호" name="postCode" readonly>
                                 <button type="button" class="btn btn-dark btn-post">우편번호 찾기</button>
                             </div>
@@ -160,7 +149,7 @@
                     <div class="row mt-3">
                         <label for="address_update" class="col-md-2 col-form-label">주소</label>
                         <div class="col-10">
-                            <input type="text" class="form-control address is-invalid" id="address_update"
+                            <input type="text" class="form-control address" id="address_update"
                                    placeholder="주소"
                                    name="address" readonly>
                         </div>
@@ -194,10 +183,10 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modifyModalForm" class="btn btn-primary" id="btn-update">수정</button>
-<%--                <form action="../hrm/update" type="post">--%>
-<%--                    <input type="hidden" id="empNo_password_update" name="empNo_password">--%>
-<%--                    <button type="submit" form="modifyModalForm" class="btn btn-primary">비밀번호 초기화</button>--%>
-<%--                </form>--%>
+                <%--                <form action="../hrm/update" type="post">--%>
+                <%--                    <input type="hidden" id="empNo_password_update" name="empNo_password">--%>
+                <%--                    <button type="submit" form="modifyModalForm" class="btn btn-primary">비밀번호 초기화</button>--%>
+                <%--                </form>--%>
             </div>
         </div>
     </div>
@@ -360,6 +349,7 @@
         });
     });
 
+
     $("#ename_update").on("keyup", function () {
         if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
@@ -367,33 +357,62 @@
             $(this).removeClass('is-invalid');
         }
     });
-
-    let enameValue = $("#ename_update").val();
-    console.log("enamevalue === " + enameValue);
-
-    $("#email_update").on("keyup", function () {
-        if ($('#email_update').val().trim() === '') {
-            $(this).addClass('is-invalid');
-        } else {
-            $(this).removeClass('is-invalid');
-        }
-    });
-    $("#mobile_update").on("keyup", function () {
-        if ($(this).val() !== '') {
+    $("#birthDate_update").on("keyup", function () {
+        if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
         } else {
             $(this).removeClass('is-invalid');
         }
     });
     $("#account_update").on("keyup", function () {
-        if ($(this).val() !== '') {
+        if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
         } else {
             $(this).removeClass('is-invalid');
         }
     });
+
+    let emailValue;
+    let mobileValue;
+    let passportValue;
+    $("#email_update").on("focus", function () {
+        emailValue = $("#email_update").val();
+    });
+    $("#mobile_update").on("focus", function () {
+        mobileValue = $("#mobile_update").val();
+    });
+    $("#passport_update").on("focus", function () {
+        passportValue = $("#passport_update").val();
+    });
+
+    $("#email_update").on("keyup", function () {
+        if ($(this).val().trim() !== emailValue) {
+            $(this).addClass('is-invalid');
+            emailChecked_update = false;
+        } else {
+            emailChecked_update = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
+
+    $("#mobile_update").on("keyup", function () {
+        if ($(this).val() !== mobileValue) {
+            $(this).addClass('is-invalid');
+            mobileChecked_update = false;
+        } else {
+            mobileChecked_update = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
+    // $("#account_update").on("keyup", function () {
+    //     if ($(this).val() !== '') {
+    //         $(this).addClass('is-invalid');
+    //     } else {
+    //         $(this).removeClass('is-invalid');
+    //     }
+    // });
     $("#passport_update").on("keyup", function () {
-        if ($(this).val() !== '') {
+        if ($(this).val() !== passportValue && $(this).val().trim() !== "") {
             passportChecked_update = false;
             $(this).addClass('is-invalid');
         } else {

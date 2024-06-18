@@ -100,13 +100,18 @@
                                               readonly>비고란</textarea>
                                 </div>
                             </div>
-                            <div class="text-end mt-3">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">인쇄</button>
-                            </div>
+<%--                            <div class="text-end mt-3">--%>
+<%--                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--%>
+<%--                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">인쇄</button>--%>
+<%--                            </div>--%>
+
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="text-end mt-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary btn-print">인쇄</button>
             </div>
         </div>
     </div>

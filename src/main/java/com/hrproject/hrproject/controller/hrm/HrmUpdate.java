@@ -93,21 +93,11 @@ public class HrmUpdate extends HttpServlet {
             }
             // 서버에 이미지 올리는것도 다 돈이다.
 
-            Map<Integer, String> deptMap = new HashMap<>();
-            deptMap.put(10, "근태관리팀");
-            deptMap.put(20, "급여관리팀");
-            deptMap.put(30, "인사관리팀");
-            deptMap.put(40, "개발팀");
-            deptMap.put(50, "기획팀");
+            HrmMap hrmMap = new HrmMap();
+            Map<Integer, String> deptMap = hrmMap.getDeptMap();
             int deptNo = Integer.parseInt(req.getParameter("deptNo"));
 
-            Map<Integer, String> positionMap = new HashMap<>();
-            // 사원 대리 과장 차장 대표이사
-            positionMap.put(10, "사원");
-            positionMap.put(20, "대리");
-            positionMap.put(30, "과장");
-            positionMap.put(40, "차장");
-            positionMap.put(50, "대표이사");
+            Map<Integer, String> positionMap = hrmMap.getPositionMap();
             int positionNo = Integer.parseInt(req.getParameter("positionNo"));
 
 
@@ -132,7 +122,7 @@ public class HrmUpdate extends HttpServlet {
                     .account(req.getParameter("account"))
                     .email(req.getParameter("email"))
 
-                    .bankName(req.getParameter("bankName"))
+                    .bankName(hrmMap.getBankMap().get(Integer.parseInt(req.getParameter("bankName"))))
                     .accountHolder(req.getParameter("accountHolder"))
                     .postCode(req.getParameter("postCode"))
                     .address(req.getParameter("address"))
