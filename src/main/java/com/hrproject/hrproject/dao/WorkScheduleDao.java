@@ -1,6 +1,7 @@
 package com.hrproject.hrproject.dao;
 
 import com.hrproject.hrproject.dto.HrmDto;
+import com.hrproject.hrproject.dto.WorkScheduleAdminDto;
 import com.hrproject.hrproject.dto.WorkScheduleDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -77,5 +78,35 @@ public class WorkScheduleDao {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         sqlSession.selectOne("updateWorkEndTime", workScheduleDto);
         sqlSession.close();
+    }
+
+    public List<WorkScheduleAdminDto> selectAllByAdmin() {
+        List<WorkScheduleAdminDto> adminWrokList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        adminWrokList = sqlSession.selectList("selectAllByAdmin");
+        sqlSession.close();
+        return adminWrokList;
+    }
+
+    public List<WorkScheduleDto> refreshWorkDB() {
+        List<WorkScheduleDto> workScheduleDtoList;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        workScheduleDtoList = sqlSession.selectList("refreshWorkDB");
+        sqlSession.close();
+        return workScheduleDtoList;
+    }
+
+
+    public void updateVacationCode(List<WorkScheduleDto> workScheduleDtoList) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.update("updateVacationCode", workScheduleDtoList);
+    }
+
+
+    public WorkScheduleDto getEmpWork(WorkScheduleDto workScheduleDto) {
+        WorkScheduleDto workDto = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        workDto=sqlSession.selectOne("getEmpWork");
+        return workDto;
     }
 }

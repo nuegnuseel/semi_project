@@ -17,6 +17,8 @@ public class WorkScheduleDto {
     private String endTime;
     private String duration;
     private String status;
+    private String atdNo;
+    private String vacationCode;
     private String etc;
 
 }

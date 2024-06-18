@@ -62,6 +62,8 @@ public class empWorkBoard extends HttpServlet {
         String Time = currentTime.toString(); // LocalTime은 ISO 형식으로 문자열로 변환됨
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.now();
+
+
         String formattedDateTime = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         String formattedTime = currentTime.format(formatter);
@@ -73,7 +75,7 @@ public class empWorkBoard extends HttpServlet {
 
         List<AttendDto> attendDtoList = null;
 //        List<String> allDates = null;
-        String vacationCode = null;
+        String atdNo = null;
         double duration = 0;
 
         // 오늘자 워크스케쥴러 init
@@ -115,15 +117,18 @@ public class empWorkBoard extends HttpServlet {
                             }
                             for (String dateStr : allDates) {
                                 if (dateStr.equals(Date)) {
-                                    vacationCode = attendDto.getAtdCode();
+                                    atdNo = attendDto.getAtdNo();
                                 }
                             }
 
                             WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
                                     .empNo(attendDto.getEmpNo())
-                                    .status(vacationCode)
+                                    .atdNo(atdNo)
                                     .workDate(Date)
                                     .build();
+
+
+                            workScheduleDto=workScheduleDao.getEmpWork(workScheduleDto);
 
                             int updateResult = workScheduleDao.updateWorkSchedule(workScheduleDto);
                             if (updateResult > 0) {
@@ -138,8 +143,16 @@ public class empWorkBoard extends HttpServlet {
             }
         }
 
+
+        // 만약 ATTEND_DB에서 ATDCODE가 바뀐 사항이 있을 수 있으니까 현 페이지 들어가면 DB 한번 리프레쉬~~
+        // DB과부하를 막기 위해서 변동사항이 있는 경우에만 update를 해야하는데 나중에 구현할게요~
+        List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.refreshWorkDB();
+        System.out.println("workScheduleDtoList >>> "+workScheduleDtoList);
+        workScheduleDao.updateVacationCode(workScheduleDtoList);
+
+
         Map<String, Object> empNoDateMap = new HashMap<>();
-        System.out.println("Date >>>" + Date);
+
         empNoDateMap.put("empNo", empNo);
         empNoDateMap.put("date", Date);
 
@@ -149,7 +162,6 @@ public class empWorkBoard extends HttpServlet {
 
         if (workScheduleDto.getStartTime() == null) {
             workScheduleDto.setStartTime(Time);
-
             try {
                 String strStatus = workScheduleDto.getStatus();
                 if (strStatus != null) {

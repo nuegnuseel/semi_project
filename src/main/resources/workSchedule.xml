@@ -20,11 +20,29 @@
         where EMPNO = #{empNo}  and workDate = #{date}
     </select>
 
-<!--    <select id="getWorkScheduleList" resultType="WorkScheduleDto" parameterType="map">-->
-<!--        select * from work_schedule-->
-<!--        where EMPNO = #{empNo} and WORKDATE = #{date}-->
-<!--    </select>-->
 
+    <select id="selectAllByAdmin" resultType="workScheduleAdminDto">
+        SELECT
+        ws.WORKIDX,
+        ws.EMPNO,
+        ws.WORKDATE,
+        hr.DEPTNAME,
+        hr.ENAME,
+        ws.STARTTIME,
+        ws.ENDTIME,
+        ws.STATUS,
+        ws.ETC
+        FROM
+        WORK_SCHEDULE ws
+        JOIN
+        HRM hr ON ws.EMPNO = hr.EMPNO
+    </select>
+
+
+    <select id="getEmpWork" resultType="workScheduleDto" parameterType="workScheduleDto">
+
+
+    </select>
     <insert id="createAllEmpSchedule" parameterType="list">
         INSERT INTO WORK_SCHEDULE (EMPNO, WORKDATE) VALUES
         <foreach collection="list" item="item" separator=",">
@@ -35,7 +53,7 @@
 
     <update id="updateWorkSchedule" parameterType="workScheduleDto">
         UPDATE work_schedule
-        SET status = #{status}
+        SET atdNo= #{atdNo}
         WHERE empNo = #{empNo} AND workDate = #{workDate}
     </update>
 
@@ -51,4 +69,37 @@
         WHERE empNo = #{empNo} AND workDate = #{workDate}
     </update>
 
+
+    <update id="updateVacationCode" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" >
+            UPDATE WORK_SCHEDULE
+            SET ATDCODE = #{item.vacationCode}
+            WHERE empNo = #{item.empNo}
+        </foreach>
+    </update>
+
+    <select id="getWorkScheduleByWorkIdx" parameterType="int" resultType="WorkScheduleDto">
+        SELECT WORKIDX, ATDCODE
+        FROM WORK_SCHEDULE
+        WHERE WORKIDX = #{workIdx} and  workDate = CURDATE()
+    </select>
+
+
+
+    <select id="refreshWorkDB" resultType="WorkScheduleDto">
+        SELECT
+        ws.WORKIDX,
+        a.ATDNO,
+        a.ATDCODE,
+        ws.EMPNO,
+        ws.WORKDATE,
+        ws.STARTTIME,
+        ws.ENDTIME,
+        ws.STATUS,
+        ws.ETC
+        FROM
+        WORK_SCHEDULE ws
+        JOIN
+        ATTEND a ON ws.EMPNO = a.EMPNO
+    </select>
 </mapper>
