@@ -111,6 +111,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" id="newOffDay" name="offDay"
                                             onchange="updateNewAtdCode()">
+                                        <option value="">근태 코드를 선택하세요</option>
                                         <option value="A01" data-offday="A01">연차</option>
                                         <option value="A02" data-offday="A02">반차</option>
                                         <option value="A03" data-offday="A03">병가</option>
