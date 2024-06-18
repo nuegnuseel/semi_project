@@ -21,6 +21,17 @@ public class WorkScheduleDao {
         sqlSession.close();
         return salaryList;
     }
+    public List<WorkScheduleDto> getEmpWorkList(WorkScheduleDto workScheduleDto) {
+        List<WorkScheduleDto> salaryList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        salaryList = sqlSession.selectList("getWorkMonthList", workScheduleDto);
+        if (salaryList != null) {
+            System.out.println("Work select query is successfully");
+//            System.out.println("SalaryDao.java__salaryList >>> "+salaryList);
+        }
+        sqlSession.close();
+        return salaryList;
+    }
 
 
     public List<WorkScheduleDto> getTodaySchedule(String date) {
