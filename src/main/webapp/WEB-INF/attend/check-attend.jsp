@@ -466,7 +466,7 @@
                     },
                     success: function (resp) {
                         var year = searchValue.substring(0, 4);
-                        var month = searchValue.substring(4, 6);
+                        var month = searchValue.substring(5, 7);
                         $("#attend-check-calendar-date").text(year + " " + month + "월 근무표");
 
                         var calendarBody = $("#calendar-body");

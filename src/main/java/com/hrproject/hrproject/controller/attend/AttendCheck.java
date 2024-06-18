@@ -89,14 +89,14 @@ public class AttendCheck extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String empNo = req.getParameter("empNo");
+        int empNo = Integer.parseInt(req.getParameter("empNo"));
         String accountingPeriod = req.getParameter("accountingPeriod");
 
         System.out.println("empNo===" + empNo);
         System.out.println("accountingPeriod===" + accountingPeriod);
 
         int searchYear = Integer.parseInt(accountingPeriod.substring(0, 4));
-        int searchMonth = Integer.parseInt(accountingPeriod.substring(4, 6));
+        int searchMonth = Integer.parseInt(accountingPeriod.substring(5, 7));
 
         System.out.println("searchYear===" + searchYear);
         System.out.println("searchMonth===" + searchMonth);
@@ -109,8 +109,18 @@ public class AttendCheck extends HttpServlet {
         int dayCounter = 1;
 
         AttendDao attendDao = new AttendDao();
-        List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList();
-        System.out.println("approvedAttendList===" + approvedAttendList.toString());
+        AttendDto attendDto  = AttendDto.builder()
+                .empNo(empNo)
+                .startMonth(accountingPeriod)
+                .build();
+
+        List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList(attendDto);
+        System.out.println("approvedAttendListaa===" + approvedAttendList.toString());
+        System.out.println("approvedAttendList.get(0).getStartAtdDate().substring(8,10)"+approvedAttendList.get(0).getStartAtdDate().substring(8,10));
+        for(int i=0; i<approvedAttendList.size(); i++){
+            approvedAttendList.get(i).getStartAtdDate().substring(8,10);
+        }
+
         req.setAttribute("approvedAttendList", approvedAttendList);
 
         for (int i = 0; i < 6; i++) { // 최대 6주까지 생성
