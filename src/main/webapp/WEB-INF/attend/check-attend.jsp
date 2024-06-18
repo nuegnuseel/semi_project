@@ -89,56 +89,9 @@
     </div>
     <br><br><br>
 
-    <h3> 승인 상태만 따로 보기</h3>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">사원번호</th>
-            <th scope="col">근태번호</th>
-            <th scope="col">사원명</th>
-            <th scope="col">근태코드</th>
-            <th scope="col">근태수</th>
-            <th scope="col">근태기간</th>
-            <th scope="col">시작 근태일</th>
-            <th scope="col">마지막 근태일</th>
-            <th scope="col">휴가명</th>
-            <th scope="col">휴가사유</th>
-            <th scope="col">인쇄</th>
-            <th scope="col">승인여부</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${approvedAttendList}" var="attendDto" varStatus="loop">
-            <tr>
-                <td>${attendDto.empNo}</td>
-                <td>${attendDto.atdNo}</td>
-                    <%--근태번호 수정키--%>
-                <td>${attendDto.ename}</td>
-                <td>${attendDto.atdCode}</td>
-                <td>${attendDto.atdNum}</td>
-                <td>${attendDto.atdDate}</td>
-                    <%--근태일--%>
-                <td>${attendDto.startAtdDate}</td>
-                    <%--시작 근태일--%>
-                <td>${attendDto.endAtdDate}</td>
-                    <%--마지막 근태일--%>
-                <td>${attendDto.offDay}</td>
-                <td>${attendDto.offDayRs}</td>
-                <td>${attendDto.print}</td>
-                <td>${attendDto.approval}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-
-    <h3> 휴가 신청 내역 </h3>
-    <%--신규 버튼--%>
-    <button class="attend-check-Insert-btn btn btn-primary w-20" data-bs-target="#insertAttendCheckModal"
-            data-bs-toggle="modal">휴가 신청
-    </button>
-    <div class="attend-check-request-list-area col-12">
-
+    <div>
+        <h3> 승인 상태만 따로 보기</h3>
+        <hr>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -148,6 +101,8 @@
                 <th scope="col">근태코드</th>
                 <th scope="col">근태수</th>
                 <th scope="col">근태기간</th>
+                <th scope="col">시작 근태일</th>
+                <th scope="col">마지막 근태일</th>
                 <th scope="col">휴가명</th>
                 <th scope="col">휴가사유</th>
                 <th scope="col">인쇄</th>
@@ -155,7 +110,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
+            <c:forEach items="${approvedAttendList}" var="attendDto" varStatus="loop">
                 <tr>
                     <td>${attendDto.empNo}</td>
                     <td>${attendDto.atdNo}</td>
@@ -164,6 +119,11 @@
                     <td>${attendDto.atdCode}</td>
                     <td>${attendDto.atdNum}</td>
                     <td>${attendDto.atdDate}</td>
+                        <%--근태일--%>
+                    <td>${attendDto.startAtdDate}</td>
+                        <%--시작 근태일--%>
+                    <td>${attendDto.endAtdDate}</td>
+                        <%--마지막 근태일--%>
                     <td>${attendDto.offDay}</td>
                     <td>${attendDto.offDayRs}</td>
                     <td>${attendDto.print}</td>
@@ -174,109 +134,75 @@
         </table>
     </div>
 
-    <div class="modal fade" id="insertAttendCheckModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-         data-bs-backdrop="static"
-         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">휴가 신청</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+<br><br><br><br>
 
-                    <form action="../attend/check/insert" id="insertAttendCheck" method="post">
-                        <div class="row mb-3">
-                            <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="atdNo" class="col-sm-2 col-form-label">근태번호</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="atdNo" name="atdNo">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="eName" class="col-sm-2 col-form-label">사원명</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ename" name="ename">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="atdCode" class="col-sm-2 col-form-label">근태코드</label>
-                            <div class="col-sm-10">
-                                <select class="form-select" id="atdCode" name="atdCode">
-                                    <option value="">근태 코드를 입력하세요.</option>
-                                    <option value="A01">A01 : 연차</option>
-                                    <option value="A02">A02 : 반차</option>
-                                    <option value="A03">A03 : 병가</option>
-                                    <option value="B01">B01 : 경조사</option>
-                                    <option value="C01">C01 : 교육</option>
-                                    <option value="C02">C02 : 연수</option>
-                                    <option value="C03">C03 : 기타</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">근태기간</label>
-                            <div class="col-sm-10 col-auto">
-                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input
-                                    type="date" class="form-control" id="endAtdDate" name="endAtdDate">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="offDay" class="col-sm-2 col-form-label">휴가명</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offDay" name="offDay">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="offDayRs" class="col-sm-2 col-form-label">휴가사유</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offDayRs" name="offDayRs">
-                            </div>
-                        </div>
-
-                        <legend class="col-form-label col-sm-2 pt-0">인쇄</legend>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="print" id="printY" value="Y" checked>
-                            <label class="form-check-label" for="printY">
-                                Y
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="print" id="printN" value="N">
-                            <label class="form-check-label" for="printN">
-                                N
-                            </label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="submit" form="insertAttendCheck" id="AttendInsertSubmitBtn" class="btn btn-primary">
-                        신청
-                    </button>
-                    <button type="reset" form="insertAttendCheck" class="btn btn-danger">리셋</button>
+    <div>
+        <h3> 휴가 신청 내역 </h3>
+        <hr>
+        <%--    검색--%>
+        <form action="../attend/check" class="row d-flex align-items-center justify-content-start m-0">
+            <div class="attend-search-area col-sm-5">
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" name="search">
+                            <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
+                            <option value="empNo" ${search eq "empno" ? "selected": ""}>사원번호</option>
+                            <option value="aptNo" ${search eq "aptNo" ? "selected": ""}>근태번호</option>
+                            <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
+                            <option value="atdCode" ${search eq "atdCode" ? "selected": ""}>근태코드</option>
+                        </select>
+                    </div>
+                    <div class="col w-auto">
+                        <input type="text" name="searchWord" class="form-control" value="${searchWord}">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary w-100">SEARCH</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">사원번호</th>
+                    <th scope="col">근태번호</th>
+                    <th scope="col">사원명</th>
+                    <th scope="col">근태코드</th>
+                    <th scope="col">근태수</th>
+                    <th scope="col">근태기간</th>
+                    <th scope="col">휴가명</th>
+                    <th scope="col">휴가사유</th>
+                    <th scope="col">인쇄</th>
+                    <th scope="col">승인여부</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
+                    <tr>
+                        <td>${attendDto.empNo}</td>
+                        <td>${attendDto.atdNo}</td>
+                            <%--근태번호 수정키--%>
+                        <td>${attendDto.ename}</td>
+                        <td>${attendDto.atdCode}</td>
+                        <td>${attendDto.atdNum}</td>
+                        <td>${attendDto.atdDate}</td>
+                        <td>${attendDto.offDay}</td>
+                        <td>${attendDto.offDayRs}</td>
+                        <td>${attendDto.print}</td>
+                        <td>${attendDto.approval}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+        <%--신규 버튼--%>
+        <button class="attend-check-Insert-btn btn btn-primary w-20" data-bs-target="#insertAttendCheckModal"
+                data-bs-toggle="modal">휴가 신청
+        </button>
     </div>
+
+
 
 
     <%--attend insert 모달--%>
@@ -549,32 +475,39 @@
                         calendarBody.empty();
                         totalBody.empty();
 
-                        console.log(resp);
-                        console.log(resp.response.weekDates);
-                        console.log(resp.response.numberOfWeeks)
-                        console.log(resp.approvedAttendList)
+
+
+                        let attendanceRecords = [];
+                        resp.approvedAttendList.forEach(function (attendDto) {
+                            let startDay = attendDto.startAtdDate.substring(8, 10);
+                            let endDay = attendDto.endAtdDate.substring(8, 10);
+                            let intStartDay = parseInt(startDay, 10);
+                            let intEndDay = parseInt(endDay, 10);
+                            let ename = attendDto.ename
+
+                            attendanceRecords.push({
+                                startDay: intStartDay,
+                                endDay: intEndDay,
+                                ename: ename
+                            });
+
+
+                        });
+
 
                         resp.response.weekDates.forEach(function (week) {
                             var weekRow = '<tr>';
                             week.forEach(function (day) {
-
-                                resp.approvedAttendList.forEach(function (attendDto){
-                                    let startDay = attendDto.startAtdDate.substring(8, 10);
-                                    let endDay = attendDto.endAtdDate.substring(8, 10);
-                                    let intStartDay = parseInt(startDay, 10);
-                                    let intEndDay = parseInt(endDay, 10);
-                                    console.log(startDay);
-                                    console.log(endDay);
-                                    console.log(intStartDay);
-                                    console.log(intEndDay);
-
-
-                                });
-
-
-
                                 if (day != 0) {
-                                    weekRow += '<td><h5 class="calendar-day">' + day + '</h5>이름띄우기</td>';
+                                    // 해당 day에 attendanceRecords에서 이름을 찾아서 표시
+                                    let nameToDisplay = '';
+                                    attendanceRecords.forEach(function (record) {
+                                        if (day >= record.startDay && day <= record.endDay) {
+                                            nameToDisplay = record.ename; // 해당 날짜에 해당하는 이름을 저장
+                                        }
+                                    });
+
+                                    weekRow += '<td><h5 class="calendar-day">' + day + '</h5>' + nameToDisplay + '</td>';
                                 } else {
                                     weekRow += '<td></td>';
                                 }
@@ -583,33 +516,6 @@
                             calendarBody.append(weekRow);
                         });
 
-                        resp.approvedAttendList.forEach(function (attendDto){
-                            let startDay = attendDto.startAtdDate.substring(8, 10);
-                            let endDay = attendDto.endAtdDate.substring(8, 10);
-                            let intStartDay = parseInt(startDay, 10);
-                            let intEndDay = parseInt(endDay, 10);
-                            console.log(startDay);
-                            console.log(endDay);
-                            console.log(intStartDay);
-                            console.log(intEndDay);
-
-
-                        });
-
-
-                        //
-                        // response.weekDates.forEach(function(week){
-                        //     var weekRow = '<tr>';
-                        //     week.forEach(function(day) {
-                        //         if (day != 0) {
-                        //             weekRow += '<td><h5 class="calendar-day">' + day + '</h5>근무시간</td>';
-                        //         } else {
-                        //             weekRow += '<td></td>';
-                        //         }
-                        //     });
-                        //     weekRow += '</tr>';
-                        //     calendarBody.append(weekRow);
-                        // })
                     },
                     error: function () {
                         message = "검색값은 6자리 정수여야합니다. \n 예)202405"
@@ -617,8 +523,9 @@
                         $("#attend-check-search-text").focus();
                         alert(message)
                     }
-                })
+                });
+            });
+        });
 
-            })
-        })
+
     </script>

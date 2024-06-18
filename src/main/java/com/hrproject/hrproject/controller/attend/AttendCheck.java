@@ -57,16 +57,30 @@ public class AttendCheck extends HttpServlet {
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
 
-        //모든 근태 출력
-        AttendDao attendDao = new AttendDao();
-        List<AttendDto> attendList = attendDao.getAttendList();
-        req.setAttribute("attendList", attendList);
-        String url = req.getRequestURL().toString().substring(22);
-        req.setAttribute("url", url);
+
 
         //승인 상태의 근태 출력
+        AttendDao attendDao = new AttendDao();
         List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList();
         req.setAttribute("approvedAttendList", approvedAttendList);
+
+
+        String search = req.getParameter("search");
+        String searchWord = req.getParameter("searchWord");
+        String url = req.getRequestURL().toString().substring(22);
+
+        // 검색어와 검색 조건이 모두 제공되면 검색을 수행합니다.
+        if (search != null && searchWord != null && !search.isBlank() && !searchWord.isBlank()) {
+            List<AttendDto> attendList = attendDao.searchAttend(search, searchWord);
+            req.setAttribute("attendList", attendList);
+            req.setAttribute("url", url);
+
+        } else {
+            //모든 근태 출력
+            List<AttendDto> attendList = attendDao.getAttendList();
+            req.setAttribute("attendList", attendList);
+            req.setAttribute("url", url);
+        }
 
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/check-attend.jsp");
@@ -122,16 +136,11 @@ public class AttendCheck extends HttpServlet {
 
         Gson gson = new Gson();
 
-//        String json = gson.toJson(responseData);
-//        String json02 = gson.toJson(approvedAttendList);
-
         Map<String, Object> responseDataPlz = new HashMap<>();
         responseDataPlz.put("response", responseData);
         responseDataPlz.put("approvedAttendList", approvedAttendList);
         String jsonResponse = gson.toJson(responseDataPlz);
 
-//        System.out.println("j >>>" +  json);
-//        System.out.println("j02>>>" +json02);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
@@ -139,11 +148,6 @@ public class AttendCheck extends HttpServlet {
         out.write(jsonResponse);
         out.flush();
 
-
-//        PrintWriter out = resp.getWriter();
-//        out.write(json);
-//        out.write(json02);
-//        out.flush();
     }
 
     private static class ResponseData {

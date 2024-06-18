@@ -52,10 +52,45 @@
         </choose>
     </sql>
 
+    <sql id="searchApprovedCondition">
+        <choose>
+            <when test="search == 'empNo'">
+                empNo LIKE CONCAT('%', #{searchWord}, '%') AND
+                approval = '대기'
+            </when>
+            <when test="search == 'atdNo'">
+                atdNo LIKE CONCAT('%', #{searchWord}, '%') AND
+                approval = '대기'
+            </when>
+            <when test="search == 'ename'">
+                ename LIKE CONCAT('%', #{searchWord}, '%') AND
+                approval = '대기'
+            </when>
+            <when test="search == 'atdCode'">
+                atdCode LIKE CONCAT('%', #{searchWord}, '%') AND
+                approval = '대기'
+            </when>
+            <otherwise>
+                empNo LIKE CONCAT('%', #{searchWord}, '%') AND approval = '대기' OR
+                atdNo LIKE CONCAT('%', #{searchWord}, '%') AND approval = '대기' OR
+                ename LIKE CONCAT('%', #{searchWord}, '%') AND approval = '대기' OR
+                atdCode LIKE CONCAT('%', #{searchWord}, '%') AND approval = '대기'
+            </otherwise>
+        </choose>
+    </sql>
+
     <select id="searchAttend" resultType="AttendDto">
         SELECT * FROM ATTEND
         <where>
             <include refid="searchCondition"/>
+        </where>
+    </select>
+
+<!--대기상태 검색-->
+    <select id="searchWaitingAttend" resultType="AttendDto">
+        SELECT * FROM ATTEND
+        <where>
+            <include refid="searchApprovedCondition"/>
         </where>
     </select>
 

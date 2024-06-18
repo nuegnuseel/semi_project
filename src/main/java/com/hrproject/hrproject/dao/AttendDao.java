@@ -82,6 +82,24 @@ public class AttendDao {
         }
     }
 
+    public List<AttendDto> searchWaiting(String search, String searchWord) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            Map<String, Object> parameterMap = new HashMap<>();
+            parameterMap.put("search", search);
+            parameterMap.put("searchWord", "%" + searchWord + "%");
+
+            List<AttendDto> attendList = sqlSession.selectList("searchWaitingAttend", parameterMap);
+            System.out.println("search query is successful");
+            System.out.println(attendList); // 가져온 데이터 로깅
+
+            return attendList;
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace(); // 혹은 로깅
+            return null; // 또는 예외를 상위로 다시 throw
+        }
+    }
+
 
     public int insertAttendDao(AttendDto attendDto) {
         int result = 0;
