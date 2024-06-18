@@ -6,13 +6,14 @@ import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
+import java.util.Map;
 
 public class WorkScheduleDao {
     public List<WorkScheduleDto> getEmpWorkList(int empNo) {
         List<WorkScheduleDto> salaryList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        salaryList = sqlSession.selectList("getWorkList",empNo);
-        if (salaryList !=null){
+        salaryList = sqlSession.selectList("getWorkList", empNo);
+        if (salaryList != null) {
             System.out.println("Work select query is successfully");
 //            System.out.println("SalaryDao.java__salaryList >>> "+salaryList);
         }
@@ -21,12 +22,12 @@ public class WorkScheduleDao {
     }
 
 
-    public WorkScheduleDto getTodaySchedule(String date) {
-        WorkScheduleDto dto = null;
+    public List<WorkScheduleDto> getTodaySchedule(String date) {
+        List<WorkScheduleDto> dto = null;
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        dto = sqlSession.selectOne("getTodaySchedule",date);
-        if (dto !=null){
+        dto = sqlSession.selectList("getTodaySchedule", date);
+        if (dto != null) {
             System.out.println("Work select query is successfully");
 //            System.out.println("SalaryDao.java__salaryList >>> "+salaryList);
         }
@@ -38,7 +39,43 @@ public class WorkScheduleDao {
     public void createAllEmpSchedule(List<HrmDto> empNoList) {
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        sqlSession.insert("createAllEmpSchedule",empNoList);
+        sqlSession.insert("createAllEmpSchedule", empNoList);
+        sqlSession.close();
+    }
+
+    public int updateWorkSchedule(WorkScheduleDto workScheduleDto) {
+        int result = 0;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("updateWorkSchedule", workScheduleDto);
+        sqlSession.close();
+        return result;
+    }
+
+//    public List<WorkScheduleDto> getWorkSchedulelist(Map<Integer, String> empNoDateMap) {
+//           List <WorkScheduleDto> dto = null;
+//            SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+//           dto= sqlSession.selectList("getWorkScheduleList",empNoDateMap);
+//            return dto;
+//    }
+
+    public WorkScheduleDto getWorkScheduleOne(Map<String, Object> empNoDateMap) {
+        WorkScheduleDto dto = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        dto = sqlSession.selectOne("getWorkScheduleOne", empNoDateMap);
+        sqlSession.close();
+        return dto;
+    }
+
+    public void updateWorkStartTime(WorkScheduleDto workScheduleDto) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.selectOne("updateWorkStartTime", workScheduleDto);
+        sqlSession.close();
+    }
+
+    public void updateWorkEndTime(WorkScheduleDto workScheduleDto) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.selectOne("updateWorkEndTime", workScheduleDto);
         sqlSession.close();
     }
 }

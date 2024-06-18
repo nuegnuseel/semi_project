@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.mybatis">
+
     <select id="getWorkList" resultType="WorkScheduleDto">
         select * from work_schedule where empNo = #{empNo}
     </select>
@@ -14,11 +15,40 @@
 
     </select>
 
+    <select id="getWorkScheduleOne" resultType="WorkScheduleDto" parameterType="map">
+        select * from work_schedule
+        where EMPNO = #{empNo}  and workDate = #{date}
+    </select>
+
+<!--    <select id="getWorkScheduleList" resultType="WorkScheduleDto" parameterType="map">-->
+<!--        select * from work_schedule-->
+<!--        where EMPNO = #{empNo} and WORKDATE = #{date}-->
+<!--    </select>-->
+
     <insert id="createAllEmpSchedule" parameterType="list">
         INSERT INTO WORK_SCHEDULE (EMPNO, WORKDATE) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.empNo}, CURDATE())
         </foreach>
     </insert>
+
+
+    <update id="updateWorkSchedule" parameterType="workScheduleDto">
+        UPDATE work_schedule
+        SET status = #{status}
+        WHERE empNo = #{empNo} AND workDate = #{workDate}
+    </update>
+
+    <update id="updateWorkStartTime" parameterType="workScheduleDto">
+        UPDATE work_schedule
+        SET STARTTIME = #{startTime}, status = #{status}
+        WHERE empNo = #{empNo} AND workDate = #{workDate}
+    </update>
+
+    <update id="updateWorkEndTime" parameterType="workScheduleDto">
+        UPDATE work_schedule
+        SET ENDTIME = #{endTime},status = #{status}
+        WHERE empNo = #{empNo} AND workDate = #{workDate}
+    </update>
 
 </mapper>
