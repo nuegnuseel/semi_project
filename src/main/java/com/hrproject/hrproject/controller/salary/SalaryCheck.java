@@ -1,19 +1,22 @@
 package com.hrproject.hrproject.controller.salary;
 
 import com.google.gson.Gson;
+import com.hrproject.hrproject.dao.WorkScheduleDao;
+import com.hrproject.hrproject.dto.HrmDto;
+import com.hrproject.hrproject.dto.WorkScheduleDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/salary/check")
 public class SalaryCheck extends HttpServlet {
@@ -22,13 +25,48 @@ public class SalaryCheck extends HttpServlet {
         LocalDate now = LocalDate.now(); //현재 날짜
         int year = now.getYear(); //현재 년도
         int month = now.getMonthValue(); //현재 달
+        List<Integer> weekWorkTimes = new ArrayList<>(); // 주간근무시간
+        int weekWorkTime = 0; //주간근무시간계산용
+        String workMonth=now.toString().substring(0,7);
         System.out.println("year===" + year);
         System.out.println("month===" + month);
+        System.out.println("workMonth==="+workMonth);
 
+        HttpSession session = req.getSession();
+        HrmDto sessionDto = (HrmDto)session.getAttribute("sessionDto");
+        int empNo = sessionDto.getEmpNo();
+
+        System.out.println("empNo==="+empNo);
+
+        WorkScheduleDao workScheduleDao = new WorkScheduleDao();
+        WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
+                .empNo(empNo)
+                .workMonth(workMonth)
+                .build();
+        List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.getEmpWorkList(workScheduleDto); // 일한날 리스트
+        Map<Integer,Integer>workDayList = new HashMap<>(); //일한날짜 리스트
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, 1); // 1월 = 0
         int dayLast = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println("dayLast===" + dayLast);
+
+        boolean isWork = false;
+        workDayList.put(0,0);
+        for(int i=1; i<=dayLast; i++){
+            isWork=false;
+            for(int j=0; j<workScheduleDtoList.size(); j++){
+                if(i == Integer.parseInt(workScheduleDtoList.get(j).getWorkDate().substring(8))){
+                    workDayList.put(i,8);
+                    isWork=true;
+                }
+            }
+            if(!isWork) {
+                workDayList.put(i,0);
+            }
+        }
+
+// ServletRequest에 계산된 주간 근무시간을 저장하여 JSP로 전달합니다
+        req.setAttribute("weekWorkTimes", weekWorkTimes);
 
         // 첫 번째 날의 요일 인덱스 구하기 (일요일: 1 ~ 토요일: 7)
         int firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
@@ -36,6 +74,7 @@ public class SalaryCheck extends HttpServlet {
 
         // 주차별 날짜 리스트 생성
         List<List<Integer>> weekDates = new ArrayList<>();
+
         int dayCounter = 1;
         for (int i = 0; i < 6; i++) { // 최대 6주까지 생성
             List<Integer> daysInWeek = new ArrayList<>();
@@ -54,22 +93,42 @@ public class SalaryCheck extends HttpServlet {
         }
         int numberOfWeeks = weekDates.size();
 
+        // 주간 근무시간을 계산할 리스트 초기화
+        for (int i = 0; i < weekDates.size(); i++) {
+            List<Integer> week = weekDates.get(i);
+            int weeklyWorkTime = 0;
+
+            // 주간 근무시간 계산
+            for (int j = 0; j < week.size(); j++) {
+                int day = week.get(j);
+                if (day != 0) {
+                    // workDayList는 0부터 시작하므로 인덱스 조정 필요
+                    weeklyWorkTime += workDayList.get(day);
+                }
+            }
+
+            // 계산된 주간 근무시간을 리스트에 추가
+            weekWorkTimes.add(weeklyWorkTime);
+        }
+
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
+        req.setAttribute("workDayList",workDayList);
+        req.setAttribute("weekWorkTimes", weekWorkTimes);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/salary/salary-check.jsp");
         dispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String empNo = req.getParameter("empNo");
+        int empNo = Integer.parseInt(req.getParameter("empNo"));
         String accountingPeriod = req.getParameter("accountingPeriod");
 
         System.out.println("empNo==="+empNo);
         System.out.println("accountingPeriod==="+accountingPeriod);
 
         int searchYear=Integer.parseInt(accountingPeriod.substring(0,4));
-        int searchMonth=Integer.parseInt(accountingPeriod.substring(4,6));
+        int searchMonth=Integer.parseInt(accountingPeriod.substring(5,7));
 
         System.out.println("searchYear==="+searchYear);
         System.out.println("searchMonth==="+searchMonth);
@@ -81,6 +140,29 @@ public class SalaryCheck extends HttpServlet {
         List<List<Integer>> weekDates = new ArrayList<>();
         int dayCounter=1;
 
+        WorkScheduleDao workScheduleDao = new WorkScheduleDao();
+        WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
+                .empNo(empNo)
+                .workMonth(accountingPeriod)
+                .build();
+
+        List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.getEmpWorkList(workScheduleDto); // 일한날 리스트
+        Map<Integer,Integer> workDayList = new HashMap<>(); //일한날짜 리스트
+        boolean isWork = false;
+        workDayList.put(0,0);
+        for(int i=1; i<=dayLast; i++){
+            isWork=false;
+            for(int j=0; j<workScheduleDtoList.size(); j++){
+                if(i == Integer.parseInt(workScheduleDtoList.get(j).getWorkDate().substring(8))){
+                    workDayList.put(i,8);
+                    isWork=true;
+                }
+            }
+            if(!isWork) {
+                workDayList.put(i,0);
+            }
+        }
+        System.out.println("workDayList==="+workDayList);
         for (int i = 0; i < 6; i++) { // 최대 6주까지 생성
             List<Integer> daysInWeek = new ArrayList<>();
             for (int j = 1; j <= 7; j++) {
@@ -99,7 +181,7 @@ public class SalaryCheck extends HttpServlet {
         int numberOfWeeks = weekDates.size();
 
         // 응답 객체 생성
-        ResponseData responseData = new ResponseData(weekDates, numberOfWeeks);
+        ResponseData responseData = new ResponseData(weekDates, numberOfWeeks,workDayList);
 
         Gson gson = new Gson();
         String json = gson.toJson(responseData);
@@ -112,11 +194,14 @@ public class SalaryCheck extends HttpServlet {
     }
     private static class ResponseData {
         List<List<Integer>> weekDates;
+        Map<Integer,Integer> workDayList;
         int numberOfWeeks;
 
-        public ResponseData(List<List<Integer>> weekDates, int numberOfWeeks) {
+
+        public ResponseData(List<List<Integer>> weekDates, int numberOfWeeks ,Map<Integer,Integer> workDayList) {
             this.weekDates = weekDates;
             this.numberOfWeeks = numberOfWeeks;
+            this.workDayList=workDayList;
         }
     }
 }

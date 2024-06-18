@@ -13,6 +13,7 @@ public class WorkScheduleDto {
     private int workIdx;
     private int empNo;
     private String workDate;
+    private String workMonth;
     private String startTime;
     private String endTime;
     private String duration;
