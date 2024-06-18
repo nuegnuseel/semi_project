@@ -97,9 +97,16 @@ public class WorkScheduleDao {
     }
 
 
-
     public void updateVacationCode(List<WorkScheduleDto> workScheduleDtoList) {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        sqlSession.update("updateVacationCode",workScheduleDtoList);
+        sqlSession.update("updateVacationCode", workScheduleDtoList);
+    }
+
+
+    public WorkScheduleDto getEmpWork(WorkScheduleDto workScheduleDto) {
+        WorkScheduleDto workDto = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        workDto=sqlSession.selectOne("getEmpWork");
+        return workDto;
     }
 }

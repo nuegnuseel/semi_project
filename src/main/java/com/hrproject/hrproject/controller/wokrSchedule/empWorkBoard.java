@@ -75,7 +75,7 @@ public class empWorkBoard extends HttpServlet {
 
         List<AttendDto> attendDtoList = null;
 //        List<String> allDates = null;
-        String vacationCode = null;
+        String atdNo = null;
         double duration = 0;
 
         // 오늘자 워크스케쥴러 init
@@ -117,15 +117,18 @@ public class empWorkBoard extends HttpServlet {
                             }
                             for (String dateStr : allDates) {
                                 if (dateStr.equals(Date)) {
-                                    vacationCode = attendDto.getAtdCode();
+                                    atdNo = attendDto.getAtdNo();
                                 }
                             }
 
                             WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
                                     .empNo(attendDto.getEmpNo())
-                                    .vacationCode(vacationCode)
+                                    .atdNo(atdNo)
                                     .workDate(Date)
                                     .build();
+
+
+                            workScheduleDto=workScheduleDao.getEmpWork(workScheduleDto);
 
                             int updateResult = workScheduleDao.updateWorkSchedule(workScheduleDto);
                             if (updateResult > 0) {
