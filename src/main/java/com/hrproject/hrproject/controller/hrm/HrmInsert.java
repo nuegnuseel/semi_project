@@ -67,8 +67,6 @@ public class HrmInsert extends HttpServlet {
                         .postCode(Integer.toString(12345 + i))
                         .address("Address" + (i + 1))
                         .addressDetail("AddressDetail" + (i + 1))
-                        .originalProfile("OriginalProfile" + (i + 1))
-                        .renameProfile("RenameProfile" + (i + 1))
                         .remarks("Remarks" + (i + 1))
                         .grade(Grade.MEMBER)
                         .build();

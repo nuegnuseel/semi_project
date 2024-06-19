@@ -228,8 +228,6 @@
                 } else {
                     $('#renameProfile_view').attr('src', '../images/profile01.jpg');
                 }
-                // 나머지 필드들도 동일한 방식으로 처리
-                // 예: $('input#hireDate_view').val(response.hireDate);
 
                 // 수정 모달을 보여줌
                 $('#viewModal').modal('show');

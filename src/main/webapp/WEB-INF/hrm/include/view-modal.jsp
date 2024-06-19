@@ -111,7 +111,7 @@
             </div>
             <div class="text-end mt-3">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary btn-print">인쇄</button>
+                <button type="button" class="btn btn-secondary" id="btn-print">인쇄</button>
             </div>
         </div>
     </div>
@@ -131,7 +131,7 @@
         // 새 창이 로드된 후 프린트 명령 실행
         printWindow.onload = function() {
             printWindow.print();
-            printWindow.close(); // 프린트 후 창 닫기
+            // printWindow.close(); // 프린트 후 창 닫기
         };
     });
 </script>
