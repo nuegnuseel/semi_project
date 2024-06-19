@@ -69,7 +69,7 @@ public class AttendInsert extends HttpServlet {
 
         if (result > 0) {
             System.out.println("attend data input successfully");
-            resp.sendRedirect("/attend/board");
+            resp.sendRedirect("/attend/board?insertAttend=true");
         } else {
             System.out.println("attend data input failed");
         }

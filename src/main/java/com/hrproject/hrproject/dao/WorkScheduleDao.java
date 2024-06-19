@@ -3,6 +3,7 @@ package com.hrproject.hrproject.dao;
 import com.hrproject.hrproject.dto.HrmDto;
 import com.hrproject.hrproject.dto.WorkScheduleAdminDto;
 import com.hrproject.hrproject.dto.WorkScheduleDto;
+import com.hrproject.hrproject.dto.WorkScheduleLogDto;
 import com.hrproject.hrproject.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
@@ -117,7 +118,45 @@ public class WorkScheduleDao {
     public WorkScheduleDto getEmpWork(WorkScheduleDto workScheduleDto) {
         WorkScheduleDto workDto = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        workDto=sqlSession.selectOne("getEmpWork");
+        workDto = sqlSession.selectOne("getEmpWork");
         return workDto;
+    }
+
+    public List<WorkScheduleAdminDto> getAdminWorkList(WorkScheduleAdminDto workScheduleAdminDto) {
+        List<WorkScheduleAdminDto> WSADList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        WSADList = sqlSession.selectList("getAdminWorkList", workScheduleAdminDto);
+        sqlSession.close();
+
+        return WSADList;
+    }
+
+    public void modifyWorkTime(Map<String, Object> modifyParamMap) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.selectList("modifyWorkTime", modifyParamMap);
+        sqlSession.close();
+    }
+
+    public void deleteWorkSchedule(int workIdx) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.delete("deleteWorkSchedule",workIdx);
+        sqlSession.close();
+    }
+
+    public WorkScheduleLogDto getWorkScheduleByWorkIdx(int workIdx) {
+        WorkScheduleLogDto workScheduleLogDto = null;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        workScheduleLogDto=sqlSession.selectOne("getWorkScheduleByWorkIdx", workIdx);
+        sqlSession.close();
+
+        return workScheduleLogDto;
+
+    }
+
+    public void insertWorkScheduleLog(WorkScheduleLogDto workScheduleLogDto) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        sqlSession.insert("insertWorkScheduleLog", workScheduleLogDto);
+        sqlSession.close();
     }
 }

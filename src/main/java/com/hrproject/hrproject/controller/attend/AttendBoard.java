@@ -1,7 +1,9 @@
 package com.hrproject.hrproject.controller.attend;
 
 import com.hrproject.hrproject.dao.AttendDao;
+import com.hrproject.hrproject.dao.NoticeDao;
 import com.hrproject.hrproject.dto.AttendDto;
+import com.hrproject.hrproject.dto.NoticeDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,21 +23,21 @@ public class AttendBoard extends HttpServlet {
         String searchWord = req.getParameter("searchWord");
         String url = req.getRequestURL().toString().substring(22);
 
-
         // 검색어와 검색 조건이 모두 제공되면 검색을 수행합니다.
         if (search != null && searchWord != null && !search.isBlank() && !searchWord.isBlank()) {
             AttendDao attendDao = new AttendDao();
-            List<AttendDto> attendList = attendDao.searchAttend(search, searchWord);
+            List<AttendDto> attendList = attendDao.searchWaiting(search, searchWord);
             req.setAttribute("attendList", attendList);
             req.setAttribute("url", url);
 
         } else {
-            // 검색어나 검색 조건이 제공되지 않은 경우 모든 출결 정보를 가져옵니다.
+            //대기 상태의 근태 정보 가져오기
             AttendDao attendDao = new AttendDao();
-            List<AttendDto> attendList = attendDao.getAttendList();
+            List<AttendDto> attendList = attendDao.getWaitingAttendList();
             req.setAttribute("attendList", attendList);
             req.setAttribute("url", url);
         }
+
 
         // JSP 페이지로 포워딩합니다.
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/board-attend.jsp");

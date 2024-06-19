@@ -22,4 +22,6 @@ public class WorkScheduleAdminDto {
     private String vacationCode;
     private String etc;
 
+
+
 }
