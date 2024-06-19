@@ -135,7 +135,18 @@
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
+
+                    <a class="nav-link" href="../workSchedule/empWorkBoard">커뮤니티</a>
+                </li>
+                <li class="left-side-link nav-item d-flex align-items-center">
+                    <i class="bi bi-calendar4"></i>
+                    <a class="nav-link" href="../workSchedule/empWorkBoard">사원용 출퇴근</a>
+                </li>
+                <li class="left-side-link nav-item d-flex align-items-center">
+                    <i class="bi bi-calendar4"></i>
+                    <a class="nav-link" href="../workSchedule/adminWorkBoard">관리자용 출퇴근</a>
                     <a class="nav-link" href="/community/board">커뮤니티</a>
+
                 </li>
             </ul>
         </div>

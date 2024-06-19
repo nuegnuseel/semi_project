@@ -3,22 +3,22 @@ package com.hrproject.hrproject.dto;
 
 import lombok.*;
 
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 @Builder
 @ToString
-@AllArgsConstructor
-public class WorkScheduleDto {
+public class WorkScheduleAdminDto {
     private int workIdx;
     private int empNo;
     private String workDate;
-    private String workMonth;
+    private String deptName; //HRM에서 가져오기
+    private String ename;   //HRM에서 가져오기
     private String startTime;
     private String endTime;
-    private String duration;
+    private String duration; //start랑 end 계산 DB에는 없음
     private String status;
-    private String atdNo;
     private String vacationCode;
     private String etc;
 
