@@ -4,7 +4,6 @@
 <style>
     a {
         color: inherit; /* 부모 요소의 색상을 상속 */
-        text-decoration: none; /* 밑줄 제거 */
     }
 
 </style>

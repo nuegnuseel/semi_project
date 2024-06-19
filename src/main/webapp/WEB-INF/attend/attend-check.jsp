@@ -105,7 +105,7 @@
                         var weekRow = '<tr>';
                         week.forEach(function(day) {
                             if (day != 0) {
-                                weekRow += '<td><h5 class="calendar-day">' + day + '</h5>근무시간</td>';
+                                weekRow += '<td><h5 class="calendar-day">' + day + '</h5>이름띄우기</td>';
                             } else {
                                 weekRow += '<td></td>';
                             }
@@ -114,7 +114,8 @@
                         calendarBody.append(weekRow);
                     })
                 },
-                error:function (){
+                error:function (err){
+                    console.log(err);
                     message="검색값은 6자리 정수여야합니다. \n 예)202405"
                     $("#attend-check-search-text").val("");
                     $("#attend-check-search-text").focus();
