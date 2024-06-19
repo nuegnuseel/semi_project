@@ -42,6 +42,8 @@
 
 
     <script>
+
+
         document.addEventListener('DOMContentLoaded', function () {
             var workRecordBtn = document.getElementById('workRecord');
             var form = document.getElementById('myForm');
