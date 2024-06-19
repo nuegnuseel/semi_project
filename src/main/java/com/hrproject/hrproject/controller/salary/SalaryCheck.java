@@ -28,15 +28,15 @@ public class SalaryCheck extends HttpServlet {
         List<Integer> weekWorkTimes = new ArrayList<>(); // 주간근무시간
         int weekWorkTime = 0; //주간근무시간계산용
         String workMonth=now.toString().substring(0,7);
-        System.out.println("year===" + year);
-        System.out.println("month===" + month);
-        System.out.println("workMonth==="+workMonth);
+        System.out.println("get year===" + year);
+        System.out.println("get month===" + month);
+        System.out.println("get workMonth==="+workMonth);
 
         HttpSession session = req.getSession();
         HrmDto sessionDto = (HrmDto)session.getAttribute("sessionDto");
         int empNo = sessionDto.getEmpNo();
 
-        System.out.println("empNo==="+empNo);
+        System.out.println("get empNo==="+empNo);
 
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
         WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
@@ -48,7 +48,7 @@ public class SalaryCheck extends HttpServlet {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, 1); // 1월 = 0
         int dayLast = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        System.out.println("dayLast===" + dayLast);
+        System.out.println("get dayLast===" + dayLast);
 
         boolean isWork = false;
         workDayList.put(0,0);
@@ -70,7 +70,7 @@ public class SalaryCheck extends HttpServlet {
 
         // 첫 번째 날의 요일 인덱스 구하기 (일요일: 1 ~ 토요일: 7)
         int firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        System.out.println("firstDayOfWeek===" + firstDayOfWeek);
+        System.out.println("get firstDayOfWeek===" + firstDayOfWeek);
 
         // 주차별 날짜 리스트 생성
         List<List<Integer>> weekDates = new ArrayList<>();
@@ -110,7 +110,8 @@ public class SalaryCheck extends HttpServlet {
             // 계산된 주간 근무시간을 리스트에 추가
             weekWorkTimes.add(weeklyWorkTime);
         }
-
+        req.setAttribute("year",year);
+        req.setAttribute("month",month);
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
         req.setAttribute("workDayList",workDayList);
@@ -122,16 +123,18 @@ public class SalaryCheck extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int empNo = Integer.parseInt(req.getParameter("empNo"));
-        String accountingPeriod = req.getParameter("accountingPeriod");
-
-        System.out.println("empNo==="+empNo);
-        System.out.println("accountingPeriod==="+accountingPeriod);
-
-        int searchYear=Integer.parseInt(accountingPeriod.substring(0,4));
-        int searchMonth=Integer.parseInt(accountingPeriod.substring(5,7));
-
-        System.out.println("searchYear==="+searchYear);
-        System.out.println("searchMonth==="+searchMonth);
+        int searchYear = Integer.parseInt(req.getParameter("year"));
+        int searchMonth = Integer.parseInt(req.getParameter("month"));
+        String workMonth = "";
+        if(searchMonth<10){
+            workMonth = req.getParameter("year").concat("-0"+req.getParameter("month"));
+        }else {
+        workMonth = req.getParameter("year").concat("-"+req.getParameter("month"));
+        }
+        System.out.println("post empNo==="+empNo);
+        System.out.println("post searchYear==="+searchYear);
+        System.out.println("post searchMonth==="+searchMonth);
+        System.out.println("post workMonth==="+workMonth);
 
         Calendar cal = Calendar.getInstance();
         cal.set(searchYear,searchMonth-1,1);
@@ -143,7 +146,7 @@ public class SalaryCheck extends HttpServlet {
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
         WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
                 .empNo(empNo)
-                .workMonth(accountingPeriod)
+                .workMonth(workMonth)
                 .build();
 
         List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.getEmpWorkList(workScheduleDto); // 일한날 리스트

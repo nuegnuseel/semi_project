@@ -32,3 +32,22 @@
     max-height: 100%;
     display: block;
 }
+.hrm-content-area{
+    width:450px;
+    height:300px;
+    justify-content:center;
+    align-items: center;
+    position: absolute;
+    top:calc(50% + 100px);
+    left: calc(50% - 225px);
+}
+.login-title{
+    height:100px;
+    position: relative;
+    .title{
+        position: absolute;
+        left:0;
+        bottom:16px;
+        font-size: 48px;
+    }
+}

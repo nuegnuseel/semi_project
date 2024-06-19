@@ -31,16 +31,19 @@
         </div>
     </div>
     <div class="salary-check-search-area col-12">
-        <div class="left-section col-2">
+        <div class="left-section col-4">
             <h2>근무 시간표</h2>
-            <div class="d-flex">
-            <input type="text" placeholder="ex)2024-06" id="salary-check-search-text" name="salaryCheckSearchText">
-            <input type="hidden"  id="salary-check-search-empNo" name="salaryCheckEmpNo" value="1">
-            <button id="salary-check-search-btn">검색</button>
+            <div class="d-flex input-group">
+                <input type="text" class="form-control salary-check-search-year-text " placeholder="ex)2024"
+                       id="salary-check-search-year" name="salaryCheckYear">
+                <input type="text" class="form-control salary-check-search-month-text " placeholder="ex)06"
+                       id="salary-check-search-month" name="salaryCheckMonth">
+                <input type="hidden" id="salary-check-search-empNo" name="salaryCheckEmpNo" value="${sessionDto.empNo}">
+                <button class="btn btn-primary salary-check-search-btn" id="salary-check-search-btn">검색</button>
             </div>
         </div>
-        <div class="center-section col-8">
-            <h1 class="salary-check-calendar-date" id="salary-check-calendar-date">2024 06월 근무표</h1>
+        <div class="center-section col-4">
+            <h1 class="salary-check-calendar-date" id="salary-check-calendar-date">${year}년 ${month}월 근무표</h1>
         </div>
     </div>
     <div class="salary-check-calendar-area d-flex">
@@ -60,14 +63,16 @@
             <c:forEach items="${weekDates}" var="week">
                 <tr>
                     <c:forEach items="${week}" var="day">
+                        <td><c:if test="${day != 0}"><h5 class="calendar-day">${day}</h5>
                         <c:choose>
                             <c:when test="${workDayList[day] == 8}">
-                                <td><c:if test="${day != 0}"><h5 class="calendar-day">${day}</h5>근무시간 : ${workDayList[day]}</c:if></td>
+                                근무시간 : ${workDayList[day]}</td>
                             </c:when>
                             <c:otherwise>
-                        <td><c:if test="${workDayList[day] == 0}"><h5 class="calendar-day">${day}</h5></c:if></td>
+                                </td>
                             </c:otherwise>
                         </c:choose>
+                    </c:if>
                     </c:forEach>
                 </tr>
             </c:forEach>
@@ -76,10 +81,10 @@
         <div class="salary-check-calendar-total">
             <table>
                 <thead>
-                    <tr>
-                        <th>기본근무시간</th>
-                        <th>초과근무시간</th>
-                    </tr>
+                <tr>
+                    <th>기본근무시간</th>
+                    <th>초과근무시간</th>
+                </tr>
                 </thead>
                 <tbody id="total-body">
                 <c:forEach items="${weekDates}" var="week" varStatus="loop">
@@ -94,25 +99,33 @@
     </div>
 </div>
 <script>
-    $(document).ready(function (){
-        $("#salary-check-search-btn").on("click",function (){
-            var searchValue = $("#salary-check-search-text").val();
+    $(document).ready(function () {
+        $("#salary-check-search-btn").on("click", function () {
+            var year = $("#salary-check-search-year").val();
+            var month = $("#salary-check-search-month").val();
+
+            if (month < 1 || month > 12) {
+                alert("월 검색값은 01~12 사이의 정수여야합니다.");
+                $("#salary-check-search-month").focus();
+                return;
+            }
             const salaryCheckEmpNo = $("#salary-check-search-empNo").val();
-            const salaryCheckSearchText = $("#salary-check-search-text").val();
+            console.log("year==" + year)
+            console.log("month==" + month)
+            console.log("salaryCheckEmpNo==" + salaryCheckEmpNo)
             var message = "";
             $.ajax({
-                url:"/salary/check",
-                method:"POST",
-                data:{
-                    empNo:salaryCheckEmpNo,
-                    accountingPeriod:salaryCheckSearchText,
+                url: "/salary/check",
+                method: "POST",
+                data: {
+                    empNo: salaryCheckEmpNo,
+                    year: year,
+                    month: month,
                 },
-                success:function (response){
-                    var year = searchValue.substring(0, 4);
-                    var month = searchValue.substring(5, 7);
+                success: function (response) {
                     $("#salary-check-calendar-date").text(year + " " + month + "월 근무표");
 
-                    var calendarBody=$("#calendar-body");
+                    var calendarBody = $("#calendar-body");
                     var totalBody = $("#total-body");
 
                     calendarBody.empty();
@@ -121,16 +134,16 @@
                     var workDayList = response.workDayList; // 응답에서 workDayList 가져오기
                     var weeklyWorkTimes = []; // 주간 근무 시간 저장
 
-                    response.weekDates.forEach(function(week){
+                    response.weekDates.forEach(function (week) {
                         var weekRow = '<tr>';
                         var weeklyWorkTime = 0;
-                        week.forEach(function(day) {
+                        week.forEach(function (day) {
                             if (day != 0) {
                                 var workTime = workDayList[day]; // 배열 인덱스는 0부터 시작하므로 day - 1
                                 weekRow += '<td><h5 class="calendar-day">' + day + '</h5>';
                                 if (workTime != 0) {
                                     weekRow += "근무시간 : " + workTime;
-                                    weeklyWorkTime+=workTime;
+                                    weeklyWorkTime += workTime;
                                 }
                                 weekRow += '</td>';
                             } else {
@@ -142,13 +155,11 @@
                         calendarBody.append(weekRow);
                     });
                     for (var i = 0; i < response.numberOfWeeks; i++) {
-                        totalBody.append('<tr><td>'+ weeklyWorkTimes[i] +'</td><td></td></tr>');
+                        totalBody.append('<tr><td>' + weeklyWorkTimes[i] + '</td><td></td></tr>');
                     }
                 },
-                error:function (){
-                    message="검색값은 4자리-2자리 정수여야합니다. \n 예)2024-05"
-                    $("#salary-check-search-text").val("");
-                    $("#salary-check-search-text").focus();
+                error: function () {
+                    message = "검색값은 4자리-2자리 정수여야합니다. \n 예)2024-05"
                     alert(message)
                 }
             })
