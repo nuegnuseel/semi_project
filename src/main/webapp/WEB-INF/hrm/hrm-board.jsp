@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
 <c:choose>
-    <c:when test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
+    <c:when test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}">
         <%--   내용 영역  --%>
         <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
                 <%--  hrm 제목 영역  --%>
@@ -17,11 +17,11 @@
                             <div class="row g-3">
                                 <div class="col">
                                     <select class="form-select" aria-label="Default select example" name="search">
+                                        <option value="all" ${search eq "all" ? "selected": ""}>전체</option>
                                         <option value="empno" ${search eq "empno" ? "selected": ""}>사원번호</option>
                                         <option value="ename" ${search eq "ename" ? "selected": ""}>사원명</option>
                                         <option value="deptname" ${search eq "deptname" ? "selected": ""}>부서명</option>
                                         <option value="email" ${search eq "email" ? "selected": ""}>이메일</option>
-                                        <option value="all" ${search eq "all" ? "selected": ""}>all</option>
                                     </select>
                                 </div>
                                 <div class="col w-auto">
@@ -54,7 +54,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">계좌번호</th>
                         <th scope="col">새로운 항목 추가???</th>
-                        <th scope="col">회원정보</th>
+                        <th scope="col">조회 / 수정 / 삭제</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,17 +90,15 @@
                                 <button type="button" class="btn btn-primary view-button" data-empno="${hrmDto.empNo}"
                                         data-bs-toggle="modal" data-bs-target="#viewModal">상세
                                 </button>
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                                     <button type="button" class="btn btn-primary modify-button"
                                             data-bs-target="#modifyModal"
                                             data-empno="${hrmDto.empNo}"
                                             data-bs-toggle="modal" data-bs-target="#modifyModal">수정
                                     </button>
-                                    <button type="button" class="btn btn-primary delete-button"
+                                    <button type="button" class="btn btn-danger delete-button"
                                             data-empno="${hrmDto.empNo}"
                                             data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제
                                     </button>
-                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -174,11 +172,13 @@
                             <%--                <a href="#" data-bs-toggle="modal" class="openModal btn btn-danger"--%>
                             <%--                   data-bs-target="#staticBackdropView" onclick="return chk_form()"--%>
                             <%--                   data-show="delete">삭제</a>--%>
-                        <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                             <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal"
                                     data-bs-target="#insertModal">신규
                             </button>
-                        </c:if>
+                            <form action="../hrm/insert" class="row d-flex align-items-center">
+                                <input type="hidden" value="addEmployee" name="addEmployee">
+                                <button class="btn btn-primary mt-2">사원 30명+</button>
+                            </form>
                     </div>
                 </div>
                     <%--      hrm page 영역 끝      --%>
@@ -186,11 +186,9 @@
                 <%--    hrm 내용영역 끝    --%>
                 <%-- Modal 영역 !!! --%>
             <jsp:include page="include/view-modal.jsp" flush="true"/>
-            <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.grade eq 'HRM_MANAGER'}">
                 <jsp:include page="include/insert-modal.jsp" flush="true"/>
                 <jsp:include page="include/update-modal.jsp" flush="true"/>
                 <jsp:include page="include/delete-modal.jsp" flush="true"/>
-            </c:if>
         </div>
     </c:when>
     <c:otherwise>
@@ -204,30 +202,32 @@
     // 상세 보기 버튼 클릭 이벤트 핸들러
     $('.view-button').click(function () {
         var empNo = $(this).attr('data-empno');
-
         $.ajax({
             url: '../hrm/view',  // 데이터를 가져올 서블릿 URL
             type: 'POST',
             data: {empNo: empNo},
             success: function (response) {
                 // 서버에서 받은 데이터로 폼을 채움
-                $('input#hireDate_view').val(response.empNo);
                 $('input#empNo_view').val(response.empNo);
                 $('input#ename_view').val(response.ename);
-                $('input#deptName_view').val(response.deptName);
+                $('input#birthDate_view').val(response.birthDate);
+                $('input#hireDate_view').val(response.hireDate);
+                $('input#hireType_view').val(response.hireType);
+                $('input#deptName_view').val(response.deptNo + "  |  " + response.deptName);
                 $('input#email_view').val(response.email);
-                $('input#postCode_view').val(response.postCode);
-                $('input#address_view').val(response.address);
-                $('input#addressDetail_view').val(response.addressDetail);
+                $('input#address_view').val(response.postCode + "  " + response.address +"  "+ response.addressDetail);
                 $('input#mobile_view').val(response.mobile);
-                $('input#position_view').val(response.position);
+                $('input#position_view').val(response.posNo + "  |  " + response.posName);
+                $('input#bankAccount_view').val(response.bankName + "    " + response.account + "    " + response.accountHolder);
                 $('input#passport_view').val(response.passport);
-                $('input#role_view').val(response.role);
+                $('input#roleName_view').val(response.roleName);
                 $('textarea#remarks_view').val(response.remarks);
 
-
-                // 나머지 필드들도 동일한 방식으로 처리
-                // 예: $('input#hireDate_view').val(response.hireDate);
+                if (response.renameProfile && response.renameProfile.trim() !== "") {
+                    $('#renameProfile_view').attr('src', '../upload/' + response.renameProfile);
+                } else {
+                    $('#renameProfile_view').attr('src', '../images/profile01.jpg');
+                }
 
                 // 수정 모달을 보여줌
                 $('#viewModal').modal('show');
@@ -248,24 +248,25 @@
             success: function (response) {
                 // 서버에서 받은 데이터로 폼을 채움
                 $('input#empNo_update').val(response.empNo);
+                $('input#empNo_password_update').val(response.empNo);
                 $('input#ename_update').val(response.ename);
                 $('input#birthDate_update').val(response.birthDate);
                 $('input#foreignName_update').val(response.foreignName);
-                $("#posNo_update").val(response.posNo);
-                $("#deptNo_update").val(response.deptNo);
-                $('#roleName_update').val(response.roleName);
+                $("select#posNo_update").val(response.posNo);
+                $("select#deptNo_update").val(response.deptNo);
+                $('select#roleName_update').val(response.roleName);
                 $('input#mobile_update').val(response.mobile);
                 $('input#passport_update').val(response.passport);
                 $('input#email_update').val(response.email);
                 $('input#hireDate_update').val(response.hireDate);
-                $('#hireType_update').val(response.hireType);
+                $('select#hireType_update').val(response.hireType);
                 $('input#postCode_update').val(response.postCode);
                 $('input#address_update').val(response.address);
                 $('input#addressDetail_update').val(response.addressDetail);
-                $('#bankName_update').val(response.bankName);
+                $('select#bankName_update').val(response.bankName);
                 $('input#account_update').val(response.account);
                 $('input#accountHolder_update').val(response.accountHolder);
-                $('input#profile_update').val(response.profile);
+                // $('input#profile_update').val(response.renameProfile);
                 $('textarea#remarks_update').val(response.remarks);
 
                 // 나머지 필드들도 동일한 방식으로 처리

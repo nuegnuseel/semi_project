@@ -31,7 +31,7 @@ public class HrmDao {
         return result;
     }
 
-//    public int setShowAbleHrm(int[] noArray) {
+    //    public int setShowAbleHrm(int[] noArray) {
     /* 일괄 삭제 할때 쓸거 */
 //        int result = 0;
 //
@@ -78,8 +78,9 @@ public class HrmDao {
 
         return total;
     }
+
     public List<HrmDto> getHrmBoardList(HrmPageDto hrmPageDto) {
-        List<HrmDto> hrmList =  null;
+        List<HrmDto> hrmList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         hrmList = sqlSession.selectList("getHrmList", hrmPageDto);
         sqlSession.close();
@@ -94,13 +95,15 @@ public class HrmDao {
         sqlSession.close();
         return hrmList;
     }
-    public List<HrmDto> getSearchEmpNoByName(String searchName){ //salary insert modal의 search modal용
-        List<HrmDto>empNoList = null;
+
+    public List<HrmDto> getSearchEmpNoByName(String searchName) { //salary insert modal의 search modal용
+        List<HrmDto> empNoList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        empNoList=sqlSession.selectList("getSearchEmpNoByName",searchName);
+        empNoList = sqlSession.selectList("getSearchEmpNoByName", searchName);
         sqlSession.close();
         return empNoList;
     }
+
     public int getMaxEmpNo() {
         int maxEmpNo = 1;
 
@@ -111,21 +114,21 @@ public class HrmDao {
         return maxEmpNo;
     }
 
-    public HrmDto login(int empNo, int password) {
+    public HrmDto login(int empNo, String password) {
         HrmDto hrmDto = null;
         HrmDao hrmDao = new HrmDao();
-        hrmDto = null;
-//        String hashPW = hrmDao.getHrm(empNo).getPassword(); DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
-//        if (BCrypt.checkpw(password, hashPW)){  DB에 password추가 및 회원정보 수정에서 비번 바꾸는 기능 추가후 주석 풀기
-        if (empNo == password){
-            hrmDto = hrmDao.getHrm(empNo);
-        }
+        if (hrmDao.getHrm(empNo) == null) return hrmDto; // 로그인하려는 empNo 없음연 리턴
+
+        String hashPassword = hrmDao.getHrm(empNo).getPassword();
+        if (password.equals(hashPassword)) hrmDto = hrmDao.getHrm(empNo); // 비밀번호 변경전 empNo=password면 이걸로 로그인
+        else if (BCrypt.checkpw(password, hashPassword)) hrmDto = hrmDao.getHrm(empNo); // 비밀번호 변경후 로그인
         return hrmDto;
     }
+
     public List<HrmDto> getEmpNoList() {
         List<HrmDto> empNoList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        empNoList=sqlSession.selectList("getEmpNoList");
+        empNoList = sqlSession.selectList("getEmpNoList");
         sqlSession.close();
         return empNoList;
     }
@@ -140,6 +143,7 @@ public class HrmDao {
         sqlSession.close();
         return result;
     }
+
     public int changePW(HrmDto hrmDto) {
         int result = 0;
 
@@ -149,5 +153,17 @@ public class HrmDao {
         sqlSession.close();
         return result;
 
+    }
+
+    public int insertHrmList(List<HrmDto> hrmDtoList) {
+        int result = 0;
+
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        for (HrmDto hrmDto : hrmDtoList) {
+            result += sqlSession.insert("insertHrm", hrmDto);
+        }
+
+        sqlSession.close();
+        return result;
     }
 }

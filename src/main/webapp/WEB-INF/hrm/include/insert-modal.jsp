@@ -5,6 +5,7 @@
   Time: 오후 5:31
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="insertModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -48,7 +49,9 @@
                             <div class="input-group">
                                 <input type="text" class="form-control is-invalid" id="mobile" placeholder="휴대폰번호"
                                        aria-label="empno" name="mobile" aria-describedby="btn-mobile-duplicate">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-mobile-duplicate">확인</button>
+                                <button class="btn btn-outline-secondary btn-duplicate" type="button"
+                                        id="btn-mobile-duplicate">확인
+                                </button>
                             </div>
                         </div>
                         <div class="col">여권번호</div>
@@ -56,7 +59,9 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="여권번호" aria-label="passport"
                                        name="passport" aria-describedby="btn-passport-duplicate" id="passport">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-passport-duplicate">확인</button>
+                                <button class="btn btn-outline-secondary btn-duplicate" type="button"
+                                        id="btn-passport-duplicate">확인
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -66,16 +71,17 @@
                             <div class="input-group">
                                 <input type="email" class="form-control is-invalid" id="email" placeholder="Email"
                                        aria-label="email" name="email" aria-describedby="btn-email-duplicate">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-email-duplicate">확인</button>
+                                <button class="btn btn-outline-secondary btn-duplicate" type="button"
+                                        id="btn-email-duplicate">확인
+                                </button>
                             </div>
                         </div>
                         <div class="col">부서</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="select" name="deptNo">
-                                <option value="10">부서코드:10 | 부서명:개발팀</option>
-                                <option value="20">부서코드:20 | 부서명:기획팀</option>
-                                <option value="30">부서코드:30 | 부서명:인사팀</option>
-                                <option value="40">부서코드:40 | 부서명:회계팀</option>
+                                <c:forEach var="dept" items="${deptMap}">
+                                    <option value="${dept.key}">부서코드:${dept.key} | 부서명:${dept.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -83,11 +89,9 @@
                         <div class="col">직위/직급</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="select" name="positionNo">
-                                <option value="10">직급코드:10 | 직급명:사원</option>
-                                <option value="20">직급코드:20 | 직급명:대리</option>
-                                <option value="30">직급코드:30 | 직급명:과장</option>
-                                <option value="40">직급코드:40 | 직급명:차장</option>
-                                <option value="50">직급코드:50 | 직급명:대표이사</option>
+                                <c:forEach var="pos" items="${positionMap}">
+                                    <option value="${pos.key}">직급코드:${pos.key} | 직급명:${pos.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">직책</div>
@@ -107,8 +111,8 @@
                         <div class="col">입사구분</div>
                         <div class="col col-md-4">
                             <select class="form-select form-select" aria-label="hireType" name="hireType">
-                                <option value="10">신입</option>
-                                <option value="20">경력</option>
+                                <option value="신입">신입</option>
+                                <option value="경력">경력</option>
                             </select>
                         </div>
                     </div>
@@ -119,29 +123,25 @@
                             <div class="input-group">
                                 <span class="input-group-text" id="bankName">은행명</span>
                                 <select class="form-select col-2" aria-label="은행명 선택" name="bankName">
-                                    <option value="한국은행">한국은행</option>
-                                    <option value="산업은행">산업은행</option>
-                                    <option value="기업은행">기업은행</option>
-                                    <option value="국민은행">국민은행</option>
-                                    <option value="외환은행">외환은행</option>
-                                    <option value="수협중앙회">수협중앙회</option>
-                                    <option value="수출입은행">수출입은행</option>
-                                    <option value="농협은행">농협은행</option>
-                                    <option value="지역농.축협">지역농.축협</option>
-                                    <option value="우리은행">우리은행</option>
+                                    <c:forEach var="bank" items="${bankMap}">
+                                        <option value="${bank.key}">${bank.value}</option>
+                                    </c:forEach>
                                 </select>
                                 <span class="input-group-text">통장번호</span>
-                                <input type="text" class="form-control col-6 is-invalid" aria-label="account" name="account" id="account">
+                                <input type="text" class="form-control col-6 is-invalid" aria-label="account"
+                                       name="account" id="account">
                                 <span class="input-group-text">예금주</span>
-                                <input type="text" class="form-control col-2" aria-label="accountHolder" name="accountHolder">
+                                <input type="text" class="form-control col-2" aria-label="accountHolder"
+                                       name="accountHolder">
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label for="postCode" class="col-md-2 col-form-label is-invalid">우편번호</label>
+                        <label for="postCode" class="col-md-2 col-form-label">우편번호</label>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control postCode is-invalid" id="postCode" placeholder="우편번호" name="postCode" readonly>
+                                <input type="text" class="form-control postCode is-invalid" id="postCode"
+                                       placeholder="우편번호" name="postCode" readonly>
                                 <button type="button" class="btn btn-dark btn-post">우편번호 찾기</button>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modalForm" class="btn btn-primary" id="btn-insert">Submit</button>
-                <button type="reset" form="modalForm" class="btn btn-danger">Reset</button>
+                <button type="reset" form="modalForm" class="btn btn-danger" id="reset">Reset</button>
             </div>
         </div>
     </div>
@@ -193,12 +193,40 @@
     let emailChecked = false;
     let mobileChecked = false;
     let passportChecked = true;
+    $('#reset').click(function () {
+        $('#birthDate').addClass('is-invalid');
+        $('#hireDate').addClass('is-invalid');
+        $('#postCode').addClass('is-invalid');
+        $('#address').addClass('is-invalid');
+        // 이메일 입력 필드 초기화
+        $('#email').removeClass('is-valid');
+        $('#email').addClass('is-invalid');
+        $('#email').prop('readonly', false);
+
+        // 휴대전화 입력 필드 초기화
+        $('#mobile').removeClass('is-valid');
+        $('#mobile').addClass('is-invalid');
+        $('#mobile').prop('readonly', false);
+
+        // 여권 입력 필드 초기화
+        $('#passport').removeClass('is-valid');
+        $('#passport').removeClass('is-invalid');
+        $('#passport').prop('readonly', false);
+        emailChecked = false;
+        mobileChecked = false;
+        passportChecked = true;
+    });
 
     $("#btn-insert").on("click", () => {
         /* 필수 입력 사항 체크 */
         if ($("#ename").val().trim() === "") {
             alert("성명은 필수입력 사항입니다.");
             $("#ename").focus();
+            return false;
+        }
+        if ($("#birthDate").val().trim() === "") {
+            alert("생년월일은 필수입력 사항입니다.");
+            $("#birthDate").focus();
             return false;
         }
         if ($("#mobile").val().trim() === "") {
@@ -211,25 +239,45 @@
             $("#email").focus();
             return false;
         }
-        // /* 아이디 중복 체크 */
-        // if (!emailChecked) {
-        //     alert("이메일 중복확인 필요")
-        //     $("#email").focus();
-        //     return false;
-        // }
-        // if (!mobileChecked) {
-        //     alert("휴대폰번호 중복확인 필요")
-        //     $("#mobile").focus();
-        //     return false;
-        // }
-        // if (!passportChecked) {
-        //     alert("아이디 중복 체크 ㄱㄱ")
-        //     $("#passport").focus();
-        //     return false;
-        // }
+        if ($("#hireDate").val().trim() === "") {
+            alert("입사일자는 필수입력 사항입니다.");
+            $("#hireDate").focus();
+            return false;
+        }
+        if ($("#account").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#account").focus();
+            return false;
+        }
+        if ($("#postCode").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#postCode").focus();
+            return false;
+        }
+        if ($("#address").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#address").focus();
+            return false;
+        }
+        /* 아이디 중복 체크 */
+        if (!emailChecked) {
+            alert("이메일 중복확인 필요")
+            $("#email").focus();
+            return false;
+        }
+        if (!mobileChecked) {
+            alert("휴대폰번호 중복확인 필요")
+            $("#mobile").focus();
+            return false;
+        }
+        if (!passportChecked) {
+            alert("여권번호 중복확인 필요 ㄱㄱ")
+            $("#passport").focus();
+            return false;
+        }
     });
 
-    $(".btn-duplicate").on("click", function() {
+    $(".btn-duplicate").on("click", function () {
         var inputId = $(this).prev().attr("id");
         var checkField;
         var checkValue = $("#" + inputId).val();
@@ -241,34 +289,33 @@
                     return; // 이미 중복 확인을 완료한 경우, 추가 확인 방지
                 }
                 checkField = "email";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: checkField, checkValue: checkValue};
                 break;
             case "passport":
                 if (passportChecked) {
                     return;
                 }
                 checkField = "passport";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: checkField, checkValue: checkValue};
                 break;
             case "mobile":
                 if (mobileChecked) {
                     return;
                 }
                 checkField = "mobile";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: checkField, checkValue: checkValue};
                 break;
             default:
                 console.error("Invalid input ID.");
                 return;
         }
-        console.log(data);
         $.ajax({
             url: url,
             data: data,
             method: "post",
-            success: function(data) {
+            success: function (data) {
 
-                if (data.count === -1){
+                if (data.count === -1) {
                     alert("중복 확인 해주세요");
                     $("#" + inputId).val("");
                     $("#" + inputId).focus();
@@ -287,6 +334,7 @@
                                 emailChecked = true;
                                 break;
                             case "passport":
+                                $("#" + inputId).removeClass('is-invalid');
                                 $("#" + inputId).addClass('is-valid');
                                 passportChecked = true;
                                 break;
@@ -300,22 +348,13 @@
                     }
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error:", error);
                 // 오류 처리
             }
         });
     });
 
-
-
-    $("#ename").on("keyup", function () {
-        if ($(this).val() !== '') {
-            $(this).removeClass('is-invalid');
-        } else {
-            $(this).addClass('is-invalid');
-        }
-    });
 
     $(document).ready(function () {
         // 오늘 날짜를 yyyy-mm-dd 형식으로 가져오기
@@ -333,6 +372,23 @@
                 $(".invalid-feedback").show();
             }
         });
+        $("#hireDate").on("change", function () {
+            if ($(this).val() !== '') {
+                $(this).removeClass('is-invalid');
+                $(".invalid-feedback").hide();
+            } else {
+                $(this).addClass('is-invalid');
+                $(".invalid-feedback").show();
+            }
+        });
+    });
+
+    $("#ename").on("keyup", function () {
+        if ($(this).val() !== '') {
+            $(this).removeClass('is-invalid');
+        } else {
+            $(this).addClass('is-invalid');
+        }
     });
 
     $("#mobile").on("keyup", function () {
@@ -356,14 +412,15 @@
             $(this).addClass('is-invalid');
         }
     });
-
-    // $("#passport").on("keyup", function () {
-    //     if ($(this).val() !== '') {
-    //         passportChecked = false;
-    //     } else {
-    //         passportChecked = true;
-    //     }
-    // });
+    $("#passport").on("keyup", function () {
+        if ($(this).val() !== '') {
+            passportChecked = false;
+            $(this).addClass('is-invalid');
+        } else {
+            passportChecked = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
 
 
     // var empNoInput = document.getElementById('empNo');

@@ -23,9 +23,6 @@ public class GradeTypeHandler implements TypeHandler<Grade> {
         String grade = rs.getString(columnName); // member, manager, admin
         Grade result = null;
         if (grade.equalsIgnoreCase("admin")) result = Grade.ADMIN;
-        else if (grade.equalsIgnoreCase("attendManager")) result = Grade.ATTEND_MANAGER;
-        else if (grade.equalsIgnoreCase("salaryManager")) result = Grade.SALARY_MANAGER;
-        else if (grade.equalsIgnoreCase("hrmManager")) result = Grade.ATTEND_MANAGER;
         else result = Grade.MEMBER;
         return result;
     }
@@ -35,9 +32,6 @@ public class GradeTypeHandler implements TypeHandler<Grade> {
         String grade = rs.getString(columnIndex); // member, manager, admin
         Grade result = null;
         if (grade.equalsIgnoreCase("admin")) result = Grade.ADMIN;
-        else if (grade.equalsIgnoreCase("attendManager")) result = Grade.ATTEND_MANAGER;
-        else if (grade.equalsIgnoreCase("salaryManager")) result = Grade.SALARY_MANAGER;
-        else if (grade.equalsIgnoreCase("hrmManager")) result = Grade.ATTEND_MANAGER;
         else result = Grade.MEMBER;
         return result;
     }
@@ -47,9 +41,6 @@ public class GradeTypeHandler implements TypeHandler<Grade> {
         String grade = cs.getString(columnIndex); // member, manager, admin
         Grade result = null;
         if (grade.equalsIgnoreCase("admin")) result = Grade.ADMIN;
-        else if (grade.equalsIgnoreCase("attendManager")) result = Grade.ATTEND_MANAGER;
-        else if (grade.equalsIgnoreCase("salaryManager")) result = Grade.SALARY_MANAGER;
-        else if (grade.equalsIgnoreCase("hrmManager")) result = Grade.ATTEND_MANAGER;
         else result = Grade.MEMBER;
         return result;
     }

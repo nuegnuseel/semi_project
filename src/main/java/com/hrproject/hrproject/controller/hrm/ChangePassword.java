@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,20 +21,17 @@ public class ChangePassword extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String empNo = req.getParameter("empNo");
-        /*if (isInteger(resp, empNoStr)) empNo = Integer.parseInt(empNoStr);
-        else {
-            ScriptWriter.alertAndBack(resp, "사원번호를 잘못 입력하였습니다.");
-            return;
-        }*/
 
         String changePW = req.getParameter("changePassword");
         String changePWConfirm = req.getParameter("changePasswordConfirm");
-        //int password = 0;
 
         if (Objects.equals(changePW, changePWConfirm) && empNo != null) {
+            String salt = BCrypt.gensalt();
+            String hashPassword = BCrypt.hashpw(changePW, salt);
+
             HrmDto hrmDto = HrmDto.builder()
                     .empNo(Integer.parseInt(req.getParameter("empNo")))
-                    .password(changePW)
+                    .password(hashPassword)
                     .build();
 
             HrmDao changePWDao = new HrmDao();
@@ -48,17 +46,4 @@ public class ChangePassword extends HttpServlet {
         }
 
     }
-
-    /*public static boolean isInteger(HttpServletResponse resp, String numCheck) {
-     *//* 로그인할때 문자 입력해도 error 500 안뜨게 *//*
-        if (numCheck == null) {
-            return false;
-        }
-        try {
-            Integer.parseInt(numCheck);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }*/
 }
