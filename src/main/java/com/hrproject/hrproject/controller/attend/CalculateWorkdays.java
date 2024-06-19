@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
+//근무일수를 직접 입력하여 값 받기
+//ㄴㄴ
 @WebServlet("/attend/calculate-workdays")
 public class CalculateWorkdays extends HttpServlet {
 

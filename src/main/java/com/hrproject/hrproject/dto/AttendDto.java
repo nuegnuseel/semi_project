@@ -3,6 +3,7 @@ package com.hrproject.hrproject.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +24,8 @@ public class AttendDto {
     private String print;         // 인쇄
     private LocalDate hireDate;   // 입사일
     private int yearsOfWork;      // 근속 연수
-    private int annualLeaveDays;  // 연차 일수
+    private String annualLeaveDays;  // 연차 일수
+
 
     @Override
     public String toString() {
@@ -44,4 +46,11 @@ public class AttendDto {
                 ", annualLeaveDays=" + annualLeaveDays +
                 '}';
     }
+
+    public void setRemainingAnnualLeaveDays(int i) {
+    }
+
+    public void setEmpName(String ename) {
+    }
 }
+

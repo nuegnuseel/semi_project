@@ -92,6 +92,11 @@
         SELECT COUNT(*) FROM HRM WHERE EMPNO = #{empNo}
     </select>
 
+    <!-- 사원 번호로 입사 날짜 조회 -->
+    <select id="getHireDateByEmpNo" resultType="java.time.LocalDate" parameterType="String">
+        SELECT hireDate FROM HRM WHERE empNo = #{empNo}
+    </select>
+
     <!-- 휴가 조회 하기 -->
     <select id="selectOffdaysByEmpNo" resultType="com.hrproject.hrproject.dto.AttendDto">
         SELECT

@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="../include/header.jsp" %>
 
-
-<!--현재 ㄴㄴ-->
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
     <div class="board-title">
         <h2 class="title">휴가 관리</h2>
@@ -28,28 +26,29 @@
         </form>
 
         <%-- 근무 일수 계산 결과 표시 --%>
-        <c:if test="${not empty leaveInfo.workDays}">
+        <c:if test="${not empty hrmDto.workDays}">
             <div class="row mt-3">
                 <div class="col-md-6">
                     <h5>입사일로부터 근무한 일수 계산 결과</h5>
-                    <p>입사일로부터 ${leaveInfo.workDays}일 동안 근무하셨습니다.</p>
+                    <p>${hrmDto.ename}님은 입사일${hrmDto.hireDate}로부터 ${hrmDto.workDays}일 동안 근무하셨습니다.</p>
                 </div>
             </div>
         </c:if>
 
         <%-- 사용한 휴가 리스트 및 연차 개수 표시 --%>
-        <c:if test="${not empty leaveInfo}">
+        <c:if test="${not empty hrmDto}">
             <div class="row mt-3">
                 <div class="col-md-6">
                     <h5>사용한 휴가 리스트</h5>
                     <ul>
-                        <c:forEach var="leave" items="${leaveInfo.usedLeaves}">
+                        <c:forEach var="leave" items="${hrmDto.usedLeaves}">
                             <li>${leave.atdCode}: ${leave.offDay}</li>
                         </c:forEach>
                     </ul>
-                    <p>사용한 휴가의 개수: ${leaveInfo.usedLeaves.size()}개</p>
-                    <p>사용한 연차의 개수: ${leaveInfo.usedAnnualLeaveDays}개</p>
-                    <p>올해 ${leaveInfo.empName}님의 남은 연차 개수는 ${leaveInfo.remainingAnnualLeaveDays}개 입니다.</p>
+                    <p>올해 ${hrmDto.ename}님의 연차 개수는 ${hrmDto.remainingAnnualLeaveDays}개 입니다.</p>
+                    <p>사용한 휴가의 개수: ${hrmDto.usedLeaves.size()}개</p>
+                    <p>사용한 연차의 개수: ${hrmDto.usedAnnualLeaveDays}개</p>
+
                 </div>
             </div>
         </c:if>

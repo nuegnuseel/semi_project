@@ -1,6 +1,7 @@
 package com.hrproject.hrproject.controller.attend;
 
 import com.hrproject.hrproject.dto.AttendDto;
+import com.hrproject.hrproject.dto.HrmDto;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -59,14 +60,14 @@ public class AnnualLeaveCalculator {
         LocalDate hireDate = LocalDate.of(2000, 1, 1); // 예시 입사일
 
         // AttendDto 생성
-        AttendDto attendDto = new AttendDto();
-        attendDto.setHireDate(hireDate);
+        HrmDto hrmDto = new HrmDto();
+        hrmDto.setHireDate(String.valueOf(hireDate));
 
         // 연차 계산기 인스턴스 생성
         AnnualLeaveCalculator calculator = new AnnualLeaveCalculator();
 
         // 연차 계산
-        int annualLeave = calculator.calculateAnnualLeave(attendDto.getHireDate());
+        int annualLeave = calculator.calculateAnnualLeave(LocalDate.parse(hrmDto.getHireDate()));
         System.out.println("연차: " + annualLeave);
     }
 }

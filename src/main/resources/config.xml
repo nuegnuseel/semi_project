@@ -42,5 +42,6 @@
         <mapper resource="attend.xml"/>
         <mapper resource="notice.xml"/>
         <mapper resource="workSchedule.xml"/>
+
     </mappers>
 </configuration>

@@ -39,6 +39,28 @@ public class HrmDto {
     private int showAble;
 
     // 생성자, getter, setter 등의 필요한 메서드 추가
+
+
+
+
+    // 연차 관련 추가 필드 입니다
+
+    private long workDays; // 입사일로부터의 근무일수
+    private String usedLeaves; // 사용한 휴가 리스트
+    private int usedAnnualLeaveDays; // 사용한 연차 일수
+    private String atdCode; // 근태 코드
+    private int remainingAnnualLeaveDays; // 남은 연차 일수
+
+
+   /* public int getRemainingAnnualLeaveDays() {
+        return remainingAnnualLeaveDays;
+    }
+
+    public void setRemainingAnnualLeaveDays(int remainingAnnualLeaveDays) {
+        this.remainingAnnualLeaveDays = remainingAnnualLeaveDays;
+    }
+*/
+
 }
 
 

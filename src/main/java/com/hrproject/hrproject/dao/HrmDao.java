@@ -129,4 +129,17 @@ public class HrmDao {
         sqlSession.close();
         return empNoList;
     }
+
+//연차 계산용으로 만들었습니다
+public int getUsedAnnualLeaveDays(int empNo) {
+    int usedAnnualLeaveDays = 0;
+    SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+    try {
+        usedAnnualLeaveDays = sqlSession.selectOne("com.hrproject.hrproject.dao.HrmDao.getUsedAnnualLeaveDays", empNo);
+    } finally {
+        sqlSession.close();
+    }
+    return usedAnnualLeaveDays;
+}
+
 }
