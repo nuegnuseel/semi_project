@@ -15,7 +15,7 @@ public class AttendDao {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getApprovedAttendList");
             System.out.println("select query is successfully");
-            System.out.println(attendList); // 가져온 데이터 로깅
+            //System.out.println(attendList); // 가져온 데이터 로깅/
 
             return attendList;
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class AttendDao {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getApprovedAttendMonthList");
             System.out.println("select query is successfully");
-            System.out.println(attendList); // 가져온 데이터 로깅
+            //System.out.println(attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class AttendDao {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getWaitingAttendList");
             System.out.println("select query is successfully");
-            System.out.println(attendList); // 가져온 데이터 로깅
+           // System.out.println(attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class AttendDao {
 
             List<AttendDto> attendList = sqlSession.selectList("searchAttend", parameterMap);
             System.out.println("search query is successful");
-            System.out.println(attendList); // 가져온 데이터 로깅
+            //System.out.println(attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class AttendDao {
 
             List<AttendDto> attendList = sqlSession.selectList("searchWaitingAttend", parameterMap);
             System.out.println("search query is successful");
-            System.out.println(attendList); // 가져온 데이터 로깅
+            //System.out.println(attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -130,7 +130,7 @@ public class AttendDao {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getAttendList");
             System.out.println("select query is successfully");
-            System.out.println(attendList); // 가져온 데이터 로깅
+            //System.out.println(attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class AttendDao {
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         attendDto=sqlSession.selectOne("getUpdateInfo",atdNo);
-
+        sqlSession.close();
         return attendDto;
     }
 
@@ -167,7 +167,7 @@ public class AttendDao {
         try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
             List<AttendDto> attendList = sqlSession.selectList("getAttendListByEmpNo", empNo);
             System.out.println("getAttendListByEmpNo query is successfully");
-            System.out.println("attendList >>> " + attendList); // 가져온 데이터 로깅
+            //System.out.println("attendList >>> " + attendList); // 가져온 데이터 로깅
 
             return attendList;
         } catch (Exception e) {
@@ -180,6 +180,7 @@ public class AttendDao {
         int result =0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         result=sqlSession.selectOne("countByEmpNo",empNo);
+        sqlSession.close();
         return result;
     }
 
@@ -187,6 +188,7 @@ public class AttendDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
         result=sqlSession.selectOne("countByAtdNo",atdNo);
+        sqlSession.close();
         return result;
 
     }

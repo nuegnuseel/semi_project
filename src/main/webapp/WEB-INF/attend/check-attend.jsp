@@ -38,14 +38,23 @@
     <div class="attend-check-search-area col-12">
         <div class="left-section col-2">
             <h2>검색</h2>
-            <div class="d-flex">
-                <input type="text" placeholder="ex)202406" id="attend-check-search-text" name="attendCheckSearchText">
-                <input type="hidden" id="attend-check-search-empNo" name="attendCheckEmpNo" value="1">
-                <button id="attend-check-search-btn">검색</button>
+
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <input type="number" id="year" class="form-control" aria-describedby="passwordHelpInline" placeholder="연도를 입력하세요">
+                </div>
+                <div class="col-auto">
+                    <input type="number" id="month" class="form-control" aria-describedby="passwordHelpInline" placeholder="월을 입력하세요">
+                </div>
+                <div class="col-auto">
+                    <button id="attend-check-search-btn" type="button" class="btn btn-primary">검색</button>
+                </div>
             </div>
+
+
         </div>
         <div class="center-section col-8">
-            <h1 class="sattend-check-calendar-date" id="attend-check-calendar-date">2024 06월 근태표</h1>
+            <h1 class="sattend-check-calendar-date" id="attend-check-calendar-date">2024년 06월 근태표</h1>
         </div>
     </div>
     <div class="attend-check-calendar-area d-flex">
@@ -67,16 +76,26 @@
                     <c:forEach items="${week}" var="day">
                         <td><c:if test="${day != 0}">
                             <h5 class="calendar-day">${day}
-                                <br> 이름띄우기
+
+
+                                <c:choose>
+                                    <c:when test="${day < 10}">
+                                        <c:set var="localDate" value="${year}${month}0${day}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="localDate" value="${year}${month}${day}" />
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <c:set var="intLocalDate" value="${localDate+0}" />
+
+
                                 <c:forEach items="${approvedAttendList}" var="attendDto" varStatus="loop">
-                                    <%--                                    <c:set var="currentDate" value="${year}-${month}-${day}" />--%>
-                                    <%-- Extract the day part from startAtdDate and convert to integer --%>
-                                    <c:set var="startDay" value="${fn:substring(attendDto.startAtdDate, 8, 10)}"/>
-                                    <c:set var="endDay" value="${fn:substring(attendDto.endAtdDate, 8, 10)}"/>
-                                    <c:set var="startDayInt" value="${startDay + 0}"/>
-                                    <c:set var="endDayInt" value="${endDay + 0}"/>
-                                    <%-- 조건문안에 넣어야댐--%>
-                                    <c:if test="${startDayInt <= day && endDayInt >= day}">
+
+                                    <c:set var="startDay" value="${fn:replace(attendDto.startAtdDate, '-', '')+0}" />
+                                    <c:set var="endDay" value="${fn:replace(attendDto.endAtdDate, '-', '')+0}" />
+
+                                    <c:if test="${startDay <= intLocalDate && endDay >= intLocalDate}">
                                         <br>${attendDto.ename}
                                     </c:if>
                                 </c:forEach>
@@ -134,7 +153,7 @@
         </table>
     </div>
 
-<br><br><br><br>
+    <br><br><br><br>
 
     <div>
         <h3> 휴가 신청 내역 </h3>
@@ -162,39 +181,39 @@
             </div>
         </form>
 
-            <table class="table table-striped">
-                <thead>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">사원번호</th>
+                <th scope="col">근태번호</th>
+                <th scope="col">사원명</th>
+                <th scope="col">근태코드</th>
+                <th scope="col">근태수</th>
+                <th scope="col">근태기간</th>
+                <th scope="col">휴가명</th>
+                <th scope="col">휴가사유</th>
+                <th scope="col">인쇄</th>
+                <th scope="col">승인여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
                 <tr>
-                    <th scope="col">사원번호</th>
-                    <th scope="col">근태번호</th>
-                    <th scope="col">사원명</th>
-                    <th scope="col">근태코드</th>
-                    <th scope="col">근태수</th>
-                    <th scope="col">근태기간</th>
-                    <th scope="col">휴가명</th>
-                    <th scope="col">휴가사유</th>
-                    <th scope="col">인쇄</th>
-                    <th scope="col">승인여부</th>
+                    <td>${attendDto.empNo}</td>
+                    <td>${attendDto.atdNo}</td>
+                        <%--근태번호 수정키--%>
+                    <td>${attendDto.ename}</td>
+                    <td>${attendDto.atdCode}</td>
+                    <td>${attendDto.atdNum}</td>
+                    <td>${attendDto.atdDate}</td>
+                    <td>${attendDto.offDay}</td>
+                    <td>${attendDto.offDayRs}</td>
+                    <td>${attendDto.print}</td>
+                    <td>${attendDto.approval}</td>
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
-                    <tr>
-                        <td>${attendDto.empNo}</td>
-                        <td>${attendDto.atdNo}</td>
-                            <%--근태번호 수정키--%>
-                        <td>${attendDto.ename}</td>
-                        <td>${attendDto.atdCode}</td>
-                        <td>${attendDto.atdNum}</td>
-                        <td>${attendDto.atdDate}</td>
-                        <td>${attendDto.offDay}</td>
-                        <td>${attendDto.offDayRs}</td>
-                        <td>${attendDto.print}</td>
-                        <td>${attendDto.approval}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            </c:forEach>
+            </tbody>
+        </table>
 
         <%--신규 버튼--%>
         <button class="attend-check-Insert-btn btn btn-primary w-20" data-bs-target="#insertAttendCheckModal"
@@ -221,7 +240,7 @@
                         <div class="row mb-3">
                             <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
+                                <input type="number" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
                         </div>
 
@@ -312,6 +331,73 @@
 
 
     <script>
+
+        //달력
+        // Ajax 요청 후 달력 생성 예시
+        $(document).ready(function () {
+            $("#attend-check-search-btn").on("click", function () {
+                let year = $("#year").val();
+                let month = $("#month").val();
+                if(month.length!=2){
+                    alert("월 검색 값은 2자리여야합니다. \n ex) 01")
+                    $("#month").focus();
+                    return;
+                }
+                if (month<1 || month>12){
+                    alert("월 검색 값은 01~12 여야합니다.")
+                    $("#month").focus();
+                    return;
+                }
+                $.ajax({
+                    url: "/attend/check",
+                    method: "POST",
+                    data: {
+                        year: year,
+                        month: month,
+                    },
+                    success: function (response) {
+                        $("#attend-check-calendar-date").text(response.year + "년 " + response.month + "월 근태표");
+
+                        var calendarBody = $("#calendar-body");
+                        calendarBody.empty();
+
+                        // 서버로부터 받은 데이터를 기반으로 달력 생성
+
+                        response.weekDates.forEach(function(week){
+                            var weekRow = "<tr>";
+                            week.forEach(function (day) {
+                                if (day !== 0) {
+                                    weekRow += '<td><h5 class="calendar-day">' + day + '</h5><br>';
+
+                                    if (day<10) {
+                                        var currentDate = year+"-"+month+"-0"+day;
+                                    }else{
+                                        var currentDate = year+"-"+month+"-"+day;
+                                    }
+
+                                    console.log("currentDate"+currentDate)
+                                    response.approvedAttendList.forEach(function (attendDto){
+                                        if(attendDto.startAtdDate <= currentDate && attendDto.endAtdDate >= currentDate) {
+                                            weekRow += attendDto.ename + '<br>';
+                                        }
+                                    });
+                                    weekRow += "</td>";
+                                } else {
+                                    weekRow += "<td></td>";
+                                }
+                            });
+                            weekRow += "</tr>";
+                            calendarBody.append(weekRow);
+                        });
+                    },
+                    error: function () {
+                        alert("서브밋 에러");
+                    },
+                });
+            });
+        });
+
+
 
         // 근태코드 변경 시 휴가명 변경
         $('#atdCode').on('change', function () {
@@ -449,83 +535,6 @@
             }
         };
 
-        //달력
-        $(document).ready(function () {
-            $("#attend-check-search-btn").on("click", function () {
-                var searchValue = $("#attend-check-search-text").val();
-                const attendCheckEmpNo = $("#attend-check-search-empNo").val();
-                const attendCheckSearchText = $("#attend-check-search-text").val();
-                var message = "";
-
-                $.ajax({
-                    url: "/attend/check",
-                    method: "POST",
-                    data: {
-                        empNo: attendCheckEmpNo,
-                        accountingPeriod: attendCheckSearchText,
-                    },
-                    success: function (resp) {
-                        var year = searchValue.substring(0, 4);
-                        var month = searchValue.substring(5, 7);
-                        $("#attend-check-calendar-date").text(year + " " + month + "월 근무표");
-
-                        var calendarBody = $("#calendar-body");
-                        var totalBody = $("#total-body");
-
-                        calendarBody.empty();
-                        totalBody.empty();
-
-
-
-                        let attendanceRecords = [];
-                        resp.approvedAttendList.forEach(function (attendDto) {
-                            let startDay = attendDto.startAtdDate.substring(8, 10);
-                            let endDay = attendDto.endAtdDate.substring(8, 10);
-                            let intStartDay = parseInt(startDay, 10);
-                            let intEndDay = parseInt(endDay, 10);
-                            let ename = attendDto.ename
-
-                            attendanceRecords.push({
-                                startDay: intStartDay,
-                                endDay: intEndDay,
-                                ename: ename
-                            });
-
-
-                        });
-
-
-                        resp.response.weekDates.forEach(function (week) {
-                            var weekRow = '<tr>';
-                            week.forEach(function (day) {
-                                if (day != 0) {
-                                    // 해당 day에 attendanceRecords에서 이름을 찾아서 표시
-                                    let nameToDisplay = '';
-                                    attendanceRecords.forEach(function (record) {
-                                        if (day >= record.startDay && day <= record.endDay) {
-                                            nameToDisplay = record.ename; // 해당 날짜에 해당하는 이름을 저장
-                                        }
-                                    });
-
-                                    weekRow += '<td><h5 class="calendar-day">' + day + '</h5>' + nameToDisplay + '</td>';
-                                } else {
-                                    weekRow += '<td></td>';
-                                }
-                            });
-                            weekRow += '</tr>';
-                            calendarBody.append(weekRow);
-                        });
-
-                    },
-                    error: function () {
-                        message = "검색값은 6자리 정수여야합니다. \n 예)202405"
-                        $("#attend-check-search-text").val("");
-                        $("#attend-check-search-text").focus();
-                        alert(message)
-                    }
-                });
-            });
-        });
 
 
     </script>
