@@ -2,9 +2,6 @@
 <%@include file="../include/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<style>
-
-</style>
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
     <div class="board-title">
         <h2 class="title">근태 조회</h2>
