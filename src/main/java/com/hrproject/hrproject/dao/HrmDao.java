@@ -86,7 +86,6 @@ public class HrmDao {
         hrmList = sqlSession.selectList("getHrmList", hrmPageDto);
         sqlSession.close();
         return hrmList;
-
     }
 
     public List<HrmDto> getSearchHrmBoardList(HrmPageDto hrmPageDto) {
@@ -220,4 +219,20 @@ public class HrmDao {
         sqlSession.close();
         return result;
     }
+
+//    public List<EvaluationDto> getEvaluationDtoList(HrmPageDto hrmPageDto) {
+//        List<EvaluationDto> evaluationDtoList = null;
+//
+//        HrmDao hrmDao = new HrmDao();
+//        List<HrmDto> hrmList = hrmDao.getHrmBoardList(hrmPageDto);
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+//
+//        Map<Integer, Integer> evaluationMap = new HashMap<>();
+//        for (int i = 0; i < hrmList.size(); i++) {
+//            evaluationMap.put(i, hrmList.get(i).getEmpNo());
+//        }
+//        evaluationDtoList = sqlSession.selectList("getEvaluationDtoList", evaluationMap);
+//        sqlSession.close();
+//        return evaluationDtoList;
+//    }
 }

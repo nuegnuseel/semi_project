@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,6 @@ public class Evaluations extends HttpServlet {
         List<HrmDto> hrmList = getHrmList(hrmPageDto);
 
         setRequestAttributes(req, totalPage, startPage, endPage, listPerPage, paginationPerPage, search, searchWord, hrmList);
-
 
         req.setAttribute("url", url);
         req.getRequestDispatcher("/WEB-INF/hrm/evaluation-board.jsp").forward(req, resp);
@@ -124,11 +124,7 @@ public class Evaluations extends HttpServlet {
         req.setAttribute("searchWord", searchWord);
         req.setAttribute("hrmList", hrmList);
 
-        HrmDao hrmGetEvaluationDao = new HrmDao();
-        HrmDao hrmCreateEvaluationDao = new HrmDao();
-//        hrmCreateEvaluationDao.createHrmEval(empNo);
-//        EvaluationDto hrmEvalDto = hrmGetEvaluationDao.getHrmEval(empNo);
-//        req.setAttribute("hrmEvalDto", hrmEvalDto);
+
 
         HrmMap hrmMap = new HrmMap();
         req.setAttribute("deptMap", hrmMap.getDeptMap());

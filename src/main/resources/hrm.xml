@@ -180,4 +180,13 @@
         )
     </insert>
 
+<!--    <select id="getEvaluationDtoList" parameterType="HashMap" resultType="EvaluationDto">-->
+<!--        SELECT DATEDIFF(CURDATE(), h.hiredate) AS days_since_hire FROM-->
+<!--        hrm h join work_schedule ws on h.empno = ws.empno-->
+<!--        WHERE h.empno IN-->
+<!--        <foreach item="empNo" collection="empNoList" open="(" separator="," close=")">-->
+<!--            #{empNo}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
 </mapper>
