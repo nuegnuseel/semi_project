@@ -156,7 +156,7 @@ public class WorkScheduleDao {
 
     public void insertWorkScheduleLog(WorkScheduleLogDto workScheduleLogDto) {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        sqlSession.insert("getWorkScheduleByWorkIdx", workScheduleLogDto);
+        sqlSession.insert("insertWorkScheduleLog", workScheduleLogDto);
         sqlSession.close();
     }
 }

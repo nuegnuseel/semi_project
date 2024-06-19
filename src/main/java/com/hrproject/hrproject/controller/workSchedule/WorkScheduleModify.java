@@ -29,28 +29,53 @@ public class WorkScheduleModify extends HttpServlet {
 
         String startTime = req.getParameter("modifyStartTime");
         String endTime = req.getParameter("modifyEndTime");
-        int workIdx  = Integer.parseInt(req.getParameter("workIdx_modify"));
-        String startTimeFormat = startTime+":00";
-        String endTimeFormat = endTime+":00";
-        System.out.println("startTime >>> "+startTimeFormat);
-        System.out.println("endTime >>> "+endTimeFormat);
+        int workIdx = Integer.parseInt(req.getParameter("workIdx_modify"));
+        String status = req.getParameter(" searchWorkStatus");
+        String startTimeFormat = "";
+        String endTimeFormat = "";
+
+        System.out.println("startTime >>> " + startTime);
+
+        if (!startTime.isEmpty()) {
+            startTimeFormat = startTime + ":00";
+        }
+        if (!endTime.isEmpty()) {
+            endTimeFormat = endTime + ":00";
+        }
+        System.out.println("startTime >>> " + startTimeFormat);
+        System.out.println("endTime >>> " + endTimeFormat);
 
         //수정 전 내역 LOG 기록
         // 세션에서 로그인 ID를 받아와야함 나중에 해야합니다~~
         // FM대로 할거면 왜 수정했는지도 넣어야 할거 같은데 패스합니다~
 
-//        WorkScheduleLogDto workScheduleLogDto = workScheduleDao.getWorkScheduleByWorkIdx(workIdx);
-//        workScheduleLogDto = WorkScheduleLogDto.builder()
-//                .whoModify("whoModify세션에서 받아와야합니다~")
-//                .logStatus("M")
-//                .build();
-//        workScheduleDao.insertWorkScheduleLog(workScheduleLogDto);
+        WorkScheduleLogDto workScheduleLogDto01 = workScheduleDao.getWorkScheduleByWorkIdx(workIdx);
+        System.out.println("workScheduleLogDto01 >>>> " + workScheduleLogDto01);
 
-        Map<String,Object> modifyParamMap = new HashMap<>();
+        WorkScheduleLogDto workScheduleLogDto02;
+        workScheduleLogDto02 = WorkScheduleLogDto.builder()
+                .workIdx(workScheduleLogDto01.getWorkIdx())
+                .empNo(workScheduleLogDto01.getEmpNo())
+                .workDate(workScheduleLogDto01.getWorkDate())
+                .startTime(workScheduleLogDto01.getStartTime())
+                .endTime(workScheduleLogDto01.getEndTime())
+                .status(workScheduleLogDto01.getStatus())
+                .atdNo(workScheduleLogDto01.getAtdNo())
+                .vacationCode(workScheduleLogDto01.getVacationCode())
+                .modifyReason("아직 구현 안했는데 고민 중")
+                .whoModify("whoModify세션에서 받아와야합니다~")
+                .logStatus("M")
+                .build();
 
-        modifyParamMap.put("startTime",startTimeFormat);
-        modifyParamMap.put("endTime",endTimeFormat);
-        modifyParamMap.put("workIdx",workIdx);
+
+        workScheduleDao.insertWorkScheduleLog(workScheduleLogDto02);
+
+        Map<String, Object> modifyParamMap = new HashMap<>();
+
+        modifyParamMap.put("startTime", startTimeFormat);
+        modifyParamMap.put("endTime", endTimeFormat);
+        modifyParamMap.put("workIdx", workIdx);
+        modifyParamMap.put("status",status);
         workScheduleDao.modifyWorkTime(modifyParamMap);
 
         resp.sendRedirect("/workSchedule/adminWorkBoard");

@@ -167,8 +167,8 @@ public class empWorkBoard extends HttpServlet {
                     List<String> statusList = new ArrayList<>(Arrays.asList(strStatus.split("/")));
                     statusList.add("출근");
 
-                    String combinedString = String.join("/", statusList);
-                    workScheduleDto.setStatus(combinedString);
+//                    String combinedString = String.join("/", statusList);
+//                    workScheduleDto.setStatus(combinedString);
                 } else {
                     workScheduleDto.setStatus("출근");
                 }

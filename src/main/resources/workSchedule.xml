@@ -75,7 +75,7 @@
         SELECT
         ws.WORKIDX,
         ws.EMPNO,
-        ws.atdCode as vacationCode,
+        ws.atdCode AS vacationCode,
         ws.WORKDATE,
         hr.DEPTNAME,
         hr.ENAME,
@@ -87,6 +87,8 @@
         WORK_SCHEDULE ws
         JOIN
         HRM hr ON ws.EMPNO = hr.EMPNO
+        ORDER BY
+        ws.WORKDATE DESC
     </select>
 
 
@@ -159,10 +161,36 @@
     </update>
 
     <update id="modifyWorkTime" parameterType="Map">
-        UPDATE work_schedule
-        SET STARTTIME = #{startTime}, ENDTIME = #{endTime}
-        WHERE WORKIDX = #{workIdx}
+<!--        UPDATE work_schedule-->
+<!--        SET STARTTIME = #{startTime}, ENDTIME = #{endTime}-->
+<!--        WHERE WORKIDX = #{workIdx}-->
 
+
+        UPDATE work_schedule
+        SET
+        STARTTIME =
+        <if test="startTime != null and startTime != ''">
+            #{startTime}
+        </if>
+        <if test="startTime == null or startTime == ''">
+            NULL
+        </if>,
+        ENDTIME =
+        <if test="endTime != null and endTime != ''">
+            #{endTime}
+        </if>
+        <if test="endTime == null or endTime == ''">
+            NULL
+        </if>,
+        status =
+        <if test="status != null and status != ''">
+            #{status}
+        </if>
+        <if test="status == null or status == ''">
+            NULL
+        </if>
+
+        WHERE WORKIDX = #{workIdx}
     </update>
 
 
@@ -174,10 +202,10 @@
         </foreach>
     </update>
 
-    <select id="getWorkScheduleByWorkIdx" parameterType="int" resultType="WorkScheduleDto">
-        SELECT WORKIDX, ATDCODE
+    <select id="getWorkScheduleByWorkIdx" parameterType="int" resultType="WorkScheduleLogDto">
+        SELECT *
         FROM WORK_SCHEDULE
-        WHERE WORKIDX = #{workIdx} and  workDate = CURDATE()
+        WHERE WORKIDX = #{workIdx}
     </select>
 
 
@@ -200,9 +228,41 @@
         Where workDate = CURDATE()
     </select>
 
-    <!--    <select id="getWorkScheduleByWorkIdx" resultType="WorkScheduleLogDto">-->
-    <!--        select * from  WORK_SCHEDULE where workIdx = #{workIdx}-->
-    <!--    </select>-->
+    <insert id="insertWorkScheduleLog"  parameterType="WorkScheduleLogDto">
+
+        INSERT INTO  WORK_SCHEDULE_LOG (
+        workIdx,
+        empNo,
+        workDate,
+        startTime,
+        endTime,
+        status,
+        atdNo,
+        atdCode,
+        etc,
+        modifyReason,
+        whoModify,
+        logDate,
+        logStatus
+        ) VALUES (
+        #{workIdx},
+        #{empNo},
+        #{workDate},
+        #{startTime},
+        #{endTime},
+        #{status},
+        #{atdNo},
+        #{vacationCode},
+        #{etc},
+        #{modifyReason},
+        #{whoModify},
+        NOW(),
+        #{logStatus}
+        )
+    </insert>
+
+
+
 
 
     <delete id="deleteWorkSchedule" parameterType="int">

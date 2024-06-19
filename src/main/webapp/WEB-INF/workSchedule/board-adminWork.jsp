@@ -126,7 +126,6 @@
                                     <option value="">-</option>
                                     <option value="출근">출근</option>
                                     <option value="퇴근">퇴근</option>
-
                                 </select>
                             </div>
                         </div>
@@ -213,23 +212,37 @@
                         <input type="text" class="form-control" placeholder="00008" aria-label="empNo"
                             hidden="hidden"    readonly id="workIdx_modify" name="workIdx_modify" value="">
                         <div class="row">
-                            <%-- form body --%>
+                            <%-- 출근 시간 --%>
                             <div class="col">출근시간</div>
                             <div class="col col-md-4">
-                                <input type="time" class="form-control" aria-label="출근시간 입력"
-                                      id="startTime_modify" name="modifyStartTime">
+                                <input type="time" class="form-control" aria-label="출근시간 입력" id="startTime_modify" name="modifyStartTime">
+                                <input type="checkbox" id="chkClearStartTime"> <label for="chkClearStartTime">시간 초기화</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <%-- 퇴근 시간 --%>
+                            <div class="col">퇴근시간</div>
+                            <div class="col col-md-4">
+                                <input type="time" class="form-control" aria-label="퇴근시간 입력" id="endTime_modify" name="modifyEndTime">
+                                <input type="checkbox" id="chkClearEndTime"> <label for="chkClearEndTime">시간 초기화</label>
                             </div>
                         </div>
                         <div class="row">
                             <%-- form body --%>
-                            <div class="col">퇴근시간</div>
+                            <div class="col">상태</div>
                             <div class="col col-md-4">
-                                <input type="time" class="form-control" aria-label="퇴근시간 입력"
-                                    id="endTime_modify"   name="modifyEndTime">
+                                <select class="form-control" name="searchWorkStatus">
+                                    <option value="">-</option>
+                                    <option value="출근">출근</option>
+                                    <option value="퇴근">퇴근</option>
+                                </select>
                             </div>
                         </div>
                     </form>
                 </div>
+
+
                 <div class="modal-footer">
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -240,6 +253,23 @@
     </div>
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 출근 시간 체크박스
+            document.getElementById('chkClearStartTime').addEventListener('change', function () {
+                var startTimeInput = document.getElementById('startTime_modify');
+                startTimeInput.value = this.checked ? null : startTimeInput.value;
+            });
+
+            // 퇴근 시간 체크박스
+            document.getElementById('chkClearEndTime').addEventListener('change', function () {
+                var endTimeInput = document.getElementById('endTime_modify');
+                endTimeInput.value = this.checked ? null : endTimeInput.value;
+            });
+        });
+
+
+
         let selectedWork = {};
         let formatStartTime;
         let formatEndTime;
