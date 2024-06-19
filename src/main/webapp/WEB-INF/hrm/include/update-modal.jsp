@@ -5,6 +5,7 @@
   Time: 오후 5:31
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="modifyModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="modifyHrmToggleLabel" aria-hidden="true">
@@ -45,16 +46,18 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" id="mobile_update" class="form-control" placeholder="휴대폰번호"
-                                       aria-label="empno" name="mobile">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-mobile-duplicate">확인</button>
+                                       aria-label="empno" name="mobile" id="btn-mobile-update-duplicate">
+                                <button class="btn btn-outline-secondary btn-update-duplicate" type="button">확인
+                                </button>
                             </div>
                         </div>
                         <div class="col">여권번호</div>
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" id="passport_update" class="form-control" placeholder="여권번호"
-                                       aria-label="passport" name="passport">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-passport-duplicate">확인</button>
+                                       aria-label="passport" name="passport" id="btn-passport-update-duplicate">
+                                <button class="btn btn-outline-secondary btn-update-duplicate" type="button">확인
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -63,34 +66,35 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="email" id="email_update" class="form-control" placeholder="Email"
-                                       aria-label="email" name="email">
-                                <button class="btn btn-outline-secondary btn-duplicate" type="button" id="btn-email-duplicate">확인</button>
+                                       aria-label="email" name="email" id="btn-email-update-duplicate">
+                                <button class="btn btn-outline-secondary btn-update-duplicate" type="button">확인
+                                </button>
                             </div>
                         </div>
                         <div class="col">부서</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" id="deptNo_update" aria-label="select" name="deptNo">
-                                <option value="10">부서코드:10 | 부서명:개발팀</option>
-                                <option value="20">부서코드:20 | 부서명:기획팀</option>
-                                <option value="30">부서코드:30 | 부서명:인사팀</option>
-                                <option value="40">부서코드:40 | 부서명:회계팀</option>
-                            </select>
+                                <select class="form-select form-select" id="deptNo_update" aria-label="select"
+                                        name="deptNo">
+                                    <c:forEach var="dept" items="${deptMap}">
+                                    <option value="${dept.key}">부서코드:${dept.key} | 부서명:${dept.value}</option>
+                                    </c:forEach>
+                                </select>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">직위/직급</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" id="posNo_update" aria-label="select" name="positionNo">
-                                <option value="10">직급코드:10 | 직급명:사원</option>
-                                <option value="20">직급코드:20 | 직급명:대리</option>
-                                <option value="30">직급코드:30 | 직급명:과장</option>
-                                <option value="40">직급코드:40 | 직급명:차장</option>
-                                <option value="50">직급코드:50 | 직급명:대표이사</option>
+                            <select class="form-select form-select" id="posNo_update" aria-label="select"
+                                    name="positionNo">
+                                <c:forEach var="pos" items="${positionMap}">
+                                    <option value="${pos.key}">직급코드:${pos.key} | 직급명:${pos.value}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">직책</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" id="roleName_update" aria-label="select" name="roleName">
+                            <select class="form-select form-select" id="roleName_update" aria-label="select"
+                                    name="roleName">
                                 <option value="팀원">팀원</option>
                                 <option value="팀장">팀장</option>
                             </select>
@@ -99,13 +103,15 @@
                     <div class="row mt-3">
                         <div class="col">입사일자</div>
                         <div class="col col-md-4">
-                            <input type="date" id="hireDate_update" class="form-control" aria-label="hiredate" name="hireDate">
+                            <input type="date" id="hireDate_update" class="form-control" aria-label="hiredate"
+                                   name="hireDate">
                         </div>
                         <div class="col">입사구분</div>
                         <div class="col col-md-4">
-                            <select class="form-select form-select" id="hireType_update" aria-label="hireType" name="hireType">
-                                <option value="10">신입</option>
-                                <option value="20">경력</option>
+                            <select class="form-select form-select" id="hireType_update" aria-label="hireType"
+                                    name="hireType">
+                                <option value="신입">신입</option>
+                                <option value="경력">경력</option>
                             </select>
                         </div>
                     </div>
@@ -115,30 +121,27 @@
                         <div class="col-10">
                             <div class="input-group">
                                 <span class="input-group-text">은행명</span>
-                                <select class="form-select col-2" id="bankName_update" aria-label="은행명 선택" name="bankName">
-                                    <option value="한국은행">한국은행</option>
-                                    <option value="산업은행">산업은행</option>
-                                    <option value="기업은행">기업은행</option>
-                                    <option value="국민은행">국민은행</option>
-                                    <option value="외환은행">외환은행</option>
-                                    <option value="수협중앙회">수협중앙회</option>
-                                    <option value="수출입은행">수출입은행</option>
-                                    <option value="농협은행">농협은행</option>
-                                    <option value="지역농.축협">지역농.축협</option>
-                                    <option value="우리은행">우리은행</option>
+                                <select class="form-select col-2" id="bankName_update" aria-label="은행명 선택"
+                                        name="bankName">
+                                    <c:forEach var="bank" items="${bankMap}">
+                                        <option value="${bank.key}">${bank.value}</option>
+                                    </c:forEach>
                                 </select>
                                 <span class="input-group-text">통장번호</span>
-                                <input type="text" class="form-control col-6 is-invalid" aria-label="account" name="account" id="account_update">
+                                <input type="text" class="form-control col-6" aria-label="account"
+                                       name="account" id="account_update">
                                 <span class="input-group-text">예금주</span>
-                                <input type="text" class="form-control col-2" aria-label="accountHolder" name="accountHolder" id="accountHolder_update">
+                                <input type="text" class="form-control col-2" aria-label="accountHolder"
+                                       name="accountHolder" id="accountHolder_update">
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label for="postCode_update" class="col-md-2 col-form-label is-invalid">우편번호</label>
+                        <label for="postCode_update" class="col-md-2 col-form-label">우편번호</label>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control postCode is-invalid" id="postCode_update" placeholder="우편번호" name="postCode" readonly>
+                                <input type="text" class="form-control postCode" id="postCode_update"
+                                       placeholder="우편번호" name="postCode" readonly>
                                 <button type="button" class="btn btn-dark btn-post">우편번호 찾기</button>
                             </div>
                         </div>
@@ -146,7 +149,8 @@
                     <div class="row mt-3">
                         <label for="address_update" class="col-md-2 col-form-label">주소</label>
                         <div class="col-10">
-                            <input type="text" class="form-control address is-invalid" id="address_update" placeholder="주소"
+                            <input type="text" class="form-control address" id="address_update"
+                                   placeholder="주소"
                                    name="address" readonly>
                         </div>
                     </div>
@@ -179,91 +183,115 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" form="modifyModalForm" class="btn btn-primary" id="btn-update">수정</button>
+                <%--                <form action="../hrm/update" type="post">--%>
+                <%--                    <input type="hidden" id="empNo_password_update" name="empNo_password">--%>
+                <%--                    <button type="submit" form="modifyModalForm" class="btn btn-primary">비밀번호 초기화</button>--%>
+                <%--                </form>--%>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    let emailChecked = false;
-    let mobileChecked = false;
-    let passportChecked = true;
+    let emailChecked_update = true;
+    let mobileChecked_update = true;
+    let passportChecked_update = true;
 
-    $("#btn-insert").on("click", () => {
+    $("#btn-update").on("click", () => {
         /* 필수 입력 사항 체크 */
-        if ($("#ename").val().trim() === "") {
+        if ($("#ename_update").val().trim() === "") {
             alert("성명은 필수입력 사항입니다.");
-            $("#ename").focus();
+            $("#ename_update").focus();
             return false;
         }
-        if ($("#mobile").val().trim() === "") {
+        if ($("#birthDate_update").val().trim() === "") {
+            alert("생년월일은 필수입력 사항입니다.");
+            $("#birthDate_update").focus();
+            return false;
+        }
+        if ($("#mobile_update").val().trim() === "") {
             alert("휴대폰번호는 필수입력 사항입니다.");
-            $("#mobile").focus();
+            $("#mobile_update").focus();
             return false;
         }
-        if ($("#email").val().trim() === "") {
+        if ($("#email_update").val().trim() === "") {
             alert("Email은 필수입력 사항입니다.");
+            $("#email_update").focus();
+            return false;
+        }
+        if ($("#hireDate_update").val().trim() === "") {
+            alert("입사일자는 필수입력 사항입니다.");
+            $("#hireDate_update").focus();
+            return false;
+        }
+        if ($("#account_update").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#account").focus();
+            return false;
+        }
+        if ($("#postCode_update").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#postCode").focus();
+            return false;
+        }
+        if ($("#address_update").val().trim() === "") {
+            alert("통장번호은 필수입력 사항입니다.");
+            $("#address").focus();
+            return false;
+        }
+        /* 아이디 중복 체크 */
+        if (!emailChecked_update) {
+            alert("이메일 중복확인 필요")
             $("#email").focus();
             return false;
         }
-        // /* 아이디 중복 체크 */
-        // if (!emailChecked) {
-        //     alert("이메일 중복확인 필요")
-        //     $("#email").focus();
-        //     return false;
-        // }
-        // if (!mobileChecked) {
-        //     alert("휴대폰번호 중복확인 필요")
-        //     $("#mobile").focus();
-        //     return false;
-        // }
-        // if (!passportChecked) {
-        //     alert("아이디 중복 체크 ㄱㄱ")
-        //     $("#passport").focus();
-        //     return false;
-        // }
+        if (!mobileChecked_update) {
+            alert("휴대폰번호 중복확인 필요")
+            $("#mobile").focus();
+            return false;
+        }
+        if (!passportChecked_update) {
+            alert("아이디 중복 체크 ㄱㄱ")
+            $("#passport").focus();
+            return false;
+        }
     });
 
-    $(".btn-duplicate").on("click", function() {
+    $(".btn-update-duplicate").on("click", function () {
         var inputId = $(this).prev().attr("id");
-        var checkField;
         var checkValue = $("#" + inputId).val();
         var url = "../hrm/duplicate-check";
         var data = {};
         switch (inputId) {
-            case "email":
-                if (emailChecked) {
+            case "email_update":
+                if (emailChecked_update) {
                     return; // 이미 중복 확인을 완료한 경우, 추가 확인 방지
                 }
-                checkField = "email";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: "email", checkValue: checkValue};
                 break;
-            case "passport":
-                if (passportChecked) {
+            case "passport_update":
+                if (passportChecked_update) {
                     return;
                 }
-                checkField = "passport";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: "passport", checkValue: checkValue};
                 break;
-            case "mobile":
-                if (mobileChecked) {
+            case "mobile_update":
+                if (mobileChecked_update) {
                     return;
                 }
-                checkField = "mobile";
-                data = { check: checkField, checkValue: checkValue };
+                data = {check: "mobile", checkValue: checkValue};
                 break;
             default:
                 console.error("Invalid input ID.");
                 return;
         }
-        console.log(data);
         $.ajax({
             url: url,
             data: data,
             method: "post",
-            success: function(data) {
+            success: function (data) {
 
-                if (data.count === -1){
+                if (data.count === -1) {
                     alert("중복 확인 해주세요");
                     $("#" + inputId).val("");
                     $("#" + inputId).focus();
@@ -277,17 +305,17 @@
                     if (used) {
                         $("#" + inputId).attr("readonly", true);
                         switch (inputId) {
-                            case "email":
+                            case "email_update":
                                 $("#" + inputId).addClass('is-valid');
-                                emailChecked = true;
+                                emailChecked_update = true;
                                 break;
-                            case "passport":
+                            case "passport_update":
                                 $("#" + inputId).addClass('is-valid');
-                                passportChecked = true;
+                                passportChecked_update = true;
                                 break;
-                            case "mobile":
+                            case "mobile_update":
                                 $("#" + inputId).addClass('is-valid');
-                                mobileChecked = true;
+                                mobileChecked_update = true;
                                 break;
                         }
                     } else {
@@ -295,7 +323,7 @@
                     }
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error:", error);
                 // 오류 처리
             }
@@ -321,36 +349,77 @@
         });
     });
 
-    $("#mobile_update").on("keyup", function () {
-        if ($(this).val() === '') {
+
+    $("#ename_update").on("keyup", function () {
+        if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
         } else {
             $(this).removeClass('is-invalid');
         }
     });
-    $("#email_update").on("keyup", function () {
-        if ($(this).val() === '') {
+    $("#birthDate_update").on("keyup", function () {
+        if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
         } else {
             $(this).removeClass('is-invalid');
         }
     });
     $("#account_update").on("keyup", function () {
-        if ($(this).val() === '') {
+        if ($(this).val().trim() === '') {
             $(this).addClass('is-invalid');
         } else {
             $(this).removeClass('is-invalid');
         }
     });
 
-    // $("#passport").on("keyup", function () {
+    let emailValue;
+    let mobileValue;
+    let passportValue;
+    $("#email_update").on("focus", function () {
+        emailValue = $("#email_update").val();
+    });
+    $("#mobile_update").on("focus", function () {
+        mobileValue = $("#mobile_update").val();
+    });
+    $("#passport_update").on("focus", function () {
+        passportValue = $("#passport_update").val();
+    });
+
+    $("#email_update").on("keyup", function () {
+        if ($(this).val().trim() !== emailValue) {
+            $(this).addClass('is-invalid');
+            emailChecked_update = false;
+        } else {
+            emailChecked_update = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
+
+    $("#mobile_update").on("keyup", function () {
+        if ($(this).val() !== mobileValue) {
+            $(this).addClass('is-invalid');
+            mobileChecked_update = false;
+        } else {
+            mobileChecked_update = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
+    // $("#account_update").on("keyup", function () {
     //     if ($(this).val() !== '') {
-    //         passportChecked = false;
+    //         $(this).addClass('is-invalid');
     //     } else {
-    //         passportChecked = true;
+    //         $(this).removeClass('is-invalid');
     //     }
     // });
-
+    $("#passport_update").on("keyup", function () {
+        if ($(this).val() !== passportValue && $(this).val().trim() !== "") {
+            passportChecked_update = false;
+            $(this).addClass('is-invalid');
+        } else {
+            passportChecked_update = true;
+            $(this).removeClass('is-invalid');
+        }
+    });
 
 
 </script>

@@ -77,7 +77,6 @@
         LIMIT #{start}, #{end}
     </select>
 
-
     <!--    출퇴근 기록에 필요해서 만들었습니다.!! -->
     <select id="getEmpNoList" resultType="HrmDto" >
         select empNo from hrm
@@ -134,8 +133,7 @@
         OUTREASONS = #{outReasons},
         ORIGINAL_PROFILE = #{originalProfile},
         RENAME_PROFILE = #{renameProfile},
-        REMARKS = #{remarks},
-        GRADE = #{grade}
+        REMARKS = #{remarks}
         WHERE EMPNO = #{empNo}
     </update>
 
