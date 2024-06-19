@@ -116,3 +116,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    let empNoView;
+    $("#btn-print").on("click", function () {
+        empNoView = $("#empNo_view").val();
+
+        // 프린트를 위한 URL 설정
+        var printUrl = "../hrm/print?hrmPrintEmpNo=" + empNoView;
+
+        // 새 창을 화면 가운데에 위치시키고 크게 열기
+        var printWindow = window.open(printUrl);
+
+        // 새 창이 로드된 후 프린트 명령 실행
+        printWindow.onload = function() {
+            printWindow.print();
+            printWindow.close(); // 프린트 후 창 닫기
+        };
+    });
+</script>
