@@ -83,7 +83,6 @@
                                 <input type="date" class="form-control" id="search_work_date" name="searchWorkDate">
                             </div>
                         </div>
-
                         <div class="row">
                             <%-- form body --%>
                             <div class="col">사원번호</div>
