@@ -126,7 +126,11 @@ public class HrmBoard extends HttpServlet {
         req.setAttribute("search", search);
         req.setAttribute("searchWord", searchWord);
         req.setAttribute("hrmList", hrmList);
-
         req.setAttribute("showModal", "view");
+
+        HrmMap hrmMap = new HrmMap();
+        req.setAttribute("deptMap", hrmMap.getDeptMap());
+        req.setAttribute("positionMap", hrmMap.getPositionMap());
+        req.setAttribute("bankMap", hrmMap.getBankMap());
     }
 }

@@ -86,7 +86,7 @@
                         <div class="row mb-3">
                             <label for="insertEmpNo" class="col-sm-2 col-form-label">사원번호</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="insertEmpNo" name="insertEmpNo">
+                                <input type="number" class="form-control" id="insertEmpNo" name="insertEmpNo">
                             </div>
                         </div>
 
@@ -107,7 +107,16 @@
                         <div class="row mb-3">
                             <label for="atdCode" class="col-sm-2 col-form-label">근태코드</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="atdCode" name="atdCode">
+                                <select class="form-select" id="atdCode" name="atdCode">
+                                    <option value="">근태 코드를 입력하세요.</option>
+                                    <option value="A01">A01 : 연차</option>
+                                    <option value="A02">A02 : 반차</option>
+                                    <option value="A03">A03 : 병가</option>
+                                    <option value="B01">B01 : 경조사</option>
+                                    <option value="C01">C01 : 교육</option>
+                                    <option value="C02">C02 : 연수</option>
+                                    <option value="C03">C03 : 기타</option>
+                                </select>
                             </div>
                         </div>
 
@@ -237,6 +246,48 @@
 </div>
 <script>
 
+    window.onload = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('insertAttend') === 'true') {
+            alert('등록 되었습니다.');
+        }
+    };
+
+    // 근태코드 변경 시 휴가명 변경
+    $('#atdCode').on('change', function () {
+        var selectedAtdCode = $(this).val();
+        var offDayInput = $('#offDay');
+
+        switch (selectedAtdCode) {
+            case 'A01':
+                offDayInput.val('연차');
+                break;
+            case 'A02':
+                offDayInput.val('반차');
+                break;
+            case 'A03':
+                offDayInput.val('병가');
+                break;
+            case 'B01':
+                offDayInput.val('경조사');
+                break;
+            case 'C01':
+                offDayInput.val('교육');
+                break;
+            case 'C02':
+                offDayInput.val('연수');
+                break;
+            case 'C03':
+                offDayInput.val('기타');
+                break;
+            default:
+                offDayInput.val('');
+                break;
+        }
+    });
+
+
     $(document).ready(function() {
         // 승인 버튼 클릭 이벤트 처리
         $(document).on("click", ".approve-button", function() {
@@ -258,9 +309,14 @@
                 data: { atdNo: atdNo, approval: approval }, // 근태번호와 업데이트할 승인 상태 전송
                 success: function(response) {
                     if (response.success) {
-                        alert("업데이트 성공");
-                        // 성공적으로 업데이트되었으면 화면에서 해당 행을 업데이트하거나 다시 로드하는 등의 작업 수행
-                        // 예: 페이지 리로드 또는 특정 요소 갱신
+                        if (approval === '승인') {
+                            alert("승인되었습니다.");
+                        }
+                        else {
+                            alert('반려되었습니다.')
+                        }
+                        window.location.reload();
+
                     } else {
                         alert("업데이트 실패");
                     }
@@ -325,12 +381,16 @@
             });
         }
     });
+
     //외래키 사원번호 예외처리
-    $(document).ready(function() {
-        $("#insertModalForm").on('submit', function(event) {
+    $(document).ready(function () {
+        $("#insertModalForm").on('submit', function (event) {
             var empNo = $('#insertEmpNo').val();
             var atdNo = $('#atdNo').val();
             var ename = $('#ename').val();
+            var startAtdDate = $('#startAtdDate').val();
+            var endAtdDate = $('#endAtdDate').val();
+            var atdCode = $('#atdCode').val();
 
             //사원번호를 입력하지 않은경우
             if (!empNo) {
@@ -355,39 +415,61 @@
                 $('#ename').val('');
                 return;
             }
+
+            //근태코드를 입력하지 않은경우
+            if (!atdCode) {
+                event.preventDefault();
+                alert('근태코드를 입력해주세요.');
+                return;
+            }
+
+            //근태기간을 입력하지 않은경우
+            if (!startAtdDate || !endAtdDate) {
+                event.preventDefault();
+                alert('근태기간을 입력해주세요.');
+                return;
+            }
+
+            //근태기간이 잘못된경우 시작과 끝이 안맞는 경우
+            if (startAtdDate > endAtdDate) {
+                event.preventDefault();
+                alert('잘못된 근태기간입니다.');
+                return;
+            }
+
             // empNo와 atdNo 입력후 조건검사
             if (empNo && atdNo) {
                 event.preventDefault();
                 $.ajax({
-                    url:"/attend/insertEmpNoCheck",
-                    method:"POST",
-                    data:{empNo:empNo},
-                    success: function (response){
-                        if (response === 1){
+                    url: "/attend/insertEmpNoCheck",
+                    method: "POST",
+                    data: {empNo: empNo},
+                    success: function (response) {
+                        if (response === 1) {
                             $.ajax({
-                                url:"/attend/insertAtdNoCheck",
-                                method:"POST",
-                                data:{atdNo:atdNo},
-                                success:function (response){
-                                    if(response === 1){
+                                url: "/attend/insertAtdNoCheck",
+                                method: "POST",
+                                data: {atdNo: atdNo},
+                                success: function (response) {
+                                    if (response === 1) {
                                         alert("중복된 근태번호입니다.")
                                         $("#atdNo").focus();
                                         return false;
-                                    }else {
+                                    } else {
                                         $("#insertModalForm").unbind('submit').submit();
                                     }
                                 },
-                                error:function (){
+                                error: function () {
                                     alert("알수없는 오류 발생");
                                 }
                             })
-                        }else {
+                        } else {
                             alert("존재하지않는 사원번호입니다.")
                             $("#insertEmpNo").focus();
                             return false;
                         }
                     },
-                    error: function (){
+                    error: function () {
                         alert("알수없는 오류 발생");
                     }
                 });
