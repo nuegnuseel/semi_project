@@ -158,4 +158,26 @@
     <select id="getSearchEmpNoByName" resultType="HrmDto" parameterType="String">
         SELECT * FROM HRM WHERE ENAME = #{searchName}
     </select>
+
+    <select id="getTotalWorkDays" resultType="Integer">
+        SELECT COUNT(*) AS total FROM hrm h
+        JOIN work_schedule w ON h.empno = w.empno
+        WHERE w.status = '퇴근' and h.empno = #{value} and showable = 1
+    </select>
+    <select id="getDaysSinceHire" resultType="Integer">
+        SELECT DATEDIFF(CURDATE(), h.hiredate) AS days_since_hire FROM
+        hrm h join work_schedule ws on h.empno = ws.empno where h.empno = #{value}
+    </select>
+
+    <select id="getHrmEval" resultType="EvaluationDto">
+        select * from Evaluations where empno = #{value} ORDER BY evaluation_NO DESC
+        LIMIT 1
+    </select>
+
+    <insert id="createHrmEval" parameterType="EvaluationDto">
+        INSERT INTO Evaluations ( empno, evaluation_YEAR, performance_score, performance_grade, comments
+        ) VALUES (#{empNo}, 1, #{performanceScore}, 1, 1
+        )
+    </insert>
+
 </mapper>
