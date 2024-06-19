@@ -4,7 +4,7 @@
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-3">
 
     <%--  내용 영역  --%>
-    <div class="hrm-content-area p-3 bg-body-tertiary">
+    <div class="hrm-login-content-area p-3 bg-body-tertiary">
     <%--  제목 영역  --%>
         <div class="login-title">
             <h2 class="title">Login</h2>

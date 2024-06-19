@@ -125,6 +125,9 @@
                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}" >
                                 <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
                                 </c:if>
+                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}" >
+                                    <li><a href="/hrm/evaluation" class="nav-link text-decoration-none rounded">평가 업무</a></li>
+                                </c:if>
                             </ul>
                         </div>
                     </li>
