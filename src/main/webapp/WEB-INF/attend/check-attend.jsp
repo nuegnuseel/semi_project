@@ -338,11 +338,7 @@
             $("#attend-check-search-btn").on("click", function () {
                 let year = $("#year").val();
                 let month = $("#month").val();
-                if(month.length!=2){
-                    alert("월 검색 값은 2자리여야합니다. \n ex) 01")
-                    $("#month").focus();
-                    return;
-                }
+
                 if (month<1 || month>12){
                     alert("월 검색 값은 01~12 여야합니다.")
                     $("#month").focus();
@@ -371,9 +367,17 @@
 
                                     if (day<10) {
                                         var currentDate = year+"-"+month+"-0"+day;
-                                    }else{
+                                        if(month<10){
+                                            var currentDate = year+"-0"+month+"-0"+day;
+                                        }
+                                    }else {
+                                        if(month<10){
+                                            var currentDate = year+"-0"+month+"-"+day;
+                                        }else{
                                         var currentDate = year+"-"+month+"-"+day;
+                                        }
                                     }
+
 
                                     console.log("currentDate"+currentDate)
                                     response.approvedAttendList.forEach(function (attendDto){

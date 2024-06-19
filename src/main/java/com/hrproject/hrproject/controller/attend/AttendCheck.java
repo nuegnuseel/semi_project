@@ -85,6 +85,10 @@ public class AttendCheck extends HttpServlet {
         int year = Integer.parseInt(req.getParameter("year"));
         int month = Integer.parseInt(req.getParameter("month"));
 
+        if (month<10) {
+
+        }
+
         System.out.println("year===" + year);
         System.out.println("month===" + month);
 
