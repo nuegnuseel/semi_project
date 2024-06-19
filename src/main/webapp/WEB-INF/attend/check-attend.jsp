@@ -77,7 +77,6 @@
                         <td><c:if test="${day != 0}">
                             <h5 class="calendar-day">${day}
 
-
                                 <c:choose>
                                     <c:when test="${day < 10}">
                                         <c:set var="localDate" value="${year}${month}0${day}" />
