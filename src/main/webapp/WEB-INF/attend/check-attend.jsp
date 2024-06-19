@@ -36,24 +36,17 @@
         </div>
     </div>
     <div class="attend-check-search-area col-12">
-        <div class="left-section col-2">
+        <div class="left-section col-4">
             <h2>검색</h2>
-
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <input type="number" id="year" class="form-control" aria-describedby="passwordHelpInline" placeholder="연도를 입력하세요">
-                </div>
-                <div class="col-auto">
-                    <input type="number" id="month" class="form-control" aria-describedby="passwordHelpInline" placeholder="월을 입력하세요">
-                </div>
-                <div class="col-auto">
-                    <button id="attend-check-search-btn" type="button" class="btn btn-primary">검색</button>
-                </div>
+            <div class="d-flex input-group">
+                <input type="number" class="form-control attend-check-search-year-text " placeholder="연도를 입력하세요"
+                       id="attend-check-search-year" name="attendCheckYear">
+                <input type="number" class="form-control attend-check-search-month-text " placeholder="월을 입력하세요"
+                       id="attend-check-search-month" name="attendCheckMonth">
+                <button class="btn btn-primary attend-check-search-btn" type="button" id="attend-check-search-btn">검색</button>
             </div>
-
-
         </div>
-        <div class="center-section col-8">
+        <div class="center-section col-4">
             <h1 class="sattend-check-calendar-date" id="attend-check-calendar-date">2024년 06월 근태표</h1>
         </div>
     </div>
@@ -76,8 +69,6 @@
                     <c:forEach items="${week}" var="day">
                         <td><c:if test="${day != 0}">
                             <h5 class="calendar-day">${day}
-
-
                                 <c:choose>
                                     <c:when test="${day < 10}">
                                         <c:set var="localDate" value="${year}${month}0${day}" />
@@ -336,12 +327,12 @@
         // Ajax 요청 후 달력 생성 예시
         $(document).ready(function () {
             $("#attend-check-search-btn").on("click", function () {
-                let year = $("#year").val();
-                let month = $("#month").val();
+                let year = $("#attend-check-search-year").val();
+                let month = $("#attend-check-search-month").val();
 
                 if (month<1 || month>12){
                     alert("월 검색 값은 01~12 여야합니다.")
-                    $("#month").focus();
+                    $("#attend-check-search-month").focus();
                     return;
                 }
                 $.ajax({
