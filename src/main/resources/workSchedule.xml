@@ -55,7 +55,7 @@
         empNo = #{empNo}
     </select>
     <select id="getWorkMonthList" resultType="WorkScheduleDto" parameterType="WorkScheduleDto">
-        select * from work_schedule where empNo = #{empNo} and workMonth = #{workMonth}
+        select * from work_schedule where empNo = #{empNo} and workDate LIKE CONCAT('%', #{workMonth}, '%')
     </select>
 
 

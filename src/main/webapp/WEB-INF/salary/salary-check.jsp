@@ -5,29 +5,70 @@
         <h2 class="title">급여 조회</h2>
     </div>
     <div class="salary-check-area d-flex col-12">
-        <div class="salary-check-profile position-relative">
-            <h2>프로필?</h2>
-        </div>
-        <div class="salary-check-info position-relative">
-            <table>
-                <tbody>
-                <tr>
-                    <td>이름</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                </tbody>
-            </table>
+        <%--        <div class="salary-check-profile position-relative">--%>
+        <%--            <h2>프로필?</h2>--%>
+        <%--        </div>--%>
+        <%--        <div class="salary-check-info position-relative">--%>
+        <%--            <table>--%>
+        <%--                <tbody>--%>
+        <%--                <tr>--%>
+        <%--                    <td>이름</td>--%>
+        <%--                </tr>--%>
+        <%--                <tr>--%>
+        <%--                    <td>내용</td>--%>
+        <%--                </tr>--%>
+        <%--                <tr>--%>
+        <%--                    <td>내용</td>--%>
+        <%--                </tr>--%>
+        <%--                <tr>--%>
+        <%--                    <td>내용</td>--%>
+        <%--                </tr>--%>
+        <%--                <tr>--%>
+        <%--                    <td>내용</td>--%>
+        <%--                </tr>--%>
+        <%--                </tbody>--%>
+        <%--            </table>--%>
+        <%--        </div>--%>
+        <div class="employee-card col-12">
+            <div class="profile-container">
+                <div class="salary-check-profile">
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${not empty hrmDto.renameProfile}">
+                                <img src="${request.contextPath}/upload/${hrmDto.renameProfile}" class="myPageProfile">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="../images/profile01.jpg">
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </div>
+
+
+
+                <div class="salary-profile-details">
+                    <h2 class="">이름 : ${LoginHrmDto.ename} </h2>
+                    <hr>
+                            <h4>부서 : ${LoginHrmDto.deptName}</h4>
+                            <h4>직책 : ${LoginHrmDto.posName}</h4>
+                            <h4>직급 : ${LoginHrmDto.roleName}</h4>
+                            <h4>입사일 : ${LoginHrmDto.hireDate}</h4>
+                            <h4>근속연수 :
+                            <c:if test="${diffYear != 0}">
+                                ${diffYear}년
+                            </c:if>
+                            <c:if test="${diffMonth != 0}">
+                                ${diffMonth}월
+                            </c:if>
+                            <c:if test="${diffDay != 0}">
+                                ${diffDay}일
+                            </c:if> </h4>
+<%--                            <h4>근속연수 :${diffYear}년 ${diffMonth}월 ${diffDay}일</h4>--%>
+                            <h4>${year}년 ${month}월 근무율 : </h4>
+                            <h4>${year}년 ${month}월 예상급여 : </h4>
+                </div>
+
+            </div>
         </div>
     </div>
     <div class="salary-check-search-area col-12">
@@ -99,6 +140,14 @@
     </div>
 </div>
 <script>
+
+    const myData = "<%= request.getAttribute("weekDates") %>";
+    console.log(myData); // 콘솔에 데이터 출력
+    const myData02 = "<%= request.getAttribute("LoginHrmDto") %>";
+    console.log(myData02); // 콘솔에 데이터 출력
+
+
+
     $(document).ready(function () {
         $("#salary-check-search-btn").on("click", function () {
             var year = $("#salary-check-search-year").val();
