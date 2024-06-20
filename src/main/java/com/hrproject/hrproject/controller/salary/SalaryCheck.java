@@ -1,8 +1,11 @@
 package com.hrproject.hrproject.controller.salary;
 
 import com.google.gson.Gson;
+import com.hrproject.hrproject.dao.HrmDao;
+import com.hrproject.hrproject.dao.NoticeDao;
 import com.hrproject.hrproject.dao.WorkScheduleDao;
 import com.hrproject.hrproject.dto.HrmDto;
+import com.hrproject.hrproject.dto.NoticeDto;
 import com.hrproject.hrproject.dto.WorkScheduleDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,6 +19,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @WebServlet("/salary/check")
@@ -36,6 +41,20 @@ public class SalaryCheck extends HttpServlet {
         HrmDto sessionDto = (HrmDto)session.getAttribute("sessionDto");
         int empNo = sessionDto.getEmpNo();
 
+
+        //로그인한 사원 정보
+        HrmDao hrmDao = new HrmDao();
+        HrmDto LoginHrmDto = hrmDao.getHrmByLoginEmpno(empNo);
+
+        System.out.println(LoginHrmDto);
+        req.setAttribute("LoginHrmDto", LoginHrmDto);
+
+
+
+
+
+
+
         System.out.println("get empNo==="+empNo);
 
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
@@ -44,6 +63,7 @@ public class SalaryCheck extends HttpServlet {
                 .workMonth(workMonth)
                 .build();
         List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.getEmpWorkList(workScheduleDto); // 일한날 리스트
+        System.out.println("workScheduleDtoList=="+workScheduleDtoList);
         Map<Integer,Integer>workDayList = new HashMap<>(); //일한날짜 리스트
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, 1); // 1월 = 0
@@ -64,7 +84,6 @@ public class SalaryCheck extends HttpServlet {
                 workDayList.put(i,0);
             }
         }
-
 // ServletRequest에 계산된 주간 근무시간을 저장하여 JSP로 전달합니다
         req.setAttribute("weekWorkTimes", weekWorkTimes);
 
@@ -92,7 +111,6 @@ public class SalaryCheck extends HttpServlet {
             if (dayCounter > dayLast) break; // 모든 날짜를 다 채웠으면 중단
         }
         int numberOfWeeks = weekDates.size();
-
         // 주간 근무시간을 계산할 리스트 초기화
         for (int i = 0; i < weekDates.size(); i++) {
             List<Integer> week = weekDates.get(i);
@@ -110,6 +128,33 @@ public class SalaryCheck extends HttpServlet {
             // 계산된 주간 근무시간을 리스트에 추가
             weekWorkTimes.add(weeklyWorkTime);
         }
+
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate hireDate = LocalDate.parse(LoginHrmDto.getHireDate(), formatter);
+
+        // 두 날짜 사이의 기간을 일(day) 단위로 계산
+        long daysBetween = ChronoUnit.DAYS.between(hireDate, currentDate) +1 ;
+        if (daysBetween < 0) {
+            daysBetween = 0;
+        }
+
+        long diffYear = daysBetween/365;
+        if (diffYear != 0) {
+            daysBetween %= diffYear*365;
+        }
+
+        long diffMonth = daysBetween/30;
+        if (diffMonth != 0 ) {
+            daysBetween %= diffMonth*30;
+        }
+
+        req.setAttribute("diffYear",diffYear);
+        req.setAttribute("diffMonth",diffMonth);
+        req.setAttribute("diffDay",daysBetween);
+
+
         req.setAttribute("year",year);
         req.setAttribute("month",month);
         req.setAttribute("weekDates", weekDates);

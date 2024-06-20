@@ -4,6 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hrproject.hrproject.dao.HrmDao">
 
+    <select id="getHrmByLoginEmpno" parameterType="int" resultType="HrmDto">
+        SELECT * FROM hrm
+        WHERE empno = #{empNo}
+    </select>
+
     <sql id="search">
         <choose>
             <when test="search == 'empno'">
@@ -158,6 +163,11 @@
     <select id="getSearchEmpNoByName" resultType="HrmDto" parameterType="String">
         SELECT * FROM HRM WHERE ENAME = #{searchName}
     </select>
+    <!-- 사용된 연차 일수 조회 쿼리 입니다-->
+    <select id="getUsedAnnualLeaveDays" resultType="int" parameterType="int">
+        SELECT * FROM HRM WHERE empNo = #{empNo}
+
+    </select>
 
     <select id="getTotalWorkDays" resultType="Integer">
         SELECT COUNT(*) AS total FROM hrm h
@@ -179,5 +189,4 @@
         ) VALUES (#{empNo}, 1, #{performanceScore}, 1, 1
         )
     </insert>
-
 </mapper>

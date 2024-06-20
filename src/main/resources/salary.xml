@@ -43,7 +43,6 @@
     <select id="getSearchSalaryList" resultType="SalarySearchDto" parameterType="SalarySearchDto">
         SELECT
         S.SALARY_NO,
-        S.EMPNO,
         H.ENAME AS ename,
         S.ACCOUNTINGPERIOD,
         S.SALARYCATEGORY,
