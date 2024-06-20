@@ -5,7 +5,14 @@
     <h1 class="text-center">사원 카드</h1>
     <div class="profile-container">
         <li class="nav-item">
-            <img src="../../images/profile01.jpg">
+            <c:choose>
+                <c:when test="${not empty hrmDto.renameProfile}">
+                    <img src="${request.contextPath}/upload/${hrmDto.renameProfile}" class="myPageProfile">
+                </c:when>
+                <c:otherwise>
+                    <img src="../images/profile01.jpg">
+                </c:otherwise>
+            </c:choose>
         </li>
         <div class="profile-details">
             <div class="row mb-sm-1 reduce-gap">
@@ -56,7 +63,7 @@
                 </div>
                 <label for="position" class="col-sm col-form-label">직급</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="position" value="${hrmDto.position}"
+                    <input type="text" class="form-control" id="position" value="${hrmDto.posName}"
                            readonly>
                 </div>
             </div>
@@ -68,7 +75,7 @@
                 </div>
                 <label for="role" class="col-sm col-form-label">직책</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="role" value="${hrmDto.role}" readonly>
+                    <input type="text" class="form-control" id="role" value="${hrmDto.roleName}" readonly>
                 </div>
             </div>
             <div class="form-row">
@@ -79,7 +86,10 @@
                 </div>
             </div>
             <div class="text-end mt-3">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">내정보변경</button>
+                <jsp:include page="mypage-passwordChange-modal.jsp" />
+                <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#passwordChange">비밀번호변경
+                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">인쇄</button>
             </div>
         </div>

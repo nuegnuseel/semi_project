@@ -13,11 +13,11 @@ import java.io.IOException;
 
 @WebServlet("/hrm/view")
 public class HrmView extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int empNo = 0;
         if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
-        System.out.println("hrmview doGET");
 
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
@@ -45,15 +45,4 @@ public class HrmView extends HttpServlet {
         resp.getWriter().write(json);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int empNo = 0;
-        if (req.getParameter("empNo") != null) empNo = Integer.parseInt(req.getParameter("empNo"));
-        System.out.println("hrmview processRequest");
-
-        HrmDao hrmDao = new HrmDao();
-        HrmDto hrmDto = hrmDao.getHrm(empNo);
-
-        req.setAttribute("hrmViewDto", hrmDto);
-        req.getRequestDispatcher("/WEB-INF/hrm/include/view-modal.jsp").forward(req, resp);
-    }
 }

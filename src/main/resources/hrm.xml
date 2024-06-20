@@ -26,6 +26,22 @@
             </otherwise>
         </choose>
     </sql>
+    <sql id="duplicate">
+        <choose>
+            <when test="check == 'email'">
+                email = #{checkValue}
+            </when>
+            <when test="check == 'mobile'">
+                mobile = #{checkValue}
+            </when>
+            <when test="check == 'passport'">
+                passport = #{checkValue}
+            </when>
+            <when test="check == 'account'">
+                account = #{checkValue}
+            </when>
+        </choose>
+    </sql>
 
     <select id="getHrmTotal" resultType="int">
         SELECT COUNT(*) AS TOTAL FROM HRM WHERE showAble = 1
@@ -36,6 +52,13 @@
         <if test="search != null and searchWord != null">
             and
             <include refid="search"></include>
+        </if>
+    </select>
+
+    <select id="duplicateCheck" resultType="int" parameterType="HashMap">
+        select count(*) as total from HRM WHERE
+        <if test="check != null and checkValue != null">
+            <include refid="duplicate"></include>
         </if>
     </select>
 
@@ -54,7 +77,6 @@
         LIMIT #{start}, #{end}
     </select>
 
-
     <!--    출퇴근 기록에 필요해서 만들었습니다.!! -->
     <select id="getEmpNoList" resultType="HrmDto" >
         select empNo from hrm
@@ -72,70 +94,94 @@
 
     <insert id="insertHrm" parameterType="HrmDto">
         INSERT INTO HRM (
-        EMPNO, ENAME, FOREIGN_NAME, DEPTNO, DEPTNAME, POSITION, MOBILE, PASSPORT, EMAIL, HIREDATE, HIRETYPE, RESIGNDATE,
-        OUTREASONS, BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, ORIGINAL_PROFILE,
-        RENAME_PROFILE,
-        ETC_FILE, REMARKS, POSITION_NO, ROLE, SHOWABLE
+        EMPNO, ENAME, FOREIGN_NAME, BIRTHDATE, PASSWORD, DEPTNO, DEPTNAME, POSNO, POSNAME, ROLENAME, MOBILE, PASSPORT, EMAIL,
+        BANK_NAME, ACCOUNT, ACCOUNT_HOLDER, POSTCODE, ADDRESS, ADDRESS_DETAIL, HIREDATE, HIRETYPE, RESIGNDATE,
+        OUTREASONS, ORIGINAL_PROFILE, RENAME_PROFILE, REMARKS, GRADE, SHOWABLE
         ) VALUES (
-        #{empNo}, #{ename}, #{foreignName}, #{deptNo}, #{deptName}, #{position}, #{mobile}, #{passport}, #{email},
-        #{hireDate}, #{hireType}, #{resignDate}, #{outReasons}, #{bankName}, #{account}, #{accountHolder}, #{postCode},
-        #{address}, #{addressDetail}, #{originalProfile}, #{renameProfile}, #{etcFile}, #{remarks}, #{positionNo},
-        #{role}, 1
+        #{empNo}, #{ename}, #{foreignName}, #{birthDate}, #{password}, #{deptNo}, #{deptName}, #{posNo}, #{posName},
+        #{roleName}, #{mobile}, #{passport}, #{email}, #{bankName}, #{account}, #{accountHolder}, #{postCode},
+        #{address}, #{addressDetail}, #{hireDate}, #{hireType}, #{resignDate}, #{outReasons}, #{originalProfile},
+        #{renameProfile}, #{remarks}, #{grade}, true
         )
     </insert>
+
 
     <update id="updateHrm" parameterType="HrmDto">
         UPDATE HRM
         SET
         ENAME = #{ename},
         FOREIGN_NAME = #{foreignName},
+        BIRTHDATE = #{birthDate},
+        PASSWORD = #{password},
         DEPTNO = #{deptNo},
         DEPTNAME = #{deptName},
-        POSITION = #{position},
+        POSNO = #{posNo},
+        POSNAME = #{posName},
+        ROLENAME = #{roleName},
         MOBILE = #{mobile},
         PASSPORT = #{passport},
         EMAIL = #{email},
-        HIREDATE = #{hireDate},
-        HIRETYPE = #{hireType},
-        RESIGNDATE = #{resignDate},
-        OUTREASONS = #{outReasons},
         BANK_NAME = #{bankName},
         ACCOUNT = #{account},
         ACCOUNT_HOLDER = #{accountHolder},
         POSTCODE = #{postCode},
         ADDRESS = #{address},
         ADDRESS_DETAIL = #{addressDetail},
-        ORIGINAL_Profile = #{originalProfile},
-        RENAME_Profile = #{renameProfile},
-        ETC_FILE = #{etcFile},
-        REMARKS = #{remarks},
-        POSITION_NO = #{positionNo},
-        ROLE = #{role}
+        HIREDATE = #{hireDate},
+        HIRETYPE = #{hireType},
+        RESIGNDATE = #{resignDate},
+        OUTREASONS = #{outReasons},
+        ORIGINAL_PROFILE = #{originalProfile},
+        RENAME_PROFILE = #{renameProfile},
+        REMARKS = #{remarks}
         WHERE EMPNO = #{empNo}
     </update>
 
-<!--    <update id="setShowAbleHrm">-->
-<!--        &lt;!&ndash; 한번에 여러개 삭제할때 씀 &ndash;&gt;-->
-<!--        UPDATE HRM SET SHOWABLE = 0 WHERE EMPNO IN-->
-<!--        <foreach collection="array" item="item" open="(" close=")" separator=",">-->
-<!--            #{item}-->
-<!--        </foreach>-->
-<!--    </update>-->
+
+    <!--    <update id="setShowAbleHrm">-->
+    <!--        &lt;!&ndash; 한번에 여러개 삭제할때 씀 &ndash;&gt;-->
+    <!--        UPDATE HRM SET SHOWABLE = 0 WHERE EMPNO IN-->
+    <!--        <foreach collection="array" item="item" open="(" close=")" separator=",">-->
+    <!--            #{item}-->
+    <!--        </foreach>-->
+    <!--    </update>-->
+
+    <update id="changeHrmPw" parameterType="HrmDto">
+        UPDATE HRM SET PASSWORD = #{password}
+        WHERE EMPNO = #{empNo}
+    </update>
 
     <update id="setShowAbleHrm" parameterType="HrmDto">
-        <!-- 한번에 여러개 삭제할때 씀 -->
         UPDATE HRM SET SHOWABLE = 0, RESIGNDATE = #{resignDate}, OUTREASONS = #{outReasons} WHERE EMPNO = #{empNo}
     </update>
 
     <select id="getSearchEmpNoByName" resultType="HrmDto" parameterType="String">
         SELECT * FROM HRM WHERE ENAME = #{searchName}
     </select>
-
     <!-- 사용된 연차 일수 조회 쿼리 입니다-->
     <select id="getUsedAnnualLeaveDays" resultType="int" parameterType="int">
         SELECT * FROM HRM WHERE empNo = #{empNo}
 
     </select>
 
+    <select id="getTotalWorkDays" resultType="Integer">
+        SELECT COUNT(*) AS total FROM hrm h
+        JOIN work_schedule w ON h.empno = w.empno
+        WHERE w.status = '퇴근' and h.empno = #{value} and showable = 1
+    </select>
+    <select id="getDaysSinceHire" resultType="Integer">
+        SELECT DATEDIFF(CURDATE(), h.hiredate) AS days_since_hire FROM
+        hrm h join work_schedule ws on h.empno = ws.empno where h.empno = #{value}
+    </select>
 
+    <select id="getHrmEval" resultType="EvaluationDto">
+        select * from Evaluations where empno = #{value} ORDER BY evaluation_NO DESC
+        LIMIT 1
+    </select>
+
+    <insert id="createHrmEval" parameterType="EvaluationDto">
+        INSERT INTO Evaluations ( empno, evaluation_YEAR, performance_score, performance_grade, comments
+        ) VALUES (#{empNo}, 1, #{performanceScore}, 1, 1
+        )
+    </insert>
 </mapper>

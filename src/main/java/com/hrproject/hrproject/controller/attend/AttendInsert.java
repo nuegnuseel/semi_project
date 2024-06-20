@@ -69,11 +69,8 @@ public class AttendInsert extends HttpServlet {
         int result = attendDao.insertAttendDao(attendDto);
 
         if (result > 0) {
-
-            System.out.println("insert-attend data input successfully");
-            resp.sendRedirect("/attend/board?insertSuccess=true");
-            return; // 리다이렉트 이후 메서드 종료
-
+            System.out.println("attend data input successfully");
+            resp.sendRedirect("/attend/board?insertAttend=true");
         } else {
             System.out.println("attend data input failed");
         }
