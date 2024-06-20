@@ -173,6 +173,7 @@ public class AttendDao {
         } catch (Exception e) {
             // 예외 발생 시 처리
             e.printStackTrace(); // 혹은 로깅
+
             return null; // 또는 예외를 상위로 다시 throw
         }
     }
@@ -192,4 +193,64 @@ public class AttendDao {
         return result;
 
     }
+
+    // 휴가정보 관련
+    public List<AttendDto> selectOffdaysByEmpNo(int empNo) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> offdaysList = sqlSession.selectList("com.hrproject.hrproject.mybatis.selectOffdaysByEmpNo", empNo);
+            System.out.println("selectOffdaysByEmpNo query is successful");
+            for (AttendDto dto : offdaysList) {
+                System.out.println(dto); // 각 DTO의 내용을 로깅
+            }
+            return offdaysList;
+        } catch (Exception e) {
+            e.printStackTrace(); // 혹은 로깅
+            return null;
+        }
+    }
+
+    public List<AttendDto> selectOffdaysByDepartment(String department) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> offdaysList = sqlSession.selectList("com.hrproject.hrproject.mybatis.selectOffdaysBySearch", Map.of("search", "department", "searchWord", department));
+            System.out.println("selectOffdaysByDepartment query is successful");
+            for (AttendDto dto : offdaysList) {
+                System.out.println(dto); // 각 DTO의 내용을 로깅
+            }
+            return offdaysList;
+        } catch (Exception e) {
+            e.printStackTrace(); // 혹은 로깅
+            return null;
+        }
+    }
+
+    public List<AttendDto> selectOffdaysByAtdCode(String atdCode) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> offdaysList = sqlSession.selectList("com.hrproject.hrproject.mybatis.selectOffdaysBySearch", Map.of("search", "atdCode", "searchWord", atdCode));
+            System.out.println("selectOffdaysByAtdCode query is successful");
+            for (AttendDto dto : offdaysList) {
+                System.out.println(dto); // 각 DTO의 내용을 로깅
+            }
+            return offdaysList;
+        } catch (Exception e) {
+            e.printStackTrace(); // 혹은 로깅
+            return null;
+        }
+    }
+
+    public List<AttendDto> selectOffdaysByEmpName(String empName) {
+        try (SqlSession sqlSession = MybatisConnectionFactory.getSqlSession()) {
+            List<AttendDto> offdaysList = sqlSession.selectList("com.hrproject.hrproject.mybatis.selectOffdaysByEmpName", empName);
+            System.out.println("selectOffdaysByEmpName query is successful");
+            for (AttendDto dto : offdaysList) {
+                System.out.println(dto); // 각 DTO의 내용을 로깅
+            }
+            return offdaysList;
+        } catch (Exception e) {
+            e.printStackTrace(); // 혹은 로깅
+            return null;
+        }
+    }
 }
+
+
+
