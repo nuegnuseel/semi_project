@@ -131,8 +131,6 @@
         SELECT * FROM HRM WHERE ENAME = #{searchName}
     </select>
 
-
-
     <!-- 사용된 연차 일수 조회 쿼리 입니다-->
     <select id="getUsedAnnualLeaveDays" resultType="int" parameterType="int">
         SELECT * FROM HRM WHERE empNo = #{empNo}

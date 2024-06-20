@@ -44,7 +44,7 @@ public class CalculateAnnualLeaveController extends HttpServlet {
         }
 
         // JSP 페이지로 포워딩
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/calculate-workdays.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/view-annual-leave.jsp");
         dispatcher.forward(req, resp);
     }
 }

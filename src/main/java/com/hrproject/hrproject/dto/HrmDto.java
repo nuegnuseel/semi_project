@@ -52,15 +52,6 @@ public class HrmDto {
     private int remainingAnnualLeaveDays; // 남은 연차 일수
 
 
-   /* public int getRemainingAnnualLeaveDays() {
-        return remainingAnnualLeaveDays;
-    }
-
-    public void setRemainingAnnualLeaveDays(int remainingAnnualLeaveDays) {
-        this.remainingAnnualLeaveDays = remainingAnnualLeaveDays;
-    }
-*/
-
 }
 
 
