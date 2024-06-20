@@ -12,6 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 public class HrmDao {
+
+    public HrmDto getHrmByLoginEmpno(int loginEmpno) {
+       HrmDto hrmList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        hrmList = sqlSession.selectOne("getHrmByLoginEmpno", loginEmpno);
+        sqlSession.close();
+        return hrmList;
+    }
+
+
     public int insertHrm(HrmDto hrmDto) {
         int result = 0;
 
