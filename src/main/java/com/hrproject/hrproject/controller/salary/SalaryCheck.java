@@ -44,6 +44,7 @@ public class SalaryCheck extends HttpServlet {
                 .workMonth(workMonth)
                 .build();
         List<WorkScheduleDto> workScheduleDtoList = workScheduleDao.getEmpWorkList(workScheduleDto); // 일한날 리스트
+        System.out.println("workScheduleDtoList=="+workScheduleDtoList);
         Map<Integer,Integer>workDayList = new HashMap<>(); //일한날짜 리스트
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, 1); // 1월 = 0
@@ -64,7 +65,6 @@ public class SalaryCheck extends HttpServlet {
                 workDayList.put(i,0);
             }
         }
-
 // ServletRequest에 계산된 주간 근무시간을 저장하여 JSP로 전달합니다
         req.setAttribute("weekWorkTimes", weekWorkTimes);
 
@@ -92,7 +92,6 @@ public class SalaryCheck extends HttpServlet {
             if (dayCounter > dayLast) break; // 모든 날짜를 다 채웠으면 중단
         }
         int numberOfWeeks = weekDates.size();
-
         // 주간 근무시간을 계산할 리스트 초기화
         for (int i = 0; i < weekDates.size(); i++) {
             List<Integer> week = weekDates.get(i);

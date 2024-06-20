@@ -30,7 +30,7 @@
             <div class="row mt-3">
                 <div class="col-md-6">
                     <h5>입사일로부터 근무한 일수 계산 결과</h5>
-                    <p>${hrmDto.ename}님은 입사일${hrmDto.hireDate}로부터 ${hrmDto.workDays}일 동안 근무하셨습니다.</p>
+                    <p>${hrmDto.ename}님은 입사일${hrmDto.hireDate}로부터 ${periodString} 동안 근무하셨습니다.</p>
                 </div>
             </div>
         </c:if>
@@ -40,14 +40,16 @@
             <div class="row mt-3">
                 <div class="col-md-6">
                     <h5>사용한 휴가 리스트</h5>
-                    <ul>
+                   <%-- <ul>
                         <c:forEach var="leave" items="${hrmDto.usedLeaves}">
                             <li>${leave.atdCode}: ${leave.offDay}</li>
                         </c:forEach>
-                    </ul>
-                    <p>올해 ${hrmDto.ename}님의 연차 개수는 ${hrmDto.remainingAnnualLeaveDays}개 입니다.</p>
-                    <p>사용한 휴가의 개수: ${hrmDto.usedLeaves.size()}개</p>
-                    <p>사용한 연차의 개수: ${hrmDto.usedAnnualLeaveDays}개</p>
+                    </ul>--%>
+                    <p>올해 ${hrmDto.ename}님의 연차 개수는 ${annualLeave+usedAnnualCount}개 입니다.</p>
+
+                    <p>사용한 연차의 개수: ${usedAnnualCount}개</p>
+                    <p> ${hrmDto.ename}님의 남은 연차의 개수는 ${annualLeave}개 입니다.</p>
+
 
                 </div>
             </div>

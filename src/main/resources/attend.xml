@@ -124,6 +124,7 @@
     <select id="getAttendListByEmpNo" resultType="AttendDto">
         select * from attend where empNo = #{empNo}
     </select>
+
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
     </select>

@@ -173,6 +173,7 @@ public class AttendDao {
         } catch (Exception e) {
             // 예외 발생 시 처리
             e.printStackTrace(); // 혹은 로깅
+
             return null; // 또는 예외를 상위로 다시 throw
         }
     }

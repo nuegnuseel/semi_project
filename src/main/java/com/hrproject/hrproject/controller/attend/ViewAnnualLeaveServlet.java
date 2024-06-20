@@ -1,5 +1,6 @@
 package com.hrproject.hrproject.controller.attend;
 
+import com.hrproject.hrproject.dao.AttendDao;
 import com.hrproject.hrproject.dao.HrmDao;
 import com.hrproject.hrproject.dto.AttendDto;
 import com.hrproject.hrproject.dto.HrmDto;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -30,53 +32,91 @@ public class ViewAnnualLeaveServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String empNo = req.getParameter("empNo");
-        String hireDateStr = req.getParameter("hireDate");
+        int empNo = Integer.parseInt(req.getParameter("empNo"));
 
-        LocalDate hireDate = null;
+        HrmDto hrmDto= null;
+        HrmDao hrmDao = new HrmDao();
+        hrmDto=hrmDao.getHrm(empNo);
+
+        AttendDto attendDto = null;
+        AttendDao attendDao = new AttendDao();
+        List<AttendDto> attendList = attendDao.getAttendListByEmpNo(empNo);
+
+        /*for(int i=0; i<attendList.size(); i++){
+            attendList.get(i).
+        }*/
+
+        String hireDateStr = hrmDto.getHireDate();
         LocalDate today = LocalDate.now();
-        long workDays = 0;
+        LocalDate hireDate = LocalDate.parse(hireDateStr);
+        String todayStr = today.toString();
 
-        if (empNo != null && !empNo.isEmpty()) {
-            try {
-                HrmDao hrmDao = new HrmDao();
-                HrmDto hrmDto = hrmDao.getHrm(Integer.parseInt(empNo));
 
-                if (hrmDto != null && hrmDto.getHireDate() != null) {
-                    hireDate = LocalDate.parse(hrmDto.getHireDate(), DateTimeFormatter.ISO_DATE);
-                    workDays = ChronoUnit.DAYS.between(hireDate, today);
 
-                    AnnualLeaveCalculator calculator = new AnnualLeaveCalculator();
-                    int totalAnnualLeaveDays = calculator.calculateAnnualLeave(hireDate);
-                    int usedAnnualLeaveDays = hrmDao.getUsedAnnualLeaveDays(Integer.parseInt(empNo));
-                    int remainingAnnualLeaveDays = totalAnnualLeaveDays - usedAnnualLeaveDays;
+        Period period = Period.between(hireDate, today);
+        long daysBetween = ChronoUnit.DAYS.between(hireDate, today);
+        /*long daysBetween = ChronoUnit.DAYS.between(, today);*/
+        String periodString = period.getYears() + "년 " + period.getMonths() + "개월 " + period.getDays() + "일";
+        System.out.println("daysBetween=="+daysBetween);
+        System.out.println("period=="+period);
+        System.out.println("periodString=="+periodString);
+        System.out.println("hrmDto.getHireDate()=="+hrmDto.getHireDate());
 
-                    hrmDto.setRemainingAnnualLeaveDays(remainingAnnualLeaveDays);
-                    req.setAttribute("hrmDto", hrmDto);
-                    req.setAttribute("workDays", workDays); // 근무 일수
-                } else {
-                    req.setAttribute("errorMessage", "직원 정보를 찾을 수 없습니다.");
-                }
-            } catch (NumberFormatException e) {
-                req.setAttribute("errorMessage", "유효한 사원 번호를 입력하세요.");
-            } catch (DateTimeParseException e) {
-                req.setAttribute("errorMessage", "입사일 형식이 올바르지 않습니다. (예: yyyy-MM-dd)");
-            }
-        } else if (hireDateStr != null && !hireDateStr.isEmpty()) {
-            try {
-                hireDate = LocalDate.parse(hireDateStr, DateTimeFormatter.ISO_DATE);
-                workDays = ChronoUnit.DAYS.between(hireDate, today);
-
-                req.setAttribute("hireDate", hireDateStr); // 선택한 입사일
-                req.setAttribute("workDays", workDays); // 근무 일수
-            } catch (DateTimeParseException e) {
-                req.setAttribute("errorMessage", "올바른 날짜 형식을 입력하세요. (예: yyyy-MM-dd)");
-            }
+        int annualLeave = 0;
+        int usedAnnualCount=0;
+        // 근무 기간에 따라 연차 계산
+        if (daysBetween < 365) {
+            // 1년 미만 근무 시
+            annualLeave = calculateLessThanOneYear(daysBetween);
         } else {
-            req.setAttribute("errorMessage", "사원 번호 또는 입사일을 입력하세요.");
+            // 1년 이상 근무 시
+            annualLeave = calculateAnnualLeave(daysBetween);
         }
+
+        // 연차는 최대 23일로 제한
+        annualLeave = Math.min(annualLeave, 23);
+
+        if(attendList!=null){
+            for(int i=0; i<attendList.size(); i++){
+                LocalDate startDate = LocalDate.parse(attendList.get(i).getStartAtdDate());
+                LocalDate endDate = LocalDate.parse(attendList.get(i).getEndAtdDate());
+                long usedAnnual = ChronoUnit.DAYS.between(startDate, endDate)+1;
+                annualLeave-=usedAnnual;
+                usedAnnualCount+=usedAnnual;
+            }
+        }
+
+        req.setAttribute("hrmDto", hrmDto);
+        req.setAttribute("daysBetween", daysBetween);
+        req.setAttribute("annualLeave", annualLeave);
+        req.setAttribute("periodString",periodString);
+        req.setAttribute("usedAnnualCount",usedAnnualCount);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/view-annual-leave.jsp");
         dispatcher.forward(req, resp);
+    }
+
+    // 1년 미만 근무 시 연차 계산
+    private int calculateLessThanOneYear(long daysWorked) {
+        // 월별 연차 1일씩 계산 (조직의 정책에 따라 조정 필요)
+        return (int) (daysWorked / 30);
+    }
+
+    // 1년 이상 근무 시 연차 계산
+    private int calculateAnnualLeave(long daysWorked) {
+        int yearsWorked = (int) (daysWorked / 365);
+
+        int baseAnnualLeave = 15; // 첫해 기본 연차
+        int additionalLeave = 0; // 추가되는 연차 수
+
+        // 매 2년마다 추가 연차 1일씩 증가, 최대 추가 연차는 8일
+        for (int i = 2; i <= yearsWorked; i += 2) {
+            additionalLeave++;
+        }
+
+        int totalAnnualLeave = baseAnnualLeave + additionalLeave;
+
+        // 최대 연차는 23일로 제한
+        return Math.min(totalAnnualLeave, 23);
     }
 }
