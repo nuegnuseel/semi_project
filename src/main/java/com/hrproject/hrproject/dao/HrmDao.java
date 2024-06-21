@@ -220,19 +220,22 @@ public class HrmDao {
         return result;
     }
 
-//    public List<EvaluationDto> getEvaluationDtoList(HrmPageDto hrmPageDto) {
-//        List<EvaluationDto> evaluationDtoList = null;
-//
-//        HrmDao hrmDao = new HrmDao();
-//        List<HrmDto> hrmList = hrmDao.getHrmBoardList(hrmPageDto);
-//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-//
-//        Map<Integer, Integer> evaluationMap = new HashMap<>();
-//        for (int i = 0; i < hrmList.size(); i++) {
-//            evaluationMap.put(i, hrmList.get(i).getEmpNo());
-//        }
-//        evaluationDtoList = sqlSession.selectList("getEvaluationDtoList", evaluationMap);
-//        sqlSession.close();
-//        return evaluationDtoList;
-//    }
+    //// HrmEval 관련 getHrm 보드
+    public List<HrmDto> getHrmEvalBoardList(HrmPageDto hrmPageDto) {
+        List<HrmDto> hrmList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        hrmList = sqlSession.selectList("getEvalHrmList", hrmPageDto);
+        sqlSession.close();
+        return hrmList;
+    }
+
+    public List<HrmDto> getHrmEvalSearchBoardList(HrmPageDto hrmPageDto) {
+        List<HrmDto> hrmList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        hrmList = sqlSession.selectList("getEvalSearchHrmList", hrmPageDto);
+        sqlSession.close();
+        return hrmList;
+    }
+    ////////
+
 }
