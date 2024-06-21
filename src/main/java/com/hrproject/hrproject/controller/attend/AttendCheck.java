@@ -145,7 +145,8 @@ public class AttendCheck extends HttpServlet {
 
         int year = Integer.parseInt(req.getParameter("year"));
         int month = Integer.parseInt(req.getParameter("month"));
-
+        System.out.println("year=="+year);
+        System.out.println("month=="+month);
         Calendar cal = Calendar.getInstance();
         cal.set(year, month-1, 1);
         int dayLast = cal.getActualMaximum(Calendar.DAY_OF_MONTH);

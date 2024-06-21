@@ -392,8 +392,8 @@
                             calendarBody.append(weekRow);
                         });
                     },
-                    error: function () {
-                        alert("서브밋 에러");
+                    error: function (xhr) {
+                        alert("XHR: " + JSON.stringify(xhr));
                     },
                 });
             });
