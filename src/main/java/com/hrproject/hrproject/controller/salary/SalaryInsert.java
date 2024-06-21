@@ -17,17 +17,11 @@ import java.util.List;
 public class SalaryInsert extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HrmDao hrmDao = new HrmDao();
-        List<HrmDto> hrmList = null;
-
         req.getRequestDispatcher("/WEB-INF/salary/insert-salary.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         // 클라이언트에서 받은 값을 통해 Dto 준비
         SalaryDto salaryDto = SalaryDto.builder()
                 .empNo(Integer.parseInt(req.getParameter("empNo")))
@@ -55,6 +49,5 @@ public class SalaryInsert extends HttpServlet {
         } else {
             System.out.println("salary data input failed");
         }
-
     }
 }

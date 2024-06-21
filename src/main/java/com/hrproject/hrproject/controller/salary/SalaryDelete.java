@@ -49,10 +49,7 @@ public class SalaryDelete extends HttpServlet {
        }else {
            System.out.println("salaryDB delete failed");
        }
-
         resp.sendRedirect("/salary/board");
-
-
     }
 
     @Override

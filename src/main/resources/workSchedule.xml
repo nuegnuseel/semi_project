@@ -5,36 +5,6 @@
 <mapper namespace="com.hrproject.hrproject.mybatis">
 
 
-    <!--    <insert id="getWorkScheduleByWorkIdx" parameterType="workScheduleLogDto">-->
-    <!--        INSERT INTO WORK_SCHEDULE_LOG (-->
-    <!--        WORKIDX,-->
-    <!--        ATDNO,-->
-    <!--        ATDCODE,-->
-    <!--        EMPNO,-->
-    <!--        WORKDATE,-->
-    <!--        STARTTIME,-->
-    <!--        ENDTIME,-->
-    <!--        STATUS,-->
-    <!--        modifyReason,-->
-    <!--        WHOMODIFY,-->
-    <!--        LOGDATE,-->
-    <!--        LOGSTATUS-->
-    <!--        ) VALUES (-->
-    <!--        #{workIdx},-->
-    <!--        #{atdNo},-->
-    <!--        #{vacationCode},-->
-    <!--        #{empNo},-->
-    <!--        #{workDate},-->
-    <!--        #{startTime},-->
-    <!--        #{endTime},-->
-    <!--        #{status},-->
-    <!--        #{modifyReason},-->
-    <!--        #{whoModify},-->
-    <!--        CURRENT_TIMESTAMP,-->
-    <!--        #{logStatus}-->
-    <!--        )-->
-    <!--    </insert>-->
-
 
 
 
@@ -220,10 +190,6 @@
     </update>
 
     <update id="modifyWorkTime" parameterType="Map">
-<!--        UPDATE work_schedule-->
-<!--        SET STARTTIME = #{startTime}, ENDTIME = #{endTime}-->
-<!--        WHERE WORKIDX = #{workIdx}-->
-
 
         UPDATE work_schedule
         SET

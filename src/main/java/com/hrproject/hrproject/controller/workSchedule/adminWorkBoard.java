@@ -16,16 +16,7 @@ import java.util.List;
 public class adminWorkBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        List<WorkScheduleAdminDto> adminWrokList;
-//        WorkScheduleDao workScheduleDao = new WorkScheduleDao();
-//
-//        //워크 스케쥴러_DB의 모든 값을 받아와서 List에 담는다.
-//        adminWrokList = workScheduleDao.selectAllByAdmin();
-//        req.setAttribute("adminWorkList", adminWrokList);
-//
-//        req.getRequestDispatcher("/WEB-INF/workSchedule/board-adminWork.jsp").forward(req, resp);
-//    }
+
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
         int page = 1;
         int recordsPerPage = 20;

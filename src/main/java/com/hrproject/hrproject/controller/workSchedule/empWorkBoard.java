@@ -28,7 +28,6 @@ public class empWorkBoard extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         // 로그인을 통해서 현재 접속자 empNo를 받는다.
         HttpSession session = req.getSession();
         HrmDto loginDto = (HrmDto) session.getAttribute("loginDto");
@@ -62,7 +61,6 @@ public class empWorkBoard extends HttpServlet {
         LocalDate currentDate = LocalDate.now();
         // 현재 시각 설정 (현재 시각을 사용하려면 LocalTime.now() 사용)
         LocalTime currentTime = LocalTime.now();
-
         // 세션으로 로그인된 사람의 empNo를 받아옴
         HttpSession session = req.getSession();
         HrmDto loginDto = (HrmDto) session.getAttribute("loginDto");
@@ -80,7 +78,7 @@ public class empWorkBoard extends HttpServlet {
         String atdNo = null;
         double duration = 0;
 
-        // 어디론가 옮겨야한다.
+        // 여기에서 init 하는게 아니라 어디론가 옮겨야한다.
         // 오늘자 워크스케쥴러 init
         // 오늘날짜 DB 있는지 체크
         if (workScheduleDao.getTodaySchedule(Date).isEmpty()) {

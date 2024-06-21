@@ -15,19 +15,13 @@ import java.util.Map;
 
 @WebServlet("/workSchedule/modify")
 public class WorkScheduleModify extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doPost(req, resp);
-
         WorkScheduleDao workScheduleDao = new WorkScheduleDao();
-
-
         //클라이언트에서 받은 수정하고 싶은 값들
         String startTime = req.getParameter("modifyStartTime");
         String endTime = req.getParameter("modifyEndTime");
@@ -47,11 +41,6 @@ public class WorkScheduleModify extends HttpServlet {
         }
         System.out.println("startTime >>> " + startTimeFormat);
         System.out.println("endTime >>> " + endTimeFormat);
-
-        //수정 전 내역 LOG 기록
-        // 세션에서 로그인 ID를 받아와야함 나중에 해야합니다~~
-        // FM대로 할거면 왜 수정했는지도 넣어야 할거 같은데 일단 패스합니다~
-
 
         // 클라이언트에서 받은 workIdx를 통해서 워크스케쥴_DB 조회를 통해 백업 준비를 합니다.
         WorkScheduleLogDto workScheduleLogDto01 = workScheduleDao.getWorkScheduleByWorkIdx(workIdx);

@@ -17,9 +17,8 @@ import java.util.List;
 public class SalarySearchBoard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         // 서치하기 위한 DTO를 만드는 과정
-        // 마이바티스에서 예외처리해도 괜찮지만 자바에서 해보고 싶어서 로직이 길어요~
+        // 마이바티스에서 예외처리해도 괜찮지만 자바에서 해보고 싶어서.. 로직이 길어요~
         SalarySearchDto.SalarySearchDtoBuilder builder =SalarySearchDto.builder();
         String empNoParam = req.getParameter("searchEmpNo");
         if (empNoParam != null && !empNoParam.isEmpty()) {
@@ -75,7 +74,6 @@ public class SalarySearchBoard extends HttpServlet {
         if (strSalaryMax != null && !strSalaryMax.isEmpty()) {
             builder.salaryMax(Integer.parseInt(strSalaryMax));
         }
-
 
 
         SalarySearchDto salarySearchDto = builder.build();
