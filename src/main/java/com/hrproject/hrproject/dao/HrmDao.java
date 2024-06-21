@@ -12,6 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 public class HrmDao {
+
+    public HrmDto getHrmByLoginEmpno(int loginEmpno) {
+       HrmDto hrmList = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+        hrmList = sqlSession.selectOne("getHrmByLoginEmpno", loginEmpno);
+        sqlSession.close();
+        return hrmList;
+    }
+
+
     public int insertHrm(HrmDto hrmDto) {
         int result = 0;
 
@@ -132,6 +142,18 @@ public class HrmDao {
         sqlSession.close();
         return empNoList;
     }
+
+//연차 계산용으로 만들었습니다
+public int getUsedAnnualLeaveDays(int empNo) {
+    int usedAnnualLeaveDays = 0;
+    SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+    try {
+        usedAnnualLeaveDays = sqlSession.selectOne("com.hrproject.hrproject.dao.HrmDao.getUsedAnnualLeaveDays", empNo);
+    } finally {
+        sqlSession.close();
+    }
+    return usedAnnualLeaveDays;
+}
 
     public int duplicateCheck(String check, String checkValue) {
         int result = 0;

@@ -125,8 +125,6 @@
         select * from attend where empNo = #{empNo}
     </select>
 
-
-
     <select id="getAttendList" resultType="AttendDto">
         select * from attend
     </select>
@@ -139,7 +137,7 @@
         UPDATE ATTEND
         SET
         ATDNUM = #{atdNum},
-        ATDDATE = #{atdDate},
+        ATDDATE = CONCAT(#{startAtdDate}, ' ~ ', #{endAtdDate}),  -- 근태기간 시작~끝
         OFFDAY = #{offDay},
         OFFDAYRS = #{offDayRs},
         ATDCODE = #{atdCode},
@@ -158,4 +156,47 @@
     <select id="countByEmpNo" resultType="int" parameterType="java.lang.String" >
         SELECT COUNT(*) FROM HRM WHERE EMPNO = #{empNo}
     </select>
+
+    <!-- 사원 번호로 입사 날짜 조회 -->
+    <select id="getHireDateByEmpNo" resultType="java.time.LocalDate" parameterType="String">
+        SELECT hireDate FROM HRM WHERE empNo = #{empNo}
+    </select>
+
+    <!-- 휴가 조회 하기 -->
+    <select id="selectOffdaysByEmpNo" resultType="com.hrproject.hrproject.dto.AttendDto">
+        SELECT
+        ATDNO,
+        EMPNO,
+        ENAME,
+        ATDCODE,
+        ATDNUM,
+        ATDDATE,
+        OFFDAY,
+        OFFDAYRS,
+        PRINT
+        FROM
+        ATTEND
+        WHERE
+        EMPNO = #{empNo}
+    </select>
+    <select id="selectOffdaysByEmpName" resultType="com.hrproject.hrproject.dto.AttendDto">
+        SELECT
+        ATDNO AS atdNo,
+        EMPNO AS empNo,
+        ENAME AS ename,
+        ATDCODE AS atdCode,
+        ATDNUM AS atdNum,
+        ATDDATE AS atdDate,
+        OFFDAY AS offDay,
+        OFFDAYRS AS offDayRs,
+        PRINT AS print
+        FROM
+        ATTEND
+        WHERE
+        ENAME = #{empName}
+    </select>
+
+
+
+
 </mapper>

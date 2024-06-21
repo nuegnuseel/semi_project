@@ -1,24 +1,20 @@
 .salary-insert-button{
     width:120px;
 }
+.salary-search-button{
+    width:120px;
+}
 .salary-search-area {
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
     padding-bottom: 16px;
 }
-.salary-search-button{
-    width:120px;
-}
 .salary-check-search-area{
     display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
     align-items: center;
     margin-top:40px;
 }
-.left-section {
-
-}
-
 .center-section {
     align-items: center;
     text-align: center; /* 내부 요소들을 가운데 정렬 */
@@ -112,4 +108,8 @@
 }
 .salary-check-search-btn{
     width:80px;
+}
+.salary-profile-details{
+    margin-left:100px;
+    width:100%;
 }

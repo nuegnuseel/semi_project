@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="../include/header.jsp" %>
 <c:choose>
-    <c:when test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}">
+    <c:when test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 30}">
         <%--   내용 영역  --%>
         <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
                 <%--  hrm 제목 영역  --%>

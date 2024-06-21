@@ -3,33 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
-    <div class="board-title">
-        <h2 class="title">근태 조회</h2>
-    </div>
-    <div class="attend-check-area d-flex col-12">
-        <div class="attend-check-profile position-relative">
-            <h2>프로필?</h2>
-        </div>
-        <div class="attend-check-info position-relative">
-            <table>
-                <tbody>
-                <tr>
-                    <td>이름</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="salary-check-area d-flex col-12">
+        <div class="employee-card col-12">
+            <div class="profile-container">
+                <div class="salary-check-profile">
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${not empty loginDto.renameProfile}">
+                                <img src="${request.contextPath}/upload/${loginDto.renameProfile}" class="myPageProfile">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="../images/profile01.jpg">
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </div>
+                <div class="salary-profile-details">
+                    <h2 class="">이름 : ${loginDto.ename} </h2>
+                    <hr>
+                    <h4>부서 : ${loginDto.deptName}</h4>
+                    <h4>직책 : ${loginDto.posName}</h4>
+                    <h4>직급 : ${loginDto.roleName}</h4>
+                    <h4>입사일 : ${loginDto.hireDate}</h4>
+                    <h4>근속연수 :
+                        <c:if test="${diffYear != 0}">
+                            ${diffYear}년
+                        </c:if>
+                        <c:if test="${diffMonth != 0}">
+                            ${diffMonth}월
+                        </c:if>
+                        <c:if test="${diffDay != 0}">
+                            ${diffDay}일
+                        </c:if> </h4>
+                    <h4>${year}년 ${month}월 발생연차 : ${annualLeave+usedAnnualCount}</h4>
+                    <h4>사용가능한 연차 : ${annualLeave}</h4>
+                    <h4>사용한 연차 : ${usedAnnualCount}</h4>
+                </div>
+            </div>
         </div>
     </div>
     <div class="attend-check-search-area col-12">

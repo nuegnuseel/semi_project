@@ -23,14 +23,7 @@ public class MyPage extends HttpServlet {
         HrmDao hrmDao = new HrmDao();
         HrmDto hrmDto = hrmDao.getHrm(empNo);
 
-
-//        HrmDao hrmGetEvaluationDao = new HrmDao();
-//        HrmDao hrmCreateEvaluationDao = new HrmDao();
-////        hrmCreateEvaluationDao.createHrmEval(empNo);
-////        EvaluationDto hrmEvalDto = hrmGetEvaluationDao.getHrmEval(empNo);
-
         req.setAttribute("hrmDto", hrmDto);
-//        req.setAttribute("hrmEvalDto", hrmEvalDto);
         req.getRequestDispatcher("/WEB-INF/hrm/mypage.jsp").forward(req, resp);
     }
 }
