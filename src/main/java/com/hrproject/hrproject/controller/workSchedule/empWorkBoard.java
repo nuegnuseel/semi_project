@@ -142,6 +142,7 @@ public class empWorkBoard extends HttpServlet {
                         allDates.add(tempDate.format(formatterDate));
                         tempDate = tempDate.plusDays(1);
                     }
+                    // 오늘날짜 확인
                     for (String dateStr : allDates) {
                         if (dateStr.equals(Date)) {
                             atdNo = attendDto.getAtdNo();
@@ -153,11 +154,6 @@ public class empWorkBoard extends HttpServlet {
                         }
 
                     }
-
-                    System.out.println("empNO >>>>" +empNoIdx);
-                    System.out.println("");
-                    System.out.println("attendDto >>>>>>>>>>>:"+attendDto);
-                    // 승인이면 휴가 업데이트
 
                     WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
                             .empNo(attendDto.getEmpNo())

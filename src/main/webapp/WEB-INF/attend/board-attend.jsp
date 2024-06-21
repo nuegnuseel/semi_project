@@ -248,7 +248,7 @@
 
     window.onload = function () {
         var urlParams = new URLSearchParams(window.location.search);
-
+        AttendInsertSuccess === insertAttend
         if (urlParams.get('insertAttend') === 'true') {
             alert('등록 되었습니다.');
         }

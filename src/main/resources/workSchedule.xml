@@ -53,7 +53,9 @@
         work_schedule
         WHERE
         empNo = #{empNo}
+        ORDER BY WORKDATE DESC
     </select>
+
     <select id="getWorkMonthList" resultType="WorkScheduleDto" parameterType="WorkScheduleDto">
         select * from work_schedule where empNo = #{empNo} and workDate LIKE CONCAT('%', #{workMonth}, '%')
     </select>
@@ -136,6 +138,7 @@
         <if test="workScheduleAdminDto.vacationCode != null and workScheduleAdminDto.vacationCode != ''">
             AND ws.ATDCODE = #{workScheduleAdminDto.vacationCode}
         </if>
+        ORDER BY WORKDATE DESC
         LIMIT #{offset}, #{limit}
     </select>
 
