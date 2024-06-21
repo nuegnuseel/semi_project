@@ -38,7 +38,6 @@ public class AttendBoard extends HttpServlet {
             req.setAttribute("url", url);
         }
 
-
         // JSP 페이지로 포워딩합니다.
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/attend/board-attend.jsp");
         dispatcher.forward(req, resp);

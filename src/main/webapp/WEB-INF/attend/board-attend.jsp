@@ -50,7 +50,7 @@
             <c:forEach items="${attendList}" var="attendDto" varStatus="loop">
                 <tr>
                     <td>${attendDto.empNo}</td>
-                    <td class="updateModal">${attendDto.atdNo}</td> <%--근태번호 수정키--%>
+                    <td><button type="button" class="updateModal btn btn-link" data-id="${attendDto.atdNo}">${attendDto.atdNo}</button></td>
                     <td>${attendDto.ename}</td>
                     <td>${attendDto.atdCode}</td>
                     <td>${attendDto.atdNum}</td>
@@ -327,17 +327,19 @@
             });
         }
     });
+    // 근태번호 클릭하여 수정 모달창 열기
+    $(document).ready(function () {
+        $(document).on("click", ".updateModal", function () {
+            const selectName = $(this).data("id");  // 클릭된 버튼의 data-id 속성에서 ID를 가져옵니다
+            console.log("클릭된 ID: " + selectName);  // 클릭된 ID를 콘솔에 출력합니다
 
 
-    //수정 모달 클릭 이벤트
-    $(document).ready(function (){
-        $(document).on("click", ".updateModal", function (){
-            const selectName=$(this).text();
             $.ajax({
                 url: "/attend/attendUpdateInfo",
                 method: "POST",
-                data: {ATDNO: selectName},
+                data: { ATDNO: selectName },  // 요청 데이터에 ID를 포함하여 전송합니다
                 success: function (response) {
+                    // 받은 응답 데이터로 모달 창 필드를 채웁니다
                     $("#editEmpNo").val(response.empNo);
                     $("#editAtdno").val(response.atdNo);
                     $("#editEname").val(response.ename);
@@ -347,15 +349,17 @@
                     $("#editOffDay").val(response.offDay);
                     $("#editOffDayRs").val(response.offDayRs);
                     $("#editPrint").val(response.print);
-                    // Show the modal
+
+                    // 모달 창을 표시합니다
                     $("#editModal").modal("show");
                 },
                 error: function () {
-
+                    // 오류 처리
+                    alert("데이터를 가져오는 도중 오류가 발생했습니다.");
                 }
-            })
-        })
-    })
+            });
+        });
+    });
 
     // 삭제 버튼 클릭 이벤트
     $(document).on("click", ".attend-delete-button", function () {
