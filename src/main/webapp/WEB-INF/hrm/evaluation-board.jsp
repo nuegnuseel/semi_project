@@ -53,6 +53,7 @@
                 <th scope="col">입사일</th>
                 <th scope="col">근속연수</th>
                 <th scope="col">등급(출석률)</th>
+                <th scope="col">승진대상</th>
                 <th scope="col">승인 / 반려</th>
             </tr>
             </thead>
@@ -66,10 +67,6 @@
                 </c:choose>
                 <tr>
                     <td>
-                            <%--                    <div class="form-check form-check-inline">--%>
-                            <%--                        <input class="chk form-check-input" type="checkbox" name="check" value="${hrmDto.empNo}">--%>
-                            <%--                        <label class="chk form-check-label">${((page -1) * listPerPage) + loop.count}</label>--%>
-                            <%--                    </div>--%>
                         <input type="checkbox" class="chk btn-check" id="btn-check-${loop.index}"
                                autocomplete="off"
                                value="${hrmDto.empNo}" name="check"
@@ -90,7 +87,18 @@
 
                     <td>${hrmDto.attendanceRate}%</td>
                     <td>
-                        <button>버튼</button>
+<%--                        <c:choose>--%>
+<%--                        <c:when test="${hrmDto.isPromotable eq true}">O</c:when>--%>
+<%--                        <c:otherwise>X</c:otherwise>--%>
+<%--                        </c:choose>--%>
+        ${hrmDto.isPromo}
+                    </td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${hrmDto.isPromo eq 'O'}"><button class="btn btn-primary">승인</button></c:when>
+                            <c:otherwise><button class="btn btn-dark" disabled>반려</button></c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>

@@ -187,30 +187,30 @@ public class HrmDao {
         return evaluationDto;
     }
 
-    public int createHrmEval(int empNo) {
-        int result = 0;
-        /* TOTALWORKDAYS % days_since_hire = 출근율 = EvaluationScore */
-        /* 모든 직원중 최대 출근율 기준점으로 잡고 나머지 계산?  */
-//        double score = (double) getTotalWorkDays(empNo) / (double) getDaysSinceHire(empNo);
-        double score =  (double) 4000 / (double) getDaysSinceHire(empNo);
-        EvaluationDto evaluationDto = EvaluationDto.builder()
-                .empNo(empNo)
-                .performanceScore(score)
-                .build();
-
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        result = sqlSession.insert("createHrmEval", evaluationDto);
-        sqlSession.close();
-        return result;
-    }
-
-    public int getDaysSinceHire(int empNo) {
-        int result = 0;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
-        result = sqlSession.selectOne("getDaysSinceHire", empNo);
-        sqlSession.close();
-        return result;
-    }
+//    public int createHrmEval(int empNo) {
+//        int result = 0;
+//        /* TOTALWORKDAYS % days_since_hire = 출근율 = EvaluationScore */
+//        /* 모든 직원중 최대 출근율 기준점으로 잡고 나머지 계산?  */
+////        double score = (double) getTotalWorkDays(empNo) / (double) getDaysSinceHire(empNo);
+//        double score =  (double) 4000 / (double) getDaysSinceHire(empNo);
+//        EvaluationDto evaluationDto = EvaluationDto.builder()
+//                .empNo(empNo)
+//                .performanceScore(score)
+//                .build();
+//
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+//        result = sqlSession.insert("createHrmEval", evaluationDto);
+//        sqlSession.close();
+//        return result;
+//    }
+//
+//    public int getDaysSinceHire(int empNo) {
+//        int result = 0;
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(true);
+//        result = sqlSession.selectOne("getDaysSinceHire", empNo);
+//        sqlSession.close();
+//        return result;
+//    }
 
     public int getTotalWorkDays(int empNo) {
         int result = 0;
@@ -236,6 +236,4 @@ public class HrmDao {
         sqlSession.close();
         return hrmList;
     }
-    ////////
-
 }

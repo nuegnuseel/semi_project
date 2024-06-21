@@ -44,12 +44,18 @@ public class Evaluations extends HttpServlet {
         HrmPageDto hrmPageDto = createPageDto(currentPage, listPerPage, search, searchWord);
         List<HrmDto> hrmList = getHrmList(hrmPageDto);
 
+        for (HrmDto hrmDto : hrmList) {
+            int score = hrmDto.getYosYear() * (int)(hrmDto.getAttendanceRate() * 100); // 진급 관련 점수?
+            int requireScore = hrmDto.getPosNo()*hrmDto.getPosNo();
+            if (score > 0) hrmDto.setIsPromo("O");
+            else hrmDto.setIsPromo("X");
+            System.out.println("empno = " + hrmDto.getEmpNo() + ", score = " + score + ", reqScore =" + requireScore);
+        }
+
         setRequestAttributes(req, totalPage, startPage, endPage, listPerPage, paginationPerPage, search, searchWord, hrmList);
 
         req.setAttribute("url", url);
         req.getRequestDispatcher("/WEB-INF/hrm/evaluation-board.jsp").forward(req, resp);
-
-
     }
 
     private int getTotalHrmCount(String search, String searchWord) {
@@ -126,11 +132,7 @@ public class Evaluations extends HttpServlet {
         req.setAttribute("searchWord", searchWord);
         req.setAttribute("hrmList", hrmList); // 여기가 evaluation-board.jsp 에서 근속년월이랑 등급 등등 관계지어서 함
 
-        HrmDao hrmGetEvaluationDao = new HrmDao();
-        HrmDao hrmCreateEvaluationDao = new HrmDao();
-//        hrmCreateEvaluationDao.createHrmEval(empNo);
-//        EvaluationDto hrmEvalDto = hrmGetEvaluationDao.getHrmEval(empNo);
-//        req.setAttribute("hrmEvalDto", hrmEvalDto);
+
 
         HrmMap hrmMap = new HrmMap();
         req.setAttribute("deptMap", hrmMap.getDeptMap());
