@@ -12,11 +12,11 @@
     <%--    폼 영역    --%>
         <form action="../hrm/login-logout" method="post">
             <div class="form-floating">
-                <input type="text" class="form-control" id="loginEmpNo" name="loginEmpNo" placeholder="사원번호를 입력해 주세요">
+                <input type="text" class="form-control" id="loginEmpNo" value="admin" name="loginEmpNo" placeholder="사원번호를 입력해 주세요">
                 <label for="loginEmpNo">사원번호</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="비밀번호를 입력해 주세요">
+                <input type="password" class="form-control" id="loginPassword" value="1234" name="loginPassword" placeholder="비밀번호를 입력해 주세요">
                 <label for="loginPassword">비밀번호</label>
             </div>
             <div class="row mt-3">
