@@ -31,7 +31,7 @@ public class empWorkBoard extends HttpServlet {
 
         // 로그인을 통해서 현재 접속자 empNo를 받는다.
         HttpSession session = req.getSession();
-        HrmDto loginDto = (HrmDto) session.getAttribute("sessionDto");
+        HrmDto loginDto = (HrmDto) session.getAttribute("loginDto");
         int empNo = loginDto.getEmpNo();
 
         int page = 1;
@@ -65,7 +65,7 @@ public class empWorkBoard extends HttpServlet {
 
         // 세션으로 로그인된 사람의 empNo를 받아옴
         HttpSession session = req.getSession();
-        HrmDto loginDto = (HrmDto) session.getAttribute("sessionDto");
+        HrmDto loginDto = (HrmDto) session.getAttribute("loginDto");
         int empNo = loginDto.getEmpNo();
 
         String Date = currentDate.toString(); // LocalDate는 ISO 형식으로 문자열로 변환됨
