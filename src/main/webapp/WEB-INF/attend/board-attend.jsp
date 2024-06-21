@@ -332,6 +332,7 @@
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
+            console.log("updateModal clicked")
             const selectName=$(this).text();
             $.ajax({
                 url: "/attend/attendUpdateInfo",
