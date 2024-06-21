@@ -50,11 +50,14 @@ public class LoginLogout extends HttpServlet {
                             .ename(loginHrmDto.getEname())
                             .deptNo(loginHrmDto.getDeptNo())
                             .deptName(loginHrmDto.getDeptName())
+                            .posName(loginHrmDto.getPosName())
+                            .roleName(loginHrmDto.getRoleName())
+                            .hireDate(loginHrmDto.getHireDate())
                             .renameProfile(loginHrmDto.getRenameProfile())
                             .grade(loginHrmDto.getGrade())
                             .build();
                     HttpSession session = req.getSession();
-                    session.setAttribute("sessionDto", sessionDto);
+                    session.setAttribute("loginDto", sessionDto);
                     ScriptWriter.alertAndNext(resp, "로그인 성공", "../index/index");
                 } else {
                     ScriptWriter.alertAndBack(resp, "로그인 실패");
@@ -70,7 +73,7 @@ public class LoginLogout extends HttpServlet {
                 .grade(grade)
                 .build();
         HttpSession session = req.getSession();
-        session.setAttribute("sessionDto", adminDto);
+        session.setAttribute("loginDto", adminDto);
         ScriptWriter.alertAndNext(resp, msg + " 계정으로 로그인", "../index/index");
     }
 

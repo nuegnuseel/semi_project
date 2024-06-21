@@ -35,15 +35,15 @@
             <!-- Login Button -->
             <div class="header-user-info d-flex col-auto ms-auto text-end">
                 <c:choose>
-                    <c:when test="${not empty sessionDto.renameProfile}">
-                        <img src="${request.contextPath}/upload/${sessionDto.renameProfile}" class="profile">
+                    <c:when test="${not empty loginDto.renameProfile}">
+                        <img src="${request.contextPath}/upload/${loginDto.renameProfile}" class="profile">
                     </c:when>
                     <c:otherwise>
                         <img src="../images/profile01.jpg" class="profile">
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${sessionDto eq null}">
+                    <c:when test="${loginDto eq null}">
                         <c:set var="redirectUrl" value="${pageContext.request.contextPath}/index/index"/>
                         <c:if test="${not fn:contains(pageContext.request.requestURI, '/index/index')}">
                             <meta http-equiv="refresh" content="0; url=${redirectUrl}">
@@ -53,18 +53,18 @@
                         <div class="dropdown">
                             <button class="user-name btn btn-outline-light" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    ${sessionDto.ename}
+                                    ${loginDto.ename}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark mt-2">
                                 <li>
                                     <form action="../hrm/mypage" method="post" id="mypage" class="m-0">
-                                        <input type="hidden" value="${sessionDto.empNo}" name="sessionEmpNo">
+                                        <input type="hidden" value="${loginDto.empNo}" name="sessionEmpNo">
                                         <button class="btn dropdown-btn-outline-light" form="mypage">마이페이지</button>
                                     </form>
                                 </li>
                                 <li>
                                     <form action="../hrm/login-logout" method="post" id="logout" class="m-0">
-                                        <input type="hidden" value="${sessionDto.empNo}" name="sessionEmpNo">
+                                        <input type="hidden" value="${loginDto.empNo}" name="sessionEmpNo">
                                         <button class="btn dropdown-btn-outline-light" form="logout">로그아웃</button>
                                     </form>
                                 </li>
@@ -105,8 +105,8 @@
                         </ul>
                     </div>
                 </li>
-                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 10
-                or sessionDto.deptNo eq 20 or sessionDto.deptNo eq 30}">
+                <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 10
+                or loginDto.deptNo eq 20 or loginDto.deptNo eq 30}">
                     <li class="left-side-link nav-item align-items-center">
                         <div class="d-flex align-items-center">
                             <i class="bi bi-person-workspace"></i>
@@ -116,16 +116,16 @@
                         </div>
                         <div class="collapse" id="workDropDown" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 10}">
+                                <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 10}">
                                     <li><a href="/attend/board" class="nav-link text-decoration-none rounded">근태 업무</a></li>
                                 </c:if>
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 20}">
+                                <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 20}">
                                 <li><a href="/salary/board" class="nav-link text-decoration-none rounded">급여 업무</a></li>
                                 </c:if>
-                               <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}" >
+                               <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 30}" >
                                 <li><a href="/hrm/board" class="nav-link text-decoration-none rounded">인사 업무</a></li>
                                 </c:if>
-                                <c:if test="${sessionDto.grade eq 'ADMIN' or sessionDto.deptNo eq 30}" >
+                                <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 30}" >
                                     <li><a href="/hrm/evaluation" class="nav-link text-decoration-none rounded">평가 업무</a></li>
                                 </c:if>
                             </ul>
