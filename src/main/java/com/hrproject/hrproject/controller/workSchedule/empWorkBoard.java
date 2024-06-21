@@ -145,17 +145,20 @@ public class empWorkBoard extends HttpServlet {
                     for (String dateStr : allDates) {
                         if (dateStr.equals(Date)) {
                             atdNo = attendDto.getAtdNo();
+                            if (attendDto.getApproval().equals("승인")){
+                                vacationCode  = attendDto.getAtdCode();
+                            }else if (attendDto.getApproval().equals("대기")){
+                                vacationCode = null;
+                            }
                         }
+
                     }
 
+                    System.out.println("empNO >>>>" +empNoIdx);
+                    System.out.println("");
                     System.out.println("attendDto >>>>>>>>>>>:"+attendDto);
                     // 승인이면 휴가 업데이트
-                    if (attendDto.getApproval().equals("승인")){
-                        vacationCode  = attendDto.getAtdCode();
 
-                    }else if (attendDto.getApproval().equals("대기")){
-                        vacationCode = null;
-                    }
                     WorkScheduleDto workScheduleDto = WorkScheduleDto.builder()
                             .empNo(attendDto.getEmpNo())
                             .atdNo(atdNo)
