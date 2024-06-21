@@ -1,6 +1,5 @@
 package com.hrproject.hrproject.controller.attend;
 
-import com.hrproject.hrproject.controller.salary.SalaryCheck;
 import com.hrproject.hrproject.dao.AttendDao;
 import com.hrproject.hrproject.dto.AttendDto;
 import com.google.gson.Gson;
@@ -16,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -153,10 +151,6 @@ public class AttendCheck extends HttpServlet {
         List<List<Integer>> weekDates = generateWeeklyDates(firstDayOfWeek, dayLast);
         int numberOfWeeks = weekDates.size();
 
-        System.out.println("dayLast==="+dayLast);
-        System.out.println("firstDayOfWeek==="+firstDayOfWeek);
-        System.out.println("numberOfWeeks==="+numberOfWeeks);
-        System.out.println("weekDates==="+weekDates);
 
         AttendDao attendDao = new AttendDao();
 
@@ -165,7 +159,8 @@ public class AttendCheck extends HttpServlet {
         req.setAttribute("approvedAttendList", approvedAttendList);
 
         // 응답 객체 생성
-        AttendCheck.ResponseData responseData = new  AttendCheck.ResponseData(weekDates, numberOfWeeks,year,month,approvedAttendList);
+        ResponseData responseData = new
+                ResponseData(weekDates, numberOfWeeks,year,month,approvedAttendList);
 
         Gson gson = new Gson();
 
