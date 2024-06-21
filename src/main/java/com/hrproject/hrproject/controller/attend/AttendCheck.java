@@ -5,6 +5,7 @@ import com.hrproject.hrproject.dao.AttendDao;
 import com.hrproject.hrproject.dto.AttendDto;
 import com.google.gson.Gson;
 import com.hrproject.hrproject.dto.HrmDto;
+import com.hrproject.hrproject.utils.GsonUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -171,7 +172,7 @@ public class AttendCheck extends HttpServlet {
         Gson gson = new Gson();
 
 
-        String jsonResponse = gson.toJson(responseData);
+        String jsonResponse = GsonUtil.GSON.toJson(responseData);
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
