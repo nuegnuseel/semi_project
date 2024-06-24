@@ -90,21 +90,28 @@
                     <i class="bi bi-house"></i>
                     <a class="nav-link" aria-current="page" href="/index/index">홈으로</a>
                 </li>
-                <li class="left-side-link nav-item align-items-center">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-search"></i>
-                        <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse"
-                                data-bs-target="#selectDropDown" aria-expanded="false">
-                            조회
-                        </button>
-                    </div>
-                    <div class="collapse" id="selectDropDown" style="">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="/attend/check" class="nav-link text-decoration-none rounded">근태 조회</a></li>
-                            <li><a href="/salary/check" class="nav-link text-decoration-none rounded">급여 조회</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <c:choose>
+                    <c:when test="${loginDto.grade eq 'ADMIN'}">
+
+                    </c:when>
+                    <c:otherwise>
+                        <li class="left-side-link nav-item align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-search"></i>
+                                <button class="btn btn-toggle collapsed nav-link" data-bs-toggle="collapse"
+                                        data-bs-target="#selectDropDown" aria-expanded="false">
+                                    조회
+                                </button>
+                            </div>
+                            <div class="collapse" id="selectDropDown" style="">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a href="/attend/check" class="nav-link text-decoration-none rounded">근태 조회</a></li>
+                                    <li><a href="/salary/check" class="nav-link text-decoration-none rounded">급여 조회</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
                 <c:if test="${loginDto.grade eq 'ADMIN' or loginDto.deptNo eq 10
                 or loginDto.deptNo eq 20 or loginDto.deptNo eq 30}">
                     <li class="left-side-link nav-item align-items-center">
@@ -138,18 +145,15 @@
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
-
-                    <a class="nav-link" href="../workSchedule/empWorkBoard">커뮤니티</a>
-                </li>
-                <li class="left-side-link nav-item d-flex align-items-center">
-                    <i class="bi bi-calendar4"></i>
                     <a class="nav-link" href="../workSchedule/empWorkBoard">사원용 출퇴근</a>
                 </li>
                 <li class="left-side-link nav-item d-flex align-items-center">
                     <i class="bi bi-calendar4"></i>
                     <a class="nav-link" href="../workSchedule/adminWorkBoard">관리자용 출퇴근</a>
+                </li>
+                <li class="left-side-link nav-item d-flex align-items-center">
+                    <i class="bi bi-book"></i>
                     <a class="nav-link" href="/community/board">커뮤니티</a>
-
                 </li>
             </ul>
         </div>
