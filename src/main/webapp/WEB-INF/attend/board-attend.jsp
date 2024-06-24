@@ -4,7 +4,7 @@
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
     <%--  제목 영역  --%>
     <div class="board-title">
-        <h2 class="title">Attend list</h2>
+        <h2 class="title">휴가 신청 대기 목록</h2>
     </div>
     <%--검색 영역--%>
     <div class="attend-content-area p-3 bg-body-tertiary">
@@ -171,6 +171,52 @@
             </div>
         </div>
     </div>
+<br><br><br><br>
+<%--처리 완료된 근태 목록 --%>
+        <div>
+            <h3> 처리 완료된 휴가 목록</h3>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">사원번호</th>
+                    <th scope="col">근태번호</th>
+                    <th scope="col">사원명</th>
+                    <th scope="col">근태코드</th>
+                    <th scope="col">근태수</th>
+                    <th scope="col">근태기간</th>
+                    <th scope="col">시작 근태일</th>
+                    <th scope="col">마지막 근태일</th>
+                    <th scope="col">휴가명</th>
+                    <th scope="col">휴가사유</th>
+                    <th scope="col">인쇄</th>
+                    <th scope="col">승인여부</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${acceptedAttendList}" var="attendDto" varStatus="loop">
+                    <tr>
+                        <td>${attendDto.empNo}</td>
+                        <td>${attendDto.atdNo}</td>
+                            <%--근태번호 수정키--%>
+                        <td>${attendDto.ename}</td>
+                        <td>${attendDto.atdCode}</td>
+                        <td>${attendDto.atdNum}</td>
+                        <td>${attendDto.atdDate}</td>
+                            <%--근태일--%>
+                        <td>${attendDto.startAtdDate}</td>
+                            <%--시작 근태일--%>
+                        <td>${attendDto.endAtdDate}</td>
+                            <%--마지막 근태일--%>
+                        <td>${attendDto.offDay}</td>
+                        <td>${attendDto.offDayRs}</td>
+                        <td>${attendDto.print}</td>
+                        <td>${attendDto.approval}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
 
 </div>

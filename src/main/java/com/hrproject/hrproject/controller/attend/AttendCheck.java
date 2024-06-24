@@ -51,32 +51,34 @@ public class AttendCheck extends HttpServlet {
 
         req.setAttribute("weekDates", weekDates);
         req.setAttribute("numberOfWeeks", numberOfWeeks);
+        //로그인정보 가져오기
+        HttpSession session = req.getSession();
+        HrmDto loginDto = (HrmDto)session.getAttribute("loginDto");
+        int loginEmpNo = loginDto.getEmpNo();
 
 
 
-
-        // 승인 상태의 근태 출력
+        // 로그인한 사원의 근태 목록 출력
         AttendDao attendDao = new AttendDao();
-        List<AttendDto> approvedAttendList = attendDao.getApprovedAttendList();
-        req.setAttribute("approvedAttendList", approvedAttendList);
-
         String search = req.getParameter("search");
         String searchWord = req.getParameter("searchWord");
         //url 내려주기 값= ex)index/index
         String url = req.getRequestURL().toString().substring(22);
         req.setAttribute("url", url);
+
+
         // 검색어와 검색 조건이 모두 제공되면 검색을 수행합니다.
         if (search != null && searchWord != null && !search.isBlank() && !searchWord.isBlank()) {
-            List<AttendDto> attendList = attendDao.searchAttend(search, searchWord);
-            req.setAttribute("attendList", attendList);
+            List<AttendDto> loginAttendList = attendDao.searchLoginAttend(search, searchWord, loginEmpNo);
+            req.setAttribute("loginAttendList", loginAttendList);
         } else {
             // 모든 근태 출력
-            List<AttendDto> attendList = attendDao.getAttendList();
-            req.setAttribute("attendList", attendList);
+            List<AttendDto> loginAttendList = attendDao.getAttendListByEmpNo(loginEmpNo);
+            req.setAttribute("loginAttendList", loginAttendList);
         }
-        //로그인정보 가져오기
-        HttpSession session = req.getSession();
-        HrmDto loginDto = (HrmDto)session.getAttribute("loginDto");
+
+
+
         //근속연수 내려주기
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -102,9 +104,12 @@ public class AttendCheck extends HttpServlet {
         req.setAttribute("diffMonth",diffMonth);
         req.setAttribute("diffDay",hiredateToSysdate);
 
-        int loginEmpNo = loginDto.getEmpNo();
+
         AttendDao annualDao = new AttendDao();
         List<AttendDto> annualList = annualDao.getAttendListByEmpNo(loginEmpNo);
+
+        List<AttendDto> approvedAttendList = annualDao.getApprovedAttendList();
+        req.setAttribute("approvedAttendList", approvedAttendList);
 
         int annualLeave = 0;
         int usedAnnualCount=0;
