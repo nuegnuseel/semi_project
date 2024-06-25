@@ -50,7 +50,7 @@
                        id="salary-check-search-year" name="salaryCheckYear">
                 <input type="text" class="form-control salary-check-search-month-text " placeholder="ex)06"
                        id="salary-check-search-month" name="salaryCheckMonth">
-                <input type="hidden" id="salary-check-search-empNo" name="salaryCheckEmpNo" value="${sessionDto.empNo}">
+                <input type="hidden" id="salary-check-search-empNo" name="salaryCheckEmpNo" value="${loginDto.empNo}">
                 <button class="btn btn-primary salary-check-search-btn" id="salary-check-search-btn">검색</button>
             </div>
         </div>
