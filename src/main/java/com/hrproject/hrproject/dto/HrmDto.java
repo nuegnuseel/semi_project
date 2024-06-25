@@ -55,5 +55,11 @@ public class HrmDto {
     private int salary;
     private Grade grade;
     private boolean showable;
+    private int yosYear; // 근속년수
+    private int yosMonth; // 근속월수
+    private int workedDays; // 출퇴근한 일수
+    private double attendanceRate;
+    private boolean isPromotable;
+    private String isPromo;
 }
 
