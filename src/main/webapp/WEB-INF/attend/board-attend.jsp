@@ -121,16 +121,16 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
+                            <label class="col-sm-2 col-form-label">근태기간</label>
+                            <div class="col-sm-10 col-auto">
+                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input type="date" class="form-control" id="endAtdDate" name="endAtdDate">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">근태기간</label>
-                            <div class="col-sm-10 col-auto">
-                                <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input type="date" class="form-control" id="endAtdDate" name="endAtdDate">
+                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
                             </div>
                         </div>
 
@@ -291,6 +291,30 @@
     </div>
 </div>
 <script>
+
+    //근태수 계산
+    document.addEventListener("DOMContentLoaded", function() {
+        const startAtdDate = document.getElementById("startAtdDate");
+        const endAtdDate = document.getElementById("endAtdDate");
+        const atdNum = document.getElementById("atdNum");
+
+        function calculateDays() {
+            const startDate = new Date(startAtdDate.value);
+            const endDate = new Date(endAtdDate.value);
+
+            if (!isNaN(startDate) && !isNaN(endDate) && startDate <= endDate) {
+                const timeDifference = endDate - startDate;
+                const dayDifference = timeDifference / (1000 * 3600 * 24) + 1;
+                atdNum.value = dayDifference.toFixed(1);
+            } else {
+                atdNum.value = "";
+            }
+        }
+
+        startAtdDate.addEventListener("change", calculateDays);
+        endAtdDate.addEventListener("change", calculateDays);
+    });
+
 
     window.onload = function () {
         var urlParams = new URLSearchParams(window.location.search);

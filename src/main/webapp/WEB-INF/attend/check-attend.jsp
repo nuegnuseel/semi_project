@@ -201,7 +201,7 @@
                         <div class="row mb-3">
                             <label for="atdNo" class="col-sm-2 col-form-label">근태번호</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="atdNo" name="atdNo">
+                                <input type="text" class="form-control" id="atdNo" name="atdNo" placeholder="근태번호를 입력하세요.">
                             </div>
                         </div>
 
@@ -229,17 +229,17 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">근태기간</label>
                             <div class="col-sm-10 col-auto">
                                 <input type="date" class="form-control" id="startAtdDate" name="startAtdDate"> ~ <input
                                     type="date" class="form-control" id="endAtdDate" name="endAtdDate">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="atdNum" class="col-sm-2 col-form-label">근태수</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="atdNum" name="atdNum" step="0.1">
                             </div>
                         </div>
 
@@ -285,6 +285,29 @@
 
 
     <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const startAtdDate = document.getElementById("startAtdDate");
+            const endAtdDate = document.getElementById("endAtdDate");
+            const atdNum = document.getElementById("atdNum");
+
+            function calculateDays() {
+                const startDate = new Date(startAtdDate.value);
+                const endDate = new Date(endAtdDate.value);
+
+                if (!isNaN(startDate) && !isNaN(endDate) && startDate <= endDate) {
+                    const timeDifference = endDate - startDate;
+                    const dayDifference = timeDifference / (1000 * 3600 * 24) + 1;
+                    atdNum.value = dayDifference.toFixed(1);
+                } else {
+                    atdNum.value = "";
+                }
+            }
+
+            startAtdDate.addEventListener("change", calculateDays);
+            endAtdDate.addEventListener("change", calculateDays);
+        });
+
 
         //달력
         // Ajax 요청 후 달력 생성 예시
