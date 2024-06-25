@@ -318,7 +318,7 @@
 
     window.onload = function () {
         var urlParams = new URLSearchParams(window.location.search);
-
+        AttendInsertSuccess === insertAttend
         if (urlParams.get('insertAttend') === 'true') {
             alert('등록 되었습니다.');
         }
@@ -402,6 +402,7 @@
     //수정 모달 클릭 이벤트
     $(document).ready(function (){
         $(document).on("click", ".updateModal", function (){
+            console.log("updateModal clicked")
             const selectName=$(this).text();
             $.ajax({
                 url: "/attend/attendUpdateInfo",
