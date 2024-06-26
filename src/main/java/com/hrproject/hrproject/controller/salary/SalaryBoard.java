@@ -17,13 +17,14 @@ public class SalaryBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String url = req.getRequestURL().toString().substring(22);
-
-
         SalaryDao salaryDao = new SalaryDao();
+        //salary_DB에서 조회를 통해 list에 담는다.
         List<SalarySearchDto> salaryList = salaryDao.getSalaryList();
+<<<<<<< HEAD
+=======
+
+>>>>>>> bae6f659014b85311ae87a3648563f4c5b794b6c
         req.setAttribute("salaryList",salaryList);
-        req.setAttribute("url", url);
         RequestDispatcher dispatcher =
                 req.getRequestDispatcher("/WEB-INF/salary/salary-board.jsp");
         dispatcher.forward(req,resp);
