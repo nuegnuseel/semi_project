@@ -105,9 +105,10 @@ public class AttendCheck extends HttpServlet {
         req.setAttribute("diffDay",hiredateToSysdate);
 
         int loginEmpNo = loginDto.getEmpNo();
+        System.out.println("loginempno=="+loginEmpNo);
         AttendDao annualDao = new AttendDao();
         List<AttendDto> annualList = annualDao.getAttendListByEmpNo(loginEmpNo);
-
+        System.out.println("annualList=="+annualList);
         int annualLeave = 0;
         int usedAnnualCount=0;
         // 근무 기간에 따라 연차 계산
@@ -132,6 +133,8 @@ public class AttendCheck extends HttpServlet {
                 long usedAnnual = ChronoUnit.DAYS.between(startDate, endDate)+1;
                 annualLeave-=usedAnnual;
                 usedAnnualCount+=usedAnnual;
+                System.out.println("startdate=="+startDate);
+                System.out.println("enddate=="+endDate);
             }
         }
         //남은연차
