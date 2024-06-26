@@ -7,7 +7,6 @@
         <div class="employee-card col-12">
             <div class="profile-container">
                 <div class="salary-check-profile">
-                    <li class="nav-item">
                         <c:choose>
                             <c:when test="${not empty loginDto.renameProfile}">
                                 <img src="${request.contextPath}/upload/${loginDto.renameProfile}" class="myPageProfile">
@@ -16,7 +15,6 @@
                                 <img src="../images/profile01.jpg">
                             </c:otherwise>
                         </c:choose>
-                    </li>
                 </div>
                 <div class="salary-profile-details">
                     <h2 class="">이름 : ${loginDto.ename} </h2>
