@@ -104,21 +104,13 @@ public class AttendCheck extends HttpServlet {
         req.setAttribute("diffMonth",diffMonth);
         req.setAttribute("diffDay",hiredateToSysdate);
 
-<<<<<<< HEAD
-        int loginEmpNo = loginDto.getEmpNo();
         System.out.println("loginempno=="+loginEmpNo);
         AttendDao annualDao = new AttendDao();
         List<AttendDto> annualList = annualDao.getAttendListByEmpNo(loginEmpNo);
         System.out.println("annualList=="+annualList);
-=======
-
-        AttendDao annualDao = new AttendDao();
-        List<AttendDto> annualList = annualDao.getAttendListByEmpNo(loginEmpNo);
-
         List<AttendDto> approvedAttendList = annualDao.getApprovedAttendList();
         req.setAttribute("approvedAttendList", approvedAttendList);
 
->>>>>>> bae6f659014b85311ae87a3648563f4c5b794b6c
         int annualLeave = 0;
         int usedAnnualCount=0;
         // 근무 기간에 따라 연차 계산
