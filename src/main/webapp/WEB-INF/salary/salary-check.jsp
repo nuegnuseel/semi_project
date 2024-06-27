@@ -8,7 +8,6 @@
         <div class="employee-card col-12">
             <div class="profile-container">
                 <div class="salary-check-profile">
-                    <li class="nav-item">
                         <c:choose>
                             <c:when test="${not empty loginDto.renameProfile}">
                                 <img src="${request.contextPath}/upload/${loginDto.renameProfile}" class="myPageProfile">
@@ -17,7 +16,6 @@
                                 <img src="../images/profile01.jpg">
                             </c:otherwise>
                         </c:choose>
-                    </li>
                 </div>
                 <div class="salary-profile-details">
                     <h2 class="">이름 : ${loginDto.ename} </h2>
@@ -36,8 +34,10 @@
                             <c:if test="${diffDay != 0}">
                                 ${diffDay}일
                             </c:if> </h4>
-                            <h4>${year}년 ${month}월 근무율 : </h4>
-                            <h4>${year}년 ${month}월 예상급여 : </h4>
+                    <div id="salaryRate">
+                            <h4>${year}년 ${month}월 근무율 : ${formattedRate}% </h4>
+                            <h4>${year}년 ${month+1}월 예상급여 : ${formattedRate * 30000} 원</h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,6 +109,38 @@
             </table>
         </div>
     </div>
+    <div class="salary-check-list-area">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="align-middle">번호</th>
+            <th class="align-middle">사원 번호</th>
+            <th class="align-middle">사원 명</th>
+            <th class="align-middle">급여구분</th>
+            <th class="align-middle">지급구분</th>
+            <th class="align-middle">대장명칭</th>
+            <th class="align-middle">지급일</th>
+            <th class="align-middle">근무연월</th>
+            <th class="align-middle">지급액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${salarycheckList}" var="salaryDto" varStatus="loop">
+            <tr>
+                <td>${salaryDto.salary_No}</td>
+                <td>${salaryDto.empNo}</td>
+                <td>${salaryDto.ename}</td>
+                <td>${salaryDto.salaryName}</td>
+                <td>${salaryDto.salaryCategory}</td>
+                <td>${salaryDto.salaryInfo}</td>
+                <td>${salaryDto.salaryDay}</td>
+                <td>${salaryDto.accountingPeriod}</td>
+                <td>${salaryDto.salary}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </div>
 </div>
 <script>
 
@@ -130,9 +162,7 @@
                 return;
             }
             const salaryCheckEmpNo = $("#salary-check-search-empNo").val();
-            console.log("year==" + year)
-            console.log("month==" + month)
-            console.log("salaryCheckEmpNo==" + salaryCheckEmpNo)
+
             var message = "";
             $.ajax({
                 url: "/salary/check",
@@ -143,8 +173,8 @@
                     month: month,
                 },
                 success: function (response) {
+                    console.log("Ajax Response:", response);
                     $("#salary-check-calendar-date").text(year + " " + month + "월 근무표");
-
                     var calendarBody = $("#calendar-body");
                     var totalBody = $("#total-body");
 
