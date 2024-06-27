@@ -87,3 +87,14 @@
 .attend-check-search-btn{
     width:80px;
 }
+.btn-basic{
+    background-color: #adb2b2;
+}
+.attend-check-bottom{
+    margin-bottom: 250px;
+}
+
+.attend-profile{
+    width: 200px;
+    height:300px;
+}

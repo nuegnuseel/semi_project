@@ -3,7 +3,7 @@
 
 
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
-    <div class="board-title"><h2 class="title">출퇴근 list</h2></div>
+    <div class="board-title"><h2 class="title">출/퇴근 목록</h2></div>
 
     <div class="attend-content-area p-3 bg-body-tertiary">
         <form id="myForm" action="../workSchedule/empWorkBoard" method="post">

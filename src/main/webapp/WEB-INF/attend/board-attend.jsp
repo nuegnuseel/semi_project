@@ -24,7 +24,7 @@
                         <input type="text" name="searchWord" class="form-control" value="${searchWord}">
                     </div>
                     <div class="col-sm-3">
-                        <button class="btn btn-primary w-100">SEARCH</button>
+                        <button class="btn-basic btn w-100">SEARCH</button>
                     </div>
                 </div>
             </div>
@@ -59,18 +59,18 @@
                     <td>${attendDto.offDayRs}</td>
                     <td>${attendDto.print}</td>
                     <td>
-                        <button type="button" class="attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
+                        <button type="button" class="btn-basic attend-delete-button btn btn-danger" data-id="${attendDto.atdNo}">삭제</button>
                     </td>
                     <td>
-                        <button type="button" class="approve-button btn btn-primary" data-id="${attendDto.atdNo}">승인</button>
-                        <button type="button" class="reject-button btn btn-danger" data-id="${attendDto.atdNo}">반려</button>
+                        <button type="button" class="btn-basic approve-button btn " data-id="${attendDto.atdNo}">승인</button>
+                        <button type="button" class="btn-basic reject-button btn btn-danger" data-id="${attendDto.atdNo}">반려</button>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
         <%--신규 버튼--%>
-        <button class="attend-Insert-btn btn btn-primary" data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
+        <button class="btn-basic attend-Insert-btn btn " data-bs-target="#insertModalToggle" data-bs-toggle="modal">신규</button>
     </div>
     <%--attend insert 모달--%>
     <div class="modal fade" id="insertModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static"

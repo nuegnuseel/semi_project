@@ -3,20 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
-    <div class="salary-check-area d-flex col-12">
+    <div class="attend-check-area d-flex col-12">
         <div class="employee-card col-12">
             <div class="profile-container">
-                <div class="salary-check-profile">
-                    <li class="nav-item">
+                <div class="attend-check-profile">
                         <c:choose>
                             <c:when test="${not empty loginDto.renameProfile}">
                                 <img src="${request.contextPath}/upload/${loginDto.renameProfile}" class="myPageProfile">
                             </c:when>
                             <c:otherwise>
-                                <img src="../images/profile01.jpg">
+                                <img src="../images/profile03.jpg" class="attend-profile">
                             </c:otherwise>
                         </c:choose>
-                    </li>
                 </div>
                 <div class="salary-profile-details">
                     <h2 class="">이름 : ${loginDto.ename} </h2>
@@ -109,7 +107,7 @@
     <br><br><br><br>
 
 <%--    로그인한 사원의 근태 신청 목록만 출력--%>
-    <div>
+    <div class="attend-check-bottom">
         <h3> ${loginDto.ename}님의 신청 내역 </h3>
         <hr>
         <%--검색--%>

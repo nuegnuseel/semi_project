@@ -6,7 +6,7 @@
 <div class="content-area d-flex flex-column flex-shrink-0 position-relative col-12">
     <%--  hrm 제목 영역  --%>
     <div class="board-title">
-        <h2 class="title">Hrm list</h2>
+        <h2 class="title">인사평가</h2>
     </div>
     <%--  hrm 내용 영역  --%>
     <div class="hrm-content-area p-3 bg-body-tertiary">
